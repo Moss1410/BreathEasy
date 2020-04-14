@@ -13,8 +13,8 @@ import plotly.express as px
 class MyApp(App):
 
     def build(self):
-        fig = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
-        fig.show()
+        # fig = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
+        # fig.show()
         graph = Graph(xlabel='X', ylabel='Y', x_ticks_minor=5,
         x_ticks_major=25, y_ticks_major=1,
         y_grid_label=True, x_grid_label=True, padding=5,
