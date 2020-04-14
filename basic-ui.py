@@ -1,15 +1,3 @@
-'''
-Circle Example
-==============
-
-This example exercises circle (ellipse) drawing. You should see sliders at the
-top of the screen with the Kivy logo below it. The sliders control the
-angle start and stop and the height and width scales. There is a button
-to reset the sliders. The logo used for the circle's background image is
-from the kivy/data directory. The entire example is coded in the
-kv language description.
-'''
-
 from kivy.app import App
 from kivy.lang import Builder
 
@@ -196,16 +184,3 @@ class CircleApp(App):
 
 
 CircleApp().run()
-
-
-
-# FloatLayout:
-#     canvas:
-#         Color:
-#             rgb: 1, 1, 1
-#         Ellipse:
-#             pos: 100, 100
-#             size: 200 * parameter_3.value, 201 * parameter_4.value
-#             source: 'data/logo/kivy-icon-512.png'
-#             angle_start: parameter_1.value
-#             angle_end: parameter_2.value
