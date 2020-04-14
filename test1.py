@@ -15,109 +15,115 @@ from kivy.lang import Builder
 
 kv = '''
 BoxLayout:
+    id: root_box
+    spacing: 5
     orientation: 'vertical'
 
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: 'BreathEasy Ventilator Control Panel'
+    # TITLE PANEL
+    Label:
+        size_hint: 1, 0.1
+        text: 'BreathEasy Ventilator Control Panel'
 
+
+    # SLIDERS 1
     BoxLayout:
-        size_hint_y: None
+        size_hint: 1, 0.10
         height: sp(100)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: e1
+                id: parameter_1
                 min: -360.
                 max: 360.
             Label:
-                text: 'Breath Frequency (b/min) = {}'.format(e1.value)
+                text: 'Breath Frequency (b/min) = {}'.format(parameter_1.value)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: e2
-                min: -360.
-                max: 360.
-                value: 360
-            Label:
-                text: 'Inspiratory Pressure (cmH2O) = {}'.format(e2.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: e2
+                id: parameter_2
                 min: -360.
                 max: 360.
                 value: 360
             Label:
-                text: 'Inspiratory Time (s) = {}'.format(e2.value)
+                text: 'Inspiratory Pressure (cmH2O) = {}'.format(parameter_2.value)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_3
+                min: -360.
+                max: 360.
+                value: 360
+            Label:
+                text: 'Inspiratory Time (s) = {}'.format(parameter_2.value)
 
+    # SLIDERS 2
     BoxLayout:
-        size_hint_y: None
+        size_hint: 1, 0.10
         height: sp(100)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: wm
+                id: parameter_4
                 min: 0
                 max: 2
                 value: 1
             Label:
-                text: 'Pause Time (%/s) = {}'.format(wm.value)
+                text: 'Pause Time (%/s) = {}'.format(parameter_3.value)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: hm
+                id: parameter_5
                 min: 0
                 max: 2
                 value: 1
             Label:
-                text: 'Inspiratory Rise Time (s) = {}'.format(hm.value)
+                text: 'Inspiratory Rise Time (s) = {}'.format(parameter_4.value)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: hm
+                id: parameter_6
                 min: 0
                 max: 2
                 value: 1
             Label:
-                text: 'Cycle Threshold (%) = {}'.format(hm.value)
+                text: 'Cycle Threshold (%) = {}'.format(parameter_4.value)
 
+    # SLIDERS 3
     BoxLayout:
-        size_hint_y: None
+        size_hint: 1, 0.10
         height: sp(100)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: wm
+                id: parameter_7
                 min: 0
-                max: 2
-                value: 1
+                max: 10
+                value: 0
             Label:
-                text: 'Flow Trigger (L/min) = {}'.format(wm.value)
+                text: 'Flow Trigger (L/min) = {}'.format(parameter_7.value)
         BoxLayout:
             orientation: 'vertical'
             Slider:
-                id: hm
+                id: parameter_8
                 min: 0
-                max: 2
-                value: 1
+                max: 10
+                value: 0
             Label:
-                text: 'FIO2 = {}'.format(hm.value)
+                text: 'FIO2 = {}'.format(parameter_8.value)
 
+    # GRAPHS PANEL
     BoxLayout:
+        spacing: 5
         orientation: 'vertical'
-        size_hint_y: None
-        height: sp(100)
+        size_hint: 1, 0.55
 
+        # GRAPH PAIR 1
         BoxLayout:
-            size_hint_y: None
-            height: sp(100)
+            size_hint: 1, 0.25
+            spacing: 5
 
             BoxLayout:
                 id: graph1
-                size_hint_y: None
-                height: sp(100)
                 orientation: 'vertical'
                 BoxLayout:
                     size_hint_y: None
@@ -131,8 +137,6 @@ BoxLayout:
 
             BoxLayout:
                 id: graph2
-                size_hint_y: None
-                height: sp(100)
                 orientation: 'vertical'
                 BoxLayout:
                     size_hint_y: None
@@ -144,14 +148,13 @@ BoxLayout:
                             pos: graph2.pos[0], graph2.pos[1]
                             size: graph2.width, graph2.height
 
+        # GRAPH PAIR 2
         BoxLayout:
-            size_hint_y: None
-            height: sp(100)
+            size_hint: 1, 0.25
+            spacing: 5
 
             BoxLayout:
                 id: graph3
-                size_hint_y: None
-                height: sp(100)
                 orientation: 'vertical'
                 BoxLayout:
                     size_hint_y: None
@@ -165,8 +168,6 @@ BoxLayout:
 
             BoxLayout:
                 id: graph4
-                size_hint_y: None
-                height: sp(100)
                 orientation: 'vertical'
                 BoxLayout:
                     size_hint_y: None
@@ -178,12 +179,13 @@ BoxLayout:
                             pos: graph4.pos[0], graph4.pos[1]
                             size: graph4.width, graph4.height
 
+    # RESET BUTTON PANEL
     BoxLayout:
         size_hint_y: None
-        height: 50
+        size_hint: 1, 0.05
         Button:
             text: 'Reset Configuration'
-            on_press: wm.value = 1; hm.value = 1;
+            on_press: parameter_1.value = 0; parameter_2.value = 0; parameter_3.value = 1; parameter_4.value = 1; parameter_5.value = 0; parameter_6.value = 0; parameter_7.value = 0; parameter_8.value = 0;
 
 '''
 
@@ -203,7 +205,7 @@ CircleApp().run()
 #             rgb: 1, 1, 1
 #         Ellipse:
 #             pos: 100, 100
-#             size: 200 * wm.value, 201 * hm.value
+#             size: 200 * parameter_3.value, 201 * parameter_4.value
 #             source: 'data/logo/kivy-icon-512.png'
-#             angle_start: e1.value
-#             angle_end: e2.value
+#             angle_start: parameter_1.value
+#             angle_end: parameter_2.value
