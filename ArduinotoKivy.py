@@ -59,28 +59,30 @@ def get_microphone_level():
         while (ser.inWaiting()==0):
             pass
         value = ser.readline()
-        intValue = int(value.decode("utf-8"))
-        if len(levels) >= 100:
-            levels = []
-        levels.append(intValue)
-        
-
-
+        try:
+            intValue = int(value.decode("utf-8"))
+            if len(levels) >= 2000:
+                levels.pop(0)
+            levels.append(intValue)
+        except:
+            pass
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
-        self.plot = MeshLinePlot(color=[1, 0, 0, 1])
+        self.plot = MeshLinePlot(color=[0, 0, 1, 1])
 
     def start(self):
         self.ids.graph.add_plot(self.plot)
+        self.ids.graph.ymax=1023
+        self.ids.graph.xmax=2000
         Clock.schedule_interval(self.get_value, 0.001)
 
     def stop(self):
         Clock.unschedule(self.get_value)
 
     def get_value(self, dt):
-        self.plot.points = [(i, j/5) for i, j in enumerate(levels)]
+        self.plot.points = [(i, j) for i, j in enumerate(levels)]
 
 class RealTimeMicrophone(App):
     def build(self):
