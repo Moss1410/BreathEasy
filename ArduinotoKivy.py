@@ -6,6 +6,7 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.garden.graph import MeshLinePlot
 from kivy.clock import Clock
+from kivy.core.window import Window
 from threading import Thread
 # import audioop
 # import pyaudio
@@ -63,6 +64,7 @@ class Logic(BoxLayout):
 
 class RealTimeMicrophone(App):
     def build(self):
+        Window.clearcolor = (0.07, 0.37, 0.55, 1)
         return Builder.load_file("alex.kv")
 
 if __name__ == "__main__":
