@@ -36,15 +36,16 @@ Logic:
     orientation: 'vertical'
 
     # TITLE PANEL
-    Label:
-        size_hint: 1, 0.1
+    BackgroundLabel:
+        size_hint: 1, 0.05
         text: 'BreathEasy Ventilator Control Panel'
-
+        color: 0,0,0,1
+        background_color: 0.85, 0.85, 0.85, 1
 
     # GRAPHS & OUTPUTS PANEL
     Logic:
         spacing: 10
-        size_hint: 1, 0.65
+        size_hint: 1, 0.8
 
         # Triple Graph Group
         Logic:
@@ -54,60 +55,83 @@ Logic:
             id: graph
 
             ######################################
-            BoxLayout:
-                orientation: "vertical"
-                Logic:
-                    size_hint: [1, .8]
-                    Grapher:
+
+            Logic:
+                BoxLayout:
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .9]
+                        Grapher:
+                            id: "graph1"
+                            xlabel: ""
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+            ######################################
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .9]
+                        Grapher:
                         id: "graph1"
-                        xlabel: ""
-                        ylabel: "Oxygen"
-                        x_ticks_minor: 5
-                        x_ticks_major: 25
-                        y_ticks_major: 200
-                        y_grid_label: True
-                        x_grid_label: True
-                        padding: 2
-                        x_grid: True 
-                        y_grid: True
+                            xlabel: ""
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
             ######################################
 
             ######################################
-            BoxLayout:
-                orientation: "vertical"
-                Logic:
-                    size_hint: [1, .8]
-                    Grapher:
-                        id: graph2
-                        xlabel: ""
-                        ylabel: "Oxygen"
-                        x_ticks_minor: 5
-                        x_ticks_major: 25
-                        y_ticks_major: 200
-                        y_grid_label: True
-                        x_grid_label: True
-                        padding: 2
-                        x_grid: True 
-                        y_grid: True
-            ######################################
+            Logic:
+                BoxLayout:
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .9]
+                        Grapher:
+                            id: "graph1"
+                            xlabel: ""
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
 
-            ######################################
-            BoxLayout:
-                orientation: "vertical"
-                Logic:
-                    size_hint: [1, .8]
-                    Grapher:
-                        id: graph3
-                        xlabel: ""
-                        ylabel: "Oxygen"
-                        #x_ticks_minor: 250
-                        x_ticks_major: 1000
-                        y_ticks_major: 100
-                        y_grid_label: True
-                        x_grid_label: True
-                        padding: 2
-                        x_grid: True 
-                        y_grid: True
             ######################################
 
         # Output Parameters
@@ -120,65 +144,105 @@ Logic:
             # Parameter 1
             Logic:
                 orientation: 'vertical'
+                canvas:
+                    Color:
+                        rgba: 0.85, 0.85, 0.85, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Breath Frequency (b/min):'
+                    color: 0,0,0,1
                 Label:
                     id: output_1
                     text: '6.5'
+                    color: 0,0,0,1
             # Parameter 2
             Logic:
                 orientation: 'vertical'
+                canvas:
+                    Color:
+                        rgba: 0.85, 0.85, 0.85, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Inspiratory Pressure (cmH2O):'
+                    color: 0,0,0,1
                 Label:
                     id: output_2
                     text: '164.35'
+                    color: 0,0,0,1
             # Parameter 3
             Logic:
                 orientation: 'vertical'
+                canvas:
+                    Color:
+                        rgba: 0.85, 0.85, 0.85, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Inspiratory Time (s):'
+                    color: 0,0,0,1
                 Label:
                     id: output_3
                     text: '3'
+                    color: 0,0,0,1
             # Parameter 4
             Logic:
                 orientation: 'vertical'
+                canvas:
+                    Color:
+                        rgba: 0.85, 0.85, 0.85, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'PEEP (cmH2O):'
+                    color: 0,0,0,1
                 Label:
                     id: output_4
                     text: '12.71'
+                    color: 0,0,0,1
 
     # Input Parameters
     Logic:
         spacing: 10
-        size_hint: 1, 0.25
+        size_hint: 1, 0.15
         id: inputs_panel
 
         # Parameter 1
         Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'Breath Frequency (b/min):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_1.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_1
                 min: 0
@@ -190,13 +254,21 @@ Logic:
         Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'Inspiratory Pressure (cmH2O):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_2.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_2
                 min: 0
@@ -207,13 +279,21 @@ Logic:
         Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'Inspiratory Time (s):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_3.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_3
                 min: 0
@@ -224,13 +304,21 @@ Logic:
         Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'PEEP (cmH2O):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_4.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_4
                 min: 0
@@ -241,13 +329,21 @@ Logic:
         Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'Pause Time (%/s):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_5.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_5
                 min: 0
@@ -258,13 +354,21 @@ Logic:
         Logic:
             size_hint: 0.125, 1
             orientation: 'vertical'
+            canvas:
+                Color:
+                    rgba: 0.85, 0.85, 0.85, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             Label:
                 text: 'Inspiratory Time (s):'
                 text_size: inputs_panel.width/8, None
                 halign: 'center'
                 valign: 'center'
+                color: 0,0,0,1
             Label:
                 text: str(int(input_6.value))
+                color: 0,0,0,1
             ProgressBar:
                 id: input_6
                 min: 0
@@ -277,28 +381,41 @@ Logic:
             spacing: 5
             orientation: 'vertical'
             size_hint: 0.25, 1
-            Logic:
-                Label:
+
+            BoxLayout:
+                spacing: 5
+                BackgroundLabel:
+                    background_color: 0.85, 0.85, 0.85, 1
+
                     text: 'Alarm 1'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
                     valign: 'center'
-                Label:
+                    color: 0,0,0,1
+                BackgroundLabel:
+                    background_color: 0.85, 0.85, 0.85, 1
                     text: 'Alarm 2'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
                     valign: 'center'
-            Logic:
-                Label:
+                    color: 0,0,0,1
+            BoxLayout:
+                spacing: 5
+                BackgroundLabel:
+                    background_color: 0.85, 0.85, 0.85, 1
+
                     text: 'Alarm 3'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
                     valign: 'center'
-                Label:
+                    color: 0,0,0,1
+                BackgroundLabel:
+                    background_color: 0.85, 0.85, 0.85, 1
                     text: 'Alarm 4'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
                     valign: 'center'
+                    color: 0,0,0,1
         ################################
 
 
