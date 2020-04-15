@@ -7,61 +7,40 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.garden.graph import MeshLinePlot
 from kivy.clock import Clock
 from threading import Thread
-# import audioop
-# import pyaudio
 
 import time
 import numpy
-import matplotlib.pyplot as plt
 import serial
-from drawnow import *
- 
-potData = []
 ser = serial.Serial('COM3', 9600)
-plt.ion()
-
-def makeFig():
-    plt.ylim(0, 1023)
-    plt.title('Potentiometer Data')
-    plt.grid(True)
-    plt.ylabel('Potentiometer Value')
-    plt.plot(potData, 'ro-', label='Potentiometer Values')
- 
-
-
-
+graphTime = 3000 #number datapoints? I'm not sure exactly
 
 def get_microphone_level():
     """
     source: http://stackoverflow.com/questions/26478315/getting-volume-levels-from-pyaudio-for-use-in-arduino
     audioop.max alternative to audioop.rms
     """
-    # chunk = 1024
-    # FORMAT = pyaudio.paInt16
-    # CHANNELS = 1
-    # RATE = 44100
-    # p = pyaudio.PyAudio()
-
-    # s = p.open(format=FORMAT,
-    #            channels=CHANNELS,
-    #            rate=RATE,
-    #            input=True,
-    #            frames_per_buffer=chunk)
-    # global levels
-    # while True:
-    #     data = s.read(chunk)
-    #     mx = audioop.rms(data, 2)
-    #     if len(levels) >= 100:
-    #         levels = []
-    #     levels.append(mx)
+    
     global levels
+    # while True:
+    #     if (ser.inWaiting()==0):
+    #         if len(levels)!=0:
+    #             levels.append(levels[-1])
+    #     value = ser.readline()
+    #     try:
+    #         intValue = int(value.decode("utf-8"))
+    #         if len(levels) >= 2000:
+    #             levels.pop(0)
+    #         levels.append(intValue)
+    #     except:
+    #         pass
+
     while True:
         while (ser.inWaiting()==0):
             pass
         value = ser.readline()
         try:
             intValue = int(value.decode("utf-8"))
-            if len(levels) >= 2000:
+            if len(levels) >= graphTime:
                 levels.pop(0)
             levels.append(intValue)
         except:
@@ -75,7 +54,7 @@ class Logic(BoxLayout):
     def start(self):
         self.ids.graph.add_plot(self.plot)
         self.ids.graph.ymax=1023
-        self.ids.graph.xmax=2000
+        self.ids.graph.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
 
     def stop(self):
