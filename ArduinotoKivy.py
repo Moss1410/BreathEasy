@@ -17,7 +17,6 @@ import serial
 from drawnow import *
 import random
 
-
 def get_microphone_level():
     global levels
     
@@ -54,6 +53,9 @@ class Logic(BoxLayout):
         self.ids.graph.ymax=1023
         self.ids.graph.xmax=2000
         Clock.schedule_interval(self.get_value, 0.001)
+        get_level_thread = Thread(target = get_microphone_level)
+        get_level_thread.daemon = True
+        get_level_thread.start()
 
     def stop(self):
         Clock.unschedule(self.get_value)
@@ -67,7 +69,5 @@ class RealTimeMicrophone(App):
 
 if __name__ == "__main__":
     levels = []  # store levels of microphone
-    get_level_thread = Thread(target = get_microphone_level)
-    get_level_thread.daemon = True
-    get_level_thread.start()
+    
     RealTimeMicrophone().run()
