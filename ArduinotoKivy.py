@@ -4,22 +4,22 @@
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.garden.graph import MeshLinePlot
+from kivy.garden.graph import MeshLinePlot, LinePlot, Plot
 from kivy.clock import Clock
 from threading import Thread
-# import audioop
-# import pyaudio
-
 import time
 import numpy
 import matplotlib.pyplot as plt
 import serial
 from drawnow import *
 import random
+from datetime import datetime
+
+clear = False
+x_amount = 200
 
 def get_microphone_level():
     global levels
-    
     try:
         ser = serial.Serial('COM3', 9600)
         while True:
@@ -28,30 +28,34 @@ def get_microphone_level():
             value = ser.readline()
             try:
                 intValue = int(value.decode("utf-8"))
-                #intValue = randInt(0, 1023)
-                if len(levels) >= 2000:
-                    levels.pop(0)
+                if len(levels) >= x_amount:
+                    if clear:
+                        levels = []
+                    else:
+                        levels.pop(0)
                 levels.append(intValue)
             except:
                 pass
     except:
         while True:
             intValue = random.randint(1, 1020)
-            if len(levels) >= 2000:
-                levels.pop(0)
+            if len(levels) >= x_amount:
+                if clear:
+                    levels = []
+                else:
+                    levels.pop(0)
             levels.append(intValue)
             time.sleep(0.01)
-
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
-        self.plot = MeshLinePlot(color=[0, 0, 1, 1])
+        self.plot = LinePlot(line_width=2, color=[0, 0, 1, 1])
 
     def start(self):
         self.ids.graph.add_plot(self.plot)
         self.ids.graph.ymax=1023
-        self.ids.graph.xmax=2000
+        self.ids.graph.xmax=x_amount
         Clock.schedule_interval(self.get_value, 0.001)
         get_level_thread = Thread(target = get_microphone_level)
         get_level_thread.daemon = True
