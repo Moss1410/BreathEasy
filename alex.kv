@@ -1,0 +1,228 @@
+BoxLayout:
+    id: root_box
+    spacing: 5
+    orientation: 'vertical'
+
+    # TITLE PANEL
+    Label:
+        size_hint: 1, 0.1
+        text: 'BreathEasy Ventilator Control Panel'
+
+
+    # SLIDERS 1
+    BoxLayout:
+        size_hint: 1, 0.10
+        height: sp(100)
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                Button:
+                    text: 'Reset Configuration'
+                    on_press: parameter_1 = parameter_1 - 1
+                Button:
+                    text: 'Reset Configuration'
+                    on_press: parameter_1 = parameter_1 + 1
+            Label:
+                text: 'Breath Frequency (b/min) = {}'.format(parameter_1)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_2
+                min: -360.
+                max: 360.
+                value: 360
+            Label:
+                text: 'Inspiratory Pressure (cmH2O) = {}'.format(parameter_2.value)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_3
+                min: -360.
+                max: 360.
+                value: 360
+            Label:
+                text: 'Inspiratory Time (s) = {}'.format(parameter_2.value)
+
+    # SLIDERS 2
+    BoxLayout:
+        size_hint: 1, 0.10
+        height: sp(100)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_4
+                min: 0
+                max: 2
+                value: 1
+            Label:
+                text: 'Pause Time (%/s) = {}'.format(parameter_3.value)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_5
+                min: 0
+                max: 2
+                value: 1
+            Label:
+                text: 'Inspiratory Rise Time (s) = {}'.format(parameter_4.value)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_6
+                min: 0
+                max: 2
+                value: 1
+            Label:
+                text: 'Cycle Threshold (%) = {}'.format(parameter_4.value)
+
+    # SLIDERS 3
+    BoxLayout:
+        size_hint: 1, 0.10
+        height: sp(100)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_7
+                min: 0
+                max: 10
+                value: 0
+            Label:
+                text: 'Flow Trigger (L/min) = {}'.format(parameter_7.value)
+        BoxLayout:
+            orientation: 'vertical'
+            Slider:
+                id: parameter_8
+                min: 0
+                max: 10
+                value: 0
+            Label:
+                text: 'FIO2 = {}'.format(parameter_8.value)
+
+    # GRAPHS PANEL
+    BoxLayout:
+        spacing: 5
+        orientation: 'vertical'
+        size_hint: 1, 0.55
+
+        # GRAPH PAIR 1
+        BoxLayout:
+            size_hint: 1, 0.25
+            spacing: 5
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .8]
+                        Graph:
+                            id: graph
+                            xlabel: ""
+                            ylabel: "Voltage"
+                    BoxLayout:
+                        size_hint: [1, .2]
+                        orientation: "horizontal"
+                        Button:
+                            text: "START"
+                            bold: True
+                            on_press: root.start()
+                        Button:
+                            text: "STOP"
+                            bold: True
+                            on_press: root.stop()
+            ######################################
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .8]
+                        Graph:
+                            id: graph
+                            xlabel: ""
+                            ylabel: "Voltage"
+                    BoxLayout:
+                        size_hint: [1, .2]
+                        orientation: "horizontal"
+                        Button:
+                            text: "START"
+                            bold: True
+                            on_press: root.start()
+                        Button:
+                            text: "STOP"
+                            bold: True
+                            on_press: root.stop()
+            ######################################
+
+        # GRAPH PAIR 2
+        BoxLayout:
+            size_hint: 1, 0.25
+            spacing: 5
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .8]
+                        Graph:
+                            id: graph
+                            xlabel: ""
+                            ylabel: "Voltage"
+                    BoxLayout:
+                        size_hint: [1, .2]
+                        orientation: "horizontal"
+                        Button:
+                            text: "START"
+                            bold: True
+                            on_press: root.start()
+                        Button:
+                            text: "STOP"
+                            bold: True
+                            on_press: root.stop()
+            ######################################
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .8]
+                        Graph:
+                            id: graph
+                            xlabel: ""
+                            ylabel: "Voltage"
+                    BoxLayout:
+                        size_hint: [1, .2]
+                        orientation: "horizontal"
+                        Button:
+                            text: "START"
+                            bold: True
+                            on_press: root.start()
+                        Button:
+                            text: "STOP"
+                            bold: True
+                            on_press: root.stop()
+            ######################################
+
+    # RESET BUTTON PANEL
+    BoxLayout:
+        size_hint_y: None
+        size_hint: 1, 0.05
+        Button:
+            text: 'Reset Configuration'
+            on_press: parameter_1.value = 0; parameter_2.value = 0; parameter_3.value = 1; parameter_4.value = 1; parameter_5.value = 0; parameter_6.value = 0; parameter_7.value = 0; parameter_8.value = 0;
+
+
+
+## A template slider element
+#BoxLayout:
+#    orientation: 'vertical'
+#    Slider:
+#        id: parameter_2
+#        min: -360.
+#        max: 360.
+#        value: 360
+#    Label:
+#        text: 'Inspiratory Pressure (cmH2O) = {}'.format(parameter_2.value)
