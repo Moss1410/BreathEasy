@@ -5,12 +5,11 @@
     canvas.before:
         Color:
             rgba: root.background_color
-        Rectangle:
+        RoundedRectangle:
+            radius: [20,]
             size: self.size
             pos: self.pos
 
-## BackgroundBoxLayout Class
-#<BackgroundBoxLayout@Label+BackgroundColor>
 # BackgroundLogic Class
 <BackgroundLogic@Label+BackgroundColor>
     background_color: 0, 0, 0, 0
@@ -18,15 +17,12 @@
     # to r 0, g 0, b 0, a 0
 # Use the BackgroundLogic any where in your kv code like below:
 #BackgroundLogic
-# Use the BackgroundLogic any where in your kv code like below:
-#BackgroundLogic
 #    background_color: 1, 0, 0, 1
 
 # BackgroundLabel Class
 <BackgroundLabel@Label+BackgroundColor>
     background_color: 0, 0, 0, 0
-    # Default the background color for this label
-    # to r 0, g 0, b 0, a 0
+    # Default the background color for this label to r 0, g 0, b 0, a 0
 # Use the BackgroundLabel any where in your kv code like below
 #BackgroundLabel
 #    text: 'Hello'
@@ -36,24 +32,34 @@
 ######### UI Layout: #########
 Logic:
     id: root_box
-    spacing: 15
+    spacing: 20
     orientation: 'vertical'
-
+    padding: 25, 25, 25, 25
+    
     # TITLE PANEL
-    BackgroundLabel:
+    Logic:
         size_hint: 1, 0.05
-        text: 'BreathEasy Ventilator Control Panel'
-        color: 0,0,0,1
-        background_color: 0.85, 0.85, 0.85, 1
+        canvas:
+            Color:
+                rgba: 0.82, 0.9, 0.94, 1
+            RoundedRectangle:
+                radius: [20,]
+                size: self.size
+                pos: self.pos
+        Label:
+            text: 'BreathEasy Ventilator Control Panel'
+            color: 0,0,0,1
+            background_color: 0.85, 0.85, 0.85, 1
+            font_size: '20sp'
 
     # GRAPHS & OUTPUTS PANEL
     Logic:
-        spacing: 10
+        spacing: 20
         size_hint: 1, 0.8
 
         # Triple Graph Group
         Logic:
-            spacing: 10
+            spacing: 20
             orientation: 'vertical'
             size_hint: 0.8, 1
             id: graph1
@@ -64,8 +70,9 @@ Logic:
                     # Setting the background color
                     canvas:
                         Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
                             size: self.size
                             pos: self.pos
                     orientation: "vertical"
@@ -93,8 +100,9 @@ Logic:
                     # Setting the background color
                     canvas:
                         Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
                             size: self.size
                             pos: self.pos
                     orientation: "vertical"
@@ -122,8 +130,9 @@ Logic:
                     # Setting the background color
                     canvas:
                         Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
                             size: self.size
                             pos: self.pos
                     orientation: "vertical"
@@ -148,7 +157,7 @@ Logic:
 
         # Output Parameters
         Logic:
-            spacing: 5
+            spacing: 15
             size_hint: 0.2, 1
             orientation: "vertical"
             id: outputs_panel
@@ -159,8 +168,9 @@ Logic:
                 # Setting the background color
                 canvas:
                     Color:
-                        rgba: 0.85, 0.85, 0.85, 1
-                    Rectangle:
+                        rgba: 0.82, 0.9, 0.94, 1
+                    RoundedRectangle:
+                        radius: [20,]
                         size: self.size
                         pos: self.pos
                 Label:
@@ -179,8 +189,9 @@ Logic:
                 # Setting the background color
                 canvas:
                     Color:
-                        rgba: 0.85, 0.85, 0.85, 1
-                    Rectangle:
+                        rgba: 0.82, 0.9, 0.94, 1
+                    RoundedRectangle:
+                        radius: [20,]
                         size: self.size
                         pos: self.pos
                 Label:
@@ -199,8 +210,9 @@ Logic:
                 # Setting the background color
                 canvas:
                     Color:
-                        rgba: 0.85, 0.85, 0.85, 1
-                    Rectangle:
+                        rgba: 0.82, 0.9, 0.94, 1
+                    RoundedRectangle:
+                        radius: [20,]
                         size: self.size
                         pos: self.pos
                 Label:
@@ -219,8 +231,9 @@ Logic:
                 # Setting the background color
                 canvas:
                     Color:
-                        rgba: 0.85, 0.85, 0.85, 1
-                    Rectangle:
+                        rgba: 0.82, 0.9, 0.94, 1
+                    RoundedRectangle:
+                        radius: [20,]
                         size: self.size
                         pos: self.pos
                 Label:
@@ -236,7 +249,7 @@ Logic:
 
     # Input Parameters
     Logic:
-        spacing: 10
+        spacing: 20
         size_hint: 1, 0.15
         id: inputs_panel
 
@@ -247,8 +260,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -274,8 +288,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -300,8 +315,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -326,8 +342,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -352,8 +369,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -378,8 +396,9 @@ Logic:
             # Setting the background color
             canvas:
                 Color:
-                    rgba: 0.85, 0.85, 0.85, 1
-                Rectangle:
+                    rgba: 0.82, 0.9, 0.94, 1
+                RoundedRectangle:
+                    radius: [20,]
                     size: self.size
                     pos: self.pos
             Label:
@@ -400,41 +419,69 @@ Logic:
         ################################
         # Alarms Panel
         Logic:
-            spacing: 5
+            spacing: 15
             orientation: 'vertical'
             size_hint: 0.25, 1
             Logic:
-                spacing: 5
-                BackgroundLabel:
-                    background_color: 0.85, 0.85, 0.85, 1
-                    text: 'Alarm 1'
-                    text_size: inputs_panel.width/16, None
-                    halign: 'center'
-                    valign: 'center'
-                    color: 0,0,0,1
-                BackgroundLabel:
-                    background_color: 0.85, 0.85, 0.85, 1
-                    text: 'Alarm 2'
-                    text_size: inputs_panel.width/16, None
-                    halign: 'center'
-                    valign: 'center'
-                    color: 0,0,0,1
+                spacing: 15
+                Logic:
+                    canvas:
+                        Color:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: 'Alarm 1'
+                        text_size: inputs_panel.width/16, None
+                        halign: 'center'
+                        valign: 'center'
+                        color: 0,0,0,1
+                Logic:
+                    canvas:
+                        Color:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: 'Alarm 2'
+                        text_size: inputs_panel.width/16, None
+                        halign: 'center'
+                        valign: 'center'
+                        color: 0,0,0,1
             Logic:
-                spacing: 5
-                BackgroundLabel:
-                    background_color: 0.85, 0.85, 0.85, 1
-                    text: 'Alarm 3'
-                    text_size: inputs_panel.width/16, None
-                    halign: 'center'
-                    valign: 'center'
-                    color: 0,0,0,1
-                BackgroundLabel:
-                    background_color: 0.85, 0.85, 0.85, 1
-                    text: 'Alarm 4'
-                    text_size: inputs_panel.width/16, None
-                    halign: 'center'
-                    valign: 'center'
-                    color: 0,0,0,1
+                spacing: 15
+                Logic:
+                    canvas:
+                        Color:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: 'Alarm 3'
+                        text_size: inputs_panel.width/16, None
+                        halign: 'center'
+                        valign: 'center'
+                        color: 0,0,0,1
+                Logic:
+                    canvas:
+                        Color:
+                            rgba: 0.82, 0.9, 0.94, 1
+                        RoundedRectangle:
+                            radius: [20,]
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: 'Alarm 4'
+                        text_size: inputs_panel.width/16, None
+                        halign: 'center'
+                        valign: 'center'
+                        color: 0,0,0,1
         ################################
 
 
