@@ -15,15 +15,12 @@ BoxLayout:
         height: sp(100)
         BoxLayout:
             orientation: 'vertical'
-            BoxLayout:
-                Button:
-                    text: 'Reset Configuration'
-                    on_press: parameter_1 = parameter_1 - 1
-                Button:
-                    text: 'Reset Configuration'
-                    on_press: parameter_1 = parameter_1 + 1
+            Slider:
+                id: parameter_1
+                min: -360.
+                max: 360.
             Label:
-                text: 'Breath Frequency (b/min) = {}'.format(parameter_1)
+                text: 'Breath Frequency (b/min) = {}'.format(parameter_1.value)
         BoxLayout:
             orientation: 'vertical'
             Slider:
@@ -108,7 +105,7 @@ BoxLayout:
         BoxLayout:
             size_hint: 1, 0.25
             spacing: 5
-
+            
             ######################################
             Logic:
                 BoxLayout:
@@ -215,7 +212,6 @@ BoxLayout:
             on_press: parameter_1.value = 0; parameter_2.value = 0; parameter_3.value = 1; parameter_4.value = 1; parameter_5.value = 0; parameter_6.value = 0; parameter_7.value = 0; parameter_8.value = 0;
 
 
-
 ## A template slider element
 #BoxLayout:
 #    orientation: 'vertical'
@@ -226,3 +222,17 @@ BoxLayout:
 #        value: 360
 #    Label:
 #        text: 'Inspiratory Pressure (cmH2O) = {}'.format(parameter_2.value)
+
+
+## Template buttons
+#BoxLayout:
+#    orientation: 'vertical'
+#    BoxLayout:
+#        Button:
+#            text: 'Reset Configuration'
+#            on_press: parameter_1 = parameter_1 - 1
+#        Button:
+#            text: 'Reset Configuration'
+#            on_press: parameter_1 = parameter_1 + 1
+#    Label:
+#        text: 'Breath Frequency (b/min) = {}'.format(parameter_1)
