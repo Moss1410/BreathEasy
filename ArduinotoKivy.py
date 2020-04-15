@@ -29,28 +29,26 @@ def get_data():
     times = []
     maxTime = 0
     ser = serial.Serial('COM3', baudrate)
-    while True:
-        while (ser.inWaiting()==0):
-            pass
-        value = ser.readline()
-        try:
-            data = str(value.decode("utf-8"))
-            data=data.split(",")
-            dataTime = int(data[0])
-            signal1 = int(data[1])
-            update_level(dataTime, signal1)
-        except:
-            pass
-
-    # try:
-        
-    # except:
-    #     currTime = 0
-    #     while True:
-    #         intValue = random.randint(1, 1020)
-    #         currTime += 200
-    #         update_level(currTime, intValue)
-    #         time.sleep(0.1)
+    try:
+        while True:
+            while (ser.inWaiting()==0):
+                pass
+            value = ser.readline()
+            try:
+                data = str(value.decode("utf-8"))
+                data=data.split(",")
+                dataTime = int(data[0])
+                signal1 = int(data[1])
+                update_level(dataTime, signal1)
+            except:
+                pass
+    except:
+        currTime = 0
+        while True:
+            intValue = random.randint(1, 1020)
+            currTime += 200
+            update_level(currTime, intValue)
+            time.sleep(0.1)
 
 def update_level(timeIn, value):
     global levels
