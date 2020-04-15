@@ -83,7 +83,7 @@ class Logic(BoxLayout):
 
 class RealTimeMicrophone(App):
     def build(self):
-        return Builder.load_file("look.kv")
+        return Builder.load_file("alex.kv")
 
 if __name__ == "__main__":
     
