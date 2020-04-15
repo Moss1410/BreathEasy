@@ -15,57 +15,34 @@ import numpy
 import matplotlib.pyplot as plt
 import serial
 from drawnow import *
- 
-potData = []
-ser = serial.Serial('COM3', 9600)
-plt.ion()
-
-def makeFig():
-    plt.ylim(0, 1023)
-    plt.title('Potentiometer Data')
-    plt.grid(True)
-    plt.ylabel('Potentiometer Value')
-    plt.plot(potData, 'ro-', label='Potentiometer Values')
- 
-
-
+import random
 
 
 def get_microphone_level():
-    """
-    source: http://stackoverflow.com/questions/26478315/getting-volume-levels-from-pyaudio-for-use-in-arduino
-    audioop.max alternative to audioop.rms
-    """
-    # chunk = 1024
-    # FORMAT = pyaudio.paInt16
-    # CHANNELS = 1
-    # RATE = 44100
-    # p = pyaudio.PyAudio()
-
-    # s = p.open(format=FORMAT,
-    #            channels=CHANNELS,
-    #            rate=RATE,
-    #            input=True,
-    #            frames_per_buffer=chunk)
-    # global levels
-    # while True:
-    #     data = s.read(chunk)
-    #     mx = audioop.rms(data, 2)
-    #     if len(levels) >= 100:
-    #         levels = []
-    #     levels.append(mx)
     global levels
-    while True:
-        while (ser.inWaiting()==0):
-            pass
-        value = ser.readline()
-        try:
-            intValue = int(value.decode("utf-8"))
+    
+    try:
+        ser = serial.Serial('COM3', 9600)
+        while True:
+            while (ser.inWaiting()==0):
+                pass
+            value = ser.readline()
+            try:
+                intValue = int(value.decode("utf-8"))
+                #intValue = randInt(0, 1023)
+                if len(levels) >= 2000:
+                    levels.pop(0)
+                levels.append(intValue)
+            except:
+                pass
+    except:
+        while True:
+            intValue = random.randint(1, 1020)
             if len(levels) >= 2000:
                 levels.pop(0)
             levels.append(intValue)
-        except:
-            pass
+            time.sleep(0.01)
+
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
