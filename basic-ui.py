@@ -178,9 +178,9 @@ BoxLayout:
 '''
 
 
-class CircleApp(App):
+class DashBoardApp(App):
     def build(self):
         return Builder.load_string(kv)
 
 
-CircleApp().run()
+DashBoardApp().run()
