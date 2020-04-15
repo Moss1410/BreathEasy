@@ -7,7 +7,15 @@ Logic:
             Graph:
                 id: graph
                 xlabel: ""
-                ylabel: "Voltage"
+                ylabel: "Oxygen"
+                x_ticks_minor: 5
+                x_ticks_major: 25
+                y_ticks_major: 100
+                y_grid_label: True
+                x_grid_label: True
+                padding: 5
+                x_grid: True 
+                y_grid: True
         BoxLayout:
             size_hint: [1, .2]
             orientation: "horizontal"
@@ -19,3 +27,7 @@ Logic:
                 text: "STOP"
                 bold: True
                 on_press: root.stop()
+            Button:
+                text: "Toggle Clear"
+                bold: True
+                on_press: root.toggle()

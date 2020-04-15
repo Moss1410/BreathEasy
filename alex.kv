@@ -11,11 +11,15 @@
 
 # BackgroundBoxLayout Class
 <BackgroundBoxLayout@Label+BackgroundColor>
+# BackgroundLogic Class
+<BackgroundLogic@Label+BackgroundColor>
     background_color: 0, 0, 0, 0
     # Default the background color for this label
     # to r 0, g 0, b 0, a 0
 # Use the BackgroundBoxLayout any where in your kv code like below:
 #BackgroundBoxLayout
+# Use the BackgroundLogic any where in your kv code like below:
+#BackgroundLogic
 #    background_color: 1, 0, 0, 1
 
 # BackgroundLabel Class
@@ -67,9 +71,10 @@ BoxLayout:
                     orientation: "vertical"
                     BoxLayout:
                         size_hint: [1, .9]
-                        Graph:
-                            id: graph
+                        Grapher:
+                            id: "graph1"
                             xlabel: ""
+<<<<<<< HEAD
                             ylabel: "Voltage"
                             label_options: {'color': (0,0,0,1)}
                             border_color: (0,0,0,1)
@@ -84,6 +89,17 @@ BoxLayout:
                             text: "STOP"
                             bold: True
                             on_press: graph1.stop()
+=======
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+>>>>>>> 3c7da453a6ee23313411673920ab3b13051ead42
             ######################################
 
             ######################################
@@ -99,9 +115,10 @@ BoxLayout:
                     orientation: "vertical"
                     BoxLayout:
                         size_hint: [1, .9]
-                        Graph:
-                            id: graph
+                        Grapher:
+                        id: "graph1"
                             xlabel: ""
+<<<<<<< HEAD
                             ylabel: "Voltage"
                             label_options: {'color': (0,0,0,1)}
                             border_color: (0,0,0,1)
@@ -116,6 +133,17 @@ BoxLayout:
                             text: "STOP"
                             bold: True
                             on_press: root.stop()
+=======
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+>>>>>>> 3c7da453a6ee23313411673920ab3b13051ead42
             ######################################
 
             ######################################
@@ -131,9 +159,10 @@ BoxLayout:
                     orientation: "vertical"
                     BoxLayout:
                         size_hint: [1, .9]
-                        Graph:
-                            id: graph
+                        Grapher:
+                            id: "graph1"
                             xlabel: ""
+<<<<<<< HEAD
                             ylabel: "Voltage"
                             label_options: {'color': (0,0,0,1)}
                             border_color: (0,0,0,1)
@@ -148,6 +177,18 @@ BoxLayout:
                             text: "STOP"
                             bold: True
                             on_press: root.stop()
+=======
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+
+>>>>>>> 3c7da453a6ee23313411673920ab3b13051ead42
             ######################################
 
         # Output Parameters
