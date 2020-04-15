@@ -1,6 +1,4 @@
 import kivy
-#kivy.require('1.0.6') # replace with your current kivy version !
-
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown 
@@ -20,10 +18,9 @@ kivy.require('1.9.0')
 
 Config.set('graphics', 'resizable', True)  
 
+
 ventilatorModeDropDown = DropDown()
 presetModeDropDown = DropDown()
-
-
 
 class MyApp(App):
 
@@ -44,8 +41,10 @@ class MyApp(App):
     acceptButton= Button(size_hint = (0.1, 0.05), pos_hint = {'center_x':0.72, 'center_y':0.1}, text="ACCEPT")
     cancelButton= Button(size_hint = (0.1, 0.05), pos_hint = {'center_x':0.85, 'center_y':0.1}, text="CANCEL")
 
+    # button click function
     def callback(self, event): 
-   
+        
+        # function for saving input data to the correct button
         def on_text(instance, value):
             if(event == self.mandatoryBreath1):
                 self.mandatoryBreath1.text = value
@@ -66,8 +65,9 @@ class MyApp(App):
             else:
                 self.psAbovePeepButton.text = value
 
-            
+        # Setup the popup layout    
         layout = GridLayout(cols = 1, padding = 10) 
+        print("\u2193")
 
         textinput = TextInput(multiline=False, text = '40')
         closeButton = Button(text = "OK") 
@@ -83,7 +83,8 @@ class MyApp(App):
         
 
     def build(self):
-     
+        
+        # set layout type
         relativeLayout = RelativeLayout()
 
         # top title
@@ -95,7 +96,6 @@ class MyApp(App):
         vsMode = Button(text="Volume Support", size_hint_y=None, height = 40)
         psMode = Button(text="Pressure Support", size_hint_y=None, height = 40)
         bvMode = Button(text="Bi-vent", size_hint_y=None, height = 40)
-        
 
         vcMode.bind(on_release = lambda btn: ventilatorModeDropDown.select(vcMode.text)) 
         pcMode.bind(on_release = lambda btn: ventilatorModeDropDown.select(pcMode.text)) 
@@ -133,8 +133,6 @@ class MyApp(App):
         # store preset button
         storePresetSelect = Button(size_hint = (0.15, 0.08), pos_hint = {'center_x':0.5, 'center_y':0.85}, text="Store Preselect")
         
-        # Mandatory Breaths
-
         # top titles
         mandatoryBreathTitle = Label(text='Mandatory Breath', pos_hint = {'center_x':0.2, 'center_y':0.70}, font_size = '20dp', bold = "true")
         inspTimesTitle = Label(text='Insp. times', pos_hint = {'center_x':0.4, 'center_y':0.70}, font_size = '20dp', bold = "true")
@@ -153,6 +151,7 @@ class MyApp(App):
         self.inspCycleRiseButton.bind(on_press = self.callback)
         self.psAbovePeepButton.bind(on_press = self.callback)
 
+        # button labels
         pcpeepLabel = Label(text = "PC above PEEP", size_hint = (0.15, 0.08), pos_hint = {'center_x':0.2, 'center_y':0.61})
         simvLabel = Label(text = "SIMV Rate", size_hint = (0.15, 0.08), pos_hint = {'center_x':0.2, 'center_y':0.48})
         peepLabel = Label(text = "PEEP", size_hint = (0.15, 0.08), pos_hint = {'center_x':0.2, 'center_y':0.35})
@@ -192,9 +191,7 @@ class MyApp(App):
         relativeLayout.add_widget(self.psAbovePeepButton)
         relativeLayout.add_widget(self.acceptButton)
         relativeLayout.add_widget(self.cancelButton)
-
-        relativeLayout.color = (0, 0, 0, 0)
-
+      
         return relativeLayout
 
 
