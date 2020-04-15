@@ -41,10 +41,35 @@ def get_microphone_level():
         try:
             intValue = int(value.decode("utf-8"))
             if len(levels) >= graphTime:
+from drawnow import *
+import random
+
+
+def get_microphone_level():
+    global levels
+    
+    try:
+        ser = serial.Serial('COM3', 9600)
+        while True:
+            while (ser.inWaiting()==0):
+                pass
+            value = ser.readline()
+            try:
+                intValue = int(value.decode("utf-8"))
+                #intValue = randInt(0, 1023)
+                if len(levels) >= 2000:
+                    levels.pop(0)
+                levels.append(intValue)
+            except:
+                pass
+    except:
+        while True:
+            intValue = random.randint(1, 1020)
+            if len(levels) >= 2000:
                 levels.pop(0)
             levels.append(intValue)
-        except:
-            pass
+            time.sleep(0.01)
+
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
