@@ -9,13 +9,13 @@
             size: self.size
             pos: self.pos
 
-# BackgroundBoxLayout Class
-<BackgroundBoxLayout@Label+BackgroundColor>
+# BackgroundLogic Class
+<BackgroundLogic@Label+BackgroundColor>
     background_color: 0, 0, 0, 0
     # Default the background color for this label
     # to r 0, g 0, b 0, a 0
-# Use the BackgroundBoxLayout any where in your kv code like below:
-#BackgroundBoxLayout
+# Use the BackgroundLogic any where in your kv code like below:
+#BackgroundLogic
 #    background_color: 1, 0, 0, 1
 
 # BackgroundLabel Class
@@ -30,7 +30,7 @@
 
 
 ######### UI Layout: #########
-BoxLayout:
+Logic:
     id: root_box
     spacing: 15
     orientation: 'vertical'
@@ -43,18 +43,19 @@ BoxLayout:
         background_color: 0.85, 0.85, 0.85, 1
 
     # GRAPHS & OUTPUTS PANEL
-    BoxLayout:
+    Logic:
         spacing: 10
         size_hint: 1, 0.8
 
         # Triple Graph Group
-        BoxLayout:
+        Logic:
             spacing: 10
             orientation: 'vertical'
             size_hint: 0.8, 1
-            id: graph1
+            id: graph
 
             ######################################
+
             Logic:
                 BoxLayout:
                     canvas:
@@ -66,50 +67,18 @@ BoxLayout:
                     orientation: "vertical"
                     BoxLayout:
                         size_hint: [1, .9]
-                        Graph:
-                            id: graph
+                        Grapher:
+                            id: "graph1"
                             xlabel: ""
-                            ylabel: "Voltage"
-                    BoxLayout:
-                        size_hint: [1, .1]
-                        orientation: "horizontal"
-                        Button:
-                            text: "START"
-                            bold: True
-                            on_press: graph1.start()
-                        Button:
-                            text: "STOP"
-                            bold: True
-                            on_press: graph1.stop()
-            ######################################
-
-            ######################################
-            Logic:
-                BoxLayout:
-                    canvas:
-                        Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    orientation: "vertical"
-                    BoxLayout:
-                        size_hint: [1, .9]
-                        Graph:
-                            id: graph
-                            xlabel: ""
-                            ylabel: "Voltage"
-                    BoxLayout:
-                        size_hint: [1, .1]
-                        orientation: "horizontal"
-                        Button:
-                            text: "START"
-                            bold: True
-                            on_press: root.start()
-                        Button:
-                            text: "STOP"
-                            bold: True
-                            on_press: root.stop()
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
             ######################################
 
             ######################################
@@ -124,32 +93,56 @@ BoxLayout:
                     orientation: "vertical"
                     BoxLayout:
                         size_hint: [1, .9]
-                        Graph:
-                            id: graph
+                        Grapher:
+                        id: "graph1"
                             xlabel: ""
-                            ylabel: "Voltage"
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+            ######################################
+
+            ######################################
+            Logic:
+                BoxLayout:
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    orientation: "vertical"
                     BoxLayout:
-                        size_hint: [1, .1]
-                        orientation: "horizontal"
-                        Button:
-                            text: "START"
-                            bold: True
-                            on_press: root.start()
-                        Button:
-                            text: "STOP"
-                            bold: True
-                            on_press: root.stop()
+                        size_hint: [1, .9]
+                        Grapher:
+                            id: "graph1"
+                            xlabel: ""
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+
             ######################################
 
         # Output Parameters
-        BoxLayout:
+        Logic:
             spacing: 5
             size_hint: 0.2, 1
             orientation: "vertical"
             id: outputs_panel
 
             # Parameter 1
-            BoxLayout:
+            Logic:
                 orientation: 'vertical'
                 canvas:
                     Color:
@@ -168,7 +161,7 @@ BoxLayout:
                     text: '6.5'
                     color: 0,0,0,1
             # Parameter 2
-            BoxLayout:
+            Logic:
                 orientation: 'vertical'
                 canvas:
                     Color:
@@ -187,7 +180,7 @@ BoxLayout:
                     text: '164.35'
                     color: 0,0,0,1
             # Parameter 3
-            BoxLayout:
+            Logic:
                 orientation: 'vertical'
                 canvas:
                     Color:
@@ -206,7 +199,7 @@ BoxLayout:
                     text: '3'
                     color: 0,0,0,1
             # Parameter 4
-            BoxLayout:
+            Logic:
                 orientation: 'vertical'
                 canvas:
                     Color:
@@ -226,13 +219,13 @@ BoxLayout:
                     color: 0,0,0,1
 
     # Input Parameters
-    BoxLayout:
+    Logic:
         spacing: 10
         size_hint: 1, 0.15
         id: inputs_panel
 
         # Parameter 1
-        BoxLayout:
+        Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
             canvas:
@@ -258,7 +251,7 @@ BoxLayout:
 
 
         # Parameter 2
-        BoxLayout:
+        Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
             canvas:
@@ -283,7 +276,7 @@ BoxLayout:
                 value: 5
 
         # Parameter 3
-        BoxLayout:
+        Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
             canvas:
@@ -308,7 +301,7 @@ BoxLayout:
                 value: 7
 
         # Parameter 4
-        BoxLayout:
+        Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
             canvas:
@@ -333,7 +326,7 @@ BoxLayout:
                 value: 3
 
         # Parameter 5
-        BoxLayout:
+        Logic:
             orientation: 'vertical'
             size_hint: 0.125, 1
             canvas:
@@ -358,7 +351,7 @@ BoxLayout:
                 value: 2
 
         # Parameter 6
-        BoxLayout:
+        Logic:
             size_hint: 0.125, 1
             orientation: 'vertical'
             canvas:
@@ -384,14 +377,16 @@ BoxLayout:
 
         ################################
         # Alarms Panel
-        BoxLayout:
+        Logic:
             spacing: 5
             orientation: 'vertical'
             size_hint: 0.25, 1
+
             BoxLayout:
                 spacing: 5
                 BackgroundLabel:
                     background_color: 0.85, 0.85, 0.85, 1
+
                     text: 'Alarm 1'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
@@ -408,6 +403,7 @@ BoxLayout:
                 spacing: 5
                 BackgroundLabel:
                     background_color: 0.85, 0.85, 0.85, 1
+
                     text: 'Alarm 3'
                     text_size: inputs_panel.width/16, None
                     halign: 'center'
@@ -427,7 +423,7 @@ BoxLayout:
 ######### UI Element Snippets: #########
 
 ## RESET BUTTON PANEL
-#BoxLayout:
+#Logic:
 #    size_hint_y: None
 #    size_hint: 1, 0.05
 #    Button:
@@ -436,7 +432,7 @@ BoxLayout:
 
 
 ## A template slider element
-#BoxLayout:
+#Logic:
 #    orientation: 'vertical'
 #    Slider:
 #        id: parameter_2
@@ -448,9 +444,9 @@ BoxLayout:
 
 
 ## Template buttons
-#BoxLayout:
+#Logic:
 #    orientation: 'vertical'
-#    BoxLayout:
+#    Logic:
 #        id: parameter_1
 #        min: 10
 #        max: 0
