@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.garden.graph import MeshLinePlot, LinePlot, Plot
+from kivy.garden.graph import MeshLinePlot, LinePlot, Plot, Graph
 from kivy.clock import Clock
 from threading import Thread
 import time
@@ -15,7 +15,7 @@ from sounds import *
 clear = True
 x_amount = 200
 
-def get_microphone_level():
+def get_data():
     global levels
     global pastLevels
     levels = []
@@ -48,43 +48,37 @@ def update_level(value):
     if len(pastLevels) >= x_amount:
         pastLevels.pop(0)    
     levels.append(value)
-    if value > 900:
-        playSound(0)
-    elif value < 100:
-        playSound(1)
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
-        self.plot = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
-        self.plot2 = LinePlot(line_width=1.5, color=[1, 0, 0, 0.6])
-
-    def start(self):
-        self.ids.graph.add_plot(self.plot)
-        self.ids.graph.add_plot(self.plot2)
-        self.ids.graph.ymax=1023
-        self.ids.graph.xmax=x_amount
-        Clock.schedule_interval(self.get_value, 0.001)
-        get_level_thread = Thread(target = get_microphone_level)
-        get_level_thread.daemon = True
-        get_level_thread.start()
-
-    def stop(self):
-        Clock.unschedule(self.get_value)
-
-    def get_value(self, dt):
-        self.plot.points = [(i, j) for i, j in enumerate(levels)]
-        self.plot2.points = [(i, j) for i, j in enumerate(pastLevels)]
     
     def toggle(self):
         global clear
         clear = not clear
 
+class Grapher(Graph):
+    def __init__(self, **kwargs):
+        super(Grapher, self).__init__(**kwargs)
+        self.plot = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
+        self.plot2 = LinePlot(line_width=1.5, color=[1, 0, 0, 0.6])
+        self.add_plot(self.plot)
+        self.add_plot(self.plot2)
+        self.ymax=1023
+        self.xmax=x_amount
+        Clock.schedule_interval(self.get_value, 0.001)
+        get_level_thread = Thread(target = get_data)
+        get_level_thread.daemon = True
+        get_level_thread.start()
+    
+    def get_value(self, dt):
+        self.plot.points = [(i, j) for i, j in enumerate(levels)]
+        self.plot2.points = [(i, j) for i, j in enumerate(pastLevels)]
 
-class RealTimeMicrophone(App):
+class BreathEasy(App):
     def build(self):
         return Builder.load_file("alex.kv")
 
 if __name__ == "__main__":
     
-    RealTimeMicrophone().run()
+    BreathEasy().run()
