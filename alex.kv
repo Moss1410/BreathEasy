@@ -83,33 +83,8 @@ Logic:
                             padding: 2
                             x_grid: True 
                             y_grid: True
-            ######################################
-
-            ######################################
-            Logic:
-                Logic:
-                    # Setting the background color
-                    canvas:
-                        Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    orientation: "vertical"
-                    Logic:
-                        size_hint: [1, .9]
-                        Grapher:
-                        id: "graph1"
-                            xlabel: ""
-                            ylabel: "Oxygen"
-                            x_ticks_minor: 5
-                            x_ticks_major: 25
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
+                            label_options: {'color': (0,0,0,1)}
+                            border_color: (0,0,0,1)
             ######################################
 
             ######################################
@@ -137,6 +112,37 @@ Logic:
                             padding: 2
                             x_grid: True 
                             y_grid: True
+                            label_options: {'color': (0,0,0,1)}
+                            border_color: (0,0,0,1)
+            ######################################
+
+            ######################################
+            Logic:
+                Logic:
+                    # Setting the background color
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    orientation: "vertical"
+                    Logic:
+                        size_hint: [1, .9]
+                        Grapher:
+                            id: "graph1"
+                            xlabel: ""
+                            ylabel: "Oxygen"
+                            x_ticks_minor: 5
+                            x_ticks_major: 25
+                            y_ticks_major: 200
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding: 2
+                            x_grid: True 
+                            y_grid: True
+                            label_options: {'color': (0,0,0,1)}
+                            border_color: (0,0,0,1)
 
             ######################################
 
