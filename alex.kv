@@ -8,102 +8,17 @@ BoxLayout:
         size_hint: 1, 0.1
         text: 'BreathEasy Ventilator Control Panel'
 
-
-    # SLIDERS 1
-    BoxLayout:
-        size_hint: 1, 0.10
-        height: sp(100)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_1
-                min: -360.
-                max: 360.
-            Label:
-                text: 'Breath Frequency (b/min) = {}'.format(parameter_1.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_2
-                min: -360.
-                max: 360.
-                value: 360
-            Label:
-                text: 'Inspiratory Pressure (cmH2O) = {}'.format(parameter_2.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_3
-                min: -360.
-                max: 360.
-                value: 360
-            Label:
-                text: 'Inspiratory Time (s) = {}'.format(parameter_2.value)
-
-    # SLIDERS 2
-    BoxLayout:
-        size_hint: 1, 0.10
-        height: sp(100)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_4
-                min: 0
-                max: 2
-                value: 1
-            Label:
-                text: 'Pause Time (%/s) = {}'.format(parameter_3.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_5
-                min: 0
-                max: 2
-                value: 1
-            Label:
-                text: 'Inspiratory Rise Time (s) = {}'.format(parameter_4.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_6
-                min: 0
-                max: 2
-                value: 1
-            Label:
-                text: 'Cycle Threshold (%) = {}'.format(parameter_4.value)
-
-    # SLIDERS 3
-    BoxLayout:
-        size_hint: 1, 0.10
-        height: sp(100)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_7
-                min: 0
-                max: 10
-                value: 0
-            Label:
-                text: 'Flow Trigger (L/min) = {}'.format(parameter_7.value)
-        BoxLayout:
-            orientation: 'vertical'
-            Slider:
-                id: parameter_8
-                min: 0
-                max: 10
-                value: 0
-            Label:
-                text: 'FIO2 = {}'.format(parameter_8.value)
-
     # GRAPHS PANEL
     BoxLayout:
         spacing: 5
-        orientation: 'vertical'
-        size_hint: 1, 0.55
+        size_hint: 1, 0.65
+        spacing: 5
 
-        # GRAPH PAIR 1
+        # Triple Graph Group
         BoxLayout:
-            size_hint: 1, 0.25
+            spacing: 5
+            orientation: 'vertical'
+            size_hint: 0.8, 1
             spacing: 5
             
             ######################################
@@ -152,64 +67,240 @@ BoxLayout:
                             on_press: root.stop()
             ######################################
 
-        # GRAPH PAIR 2
+            ######################################
+            Logic:
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        size_hint: [1, .8]
+                        Graph:
+                            id: graph
+                            xlabel: ""
+                            ylabel: "Voltage"
+                    BoxLayout:
+                        size_hint: [1, .2]
+                        orientation: "horizontal"
+                        Button:
+                            text: "START"
+                            bold: True
+                            on_press: root.start()
+                        Button:
+                            text: "STOP"
+                            bold: True
+                            on_press: root.stop()
+            ######################################
+
+        # Output Parameters
         BoxLayout:
-            size_hint: 1, 0.25
-            spacing: 5
+            size_hint: 0.2, 1
+            orientation: "vertical"
+            id: outputs_panel
+            # Parameter 1
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text_size: outputs_panel.width, None
+                    halign: 'left'
+                    valign: 'center'
+                    text: 'Breath Frequency (b/min):'
+                Label:
+                    id: output_1
+                    text: '6.5'
+            # Parameter 2
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text_size: outputs_panel.width, None
+                    halign: 'left'
+                    valign: 'center'
+                    text: 'Inspiratory Pressure (cmH2O):'
+                Label:
+                    id: output_2
+                    text: '164.35'
+            # Parameter 3
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text_size: outputs_panel.width, None
+                    halign: 'left'
+                    valign: 'center'
+                    text: 'Inspiratory Time (s):'
+                Label:
+                    id: output_3
+                    text: '3'
+            # Parameter 4
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text_size: outputs_panel.width, None
+                    halign: 'left'
+                    valign: 'center'
+                    text: 'PEEP (cmH2O):'
+                Label:
+                    id: output_4
+                    text: '12.71'
 
-            ######################################
-            Logic:
-                BoxLayout:
-                    orientation: "vertical"
-                    BoxLayout:
-                        size_hint: [1, .8]
-                        Graph:
-                            id: graph
-                            xlabel: ""
-                            ylabel: "Voltage"
-                    BoxLayout:
-                        size_hint: [1, .2]
-                        orientation: "horizontal"
-                        Button:
-                            text: "START"
-                            bold: True
-                            on_press: root.start()
-                        Button:
-                            text: "STOP"
-                            bold: True
-                            on_press: root.stop()
-            ######################################
 
-            ######################################
-            Logic:
-                BoxLayout:
-                    orientation: "vertical"
-                    BoxLayout:
-                        size_hint: [1, .8]
-                        Graph:
-                            id: graph
-                            xlabel: ""
-                            ylabel: "Voltage"
-                    BoxLayout:
-                        size_hint: [1, .2]
-                        orientation: "horizontal"
-                        Button:
-                            text: "START"
-                            bold: True
-                            on_press: root.start()
-                        Button:
-                            text: "STOP"
-                            bold: True
-                            on_press: root.stop()
-            ######################################
-
-    # RESET BUTTON PANEL
+    # Input Parameters
     BoxLayout:
-        size_hint_y: None
-        size_hint: 1, 0.05
-        Button:
-            text: 'Reset Configuration'
-            on_press: parameter_1.value = 0; parameter_2.value = 0; parameter_3.value = 1; parameter_4.value = 1; parameter_5.value = 0; parameter_6.value = 0; parameter_7.value = 0; parameter_8.value = 0;
+        size_hint: 1, 0.25
+        id: inputs_panel
+
+        # Parameter 1
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.125, 1
+            Label:
+                text: 'Breath Frequency (b/min):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_1
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_1.text = str(int(input_1.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_1.text = str(int(input_1.text) + 1)
+        # Parameter 2
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.125, 1
+            Label:
+                text: 'Inspiratory Pressure (cmH2O):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_2
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_2.text = str(int(input_2.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_2.text = str(int(input_2.text) + 1)
+        # Parameter 3
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.125, 1
+            Label:
+                text: 'Inspiratory Time (s):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_3
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_3.text = str(int(input_3.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_3.text = str(int(input_3.text) + 1)
+        # Parameter 4
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.125, 1
+            Label:
+                text: 'PEEP (cmH2O):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_4
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_4.text = str(int(input_4.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_4.text = str(int(input_4.text) + 1)
+        # Parameter 5
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.125, 1
+            Label:
+                text: 'Pause Time (%/s):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_5
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_5.text = str(int(input_5.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_5.text = str(int(input_5.text) + 1)
+        # Parameter 6
+        BoxLayout:
+            size_hint: 0.125, 1
+            orientation: 'vertical'
+            Label:
+                text: 'Inspiratory Time (s):'
+                text_size: inputs_panel.width/8, None
+                halign: 'center'
+                valign: 'center'
+            Label:
+                id: input_6
+                text: '0'
+            BoxLayout:
+                Button:
+                    text: '-'
+                    on_press: input_6.text = str(int(input_6.text) - 1)
+                Button:
+                    text: '+'
+                    on_press: input_6.text = str(int(input_6.text) + 1)
+
+        ################################
+        # Alarms Panel
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.25, 1
+            BoxLayout:
+                Label:
+                    text: 'Alarm 1'
+                    text_size: inputs_panel.width/16, None
+                    halign: 'center'
+                    valign: 'center'
+                Label:
+                    text: 'Alarm 2'
+                    text_size: inputs_panel.width/16, None
+                    halign: 'center'
+                    valign: 'center'
+            BoxLayout:
+                Label:
+                    text: 'Alarm 3'
+                    text_size: inputs_panel.width/16, None
+                    halign: 'center'
+                    valign: 'center'
+                Label:
+                    text: 'Alarm 4'
+                    text_size: inputs_panel.width/16, None
+                    halign: 'center'
+                    valign: 'center'
+        ################################
+
+
+
+######### UI Element Snippets: #########
+
+## RESET BUTTON PANEL
+#BoxLayout:
+#    size_hint_y: None
+#    size_hint: 1, 0.05
+#    Button:
+#        text: 'Reset Configuration'
+#        on_press: input_1.value = 0; input_2.value = 0; input_3.value = 1; input_4.value = 1; input_5.value = 0; input_6.value = 0
 
 
 ## A template slider element
@@ -228,11 +319,14 @@ BoxLayout:
 #BoxLayout:
 #    orientation: 'vertical'
 #    BoxLayout:
+#        id: parameter_1
+#        min: 10
+#        max: 0
 #        Button:
 #            text: 'Reset Configuration'
 #            on_press: parameter_1 = parameter_1 - 1
 #        Button:
 #            text: 'Reset Configuration'
 #            on_press: parameter_1 = parameter_1 + 1
-#    Label:
-#        text: 'Breath Frequency (b/min) = {}'.format(parameter_1)
+#        Label:
+#            text: 'Breath Frequency (b/min) = {}'.format(parameter_1)

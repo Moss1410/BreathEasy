@@ -174,7 +174,6 @@ BoxLayout:
         Button:
             text: 'Reset Configuration'
             on_press: parameter_1.value = 0; parameter_2.value = 0; parameter_3.value = 1; parameter_4.value = 1; parameter_5.value = 0; parameter_6.value = 0; parameter_7.value = 0; parameter_8.value = 0;
-
 '''
 
 
