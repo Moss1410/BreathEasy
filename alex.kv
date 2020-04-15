@@ -1,6 +1,38 @@
+######### Kivy Custom Class Devinitions: #########
+# Define  background color Template
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+# BackgroundBoxLayout Class
+<BackgroundBoxLayout@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+    # Default the background color for this label
+    # to r 0, g 0, b 0, a 0
+# Use the BackgroundBoxLayout any where in your kv code like below:
+#BackgroundBoxLayout
+#    background_color: 1, 0, 0, 1
+
+# BackgroundLabel Class
+<BackgroundLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+    # Default the background color for this label
+    # to r 0, g 0, b 0, a 0
+# Use the BackgroundLabel any where in your kv code like below
+#BackgroundLabel
+#    text: 'Hello'
+#    background_color: 1, 0, 0, 1
+
+
+######### UI Layout: #########
 BoxLayout:
     id: root_box
-    spacing: 5
+    spacing: 15
     orientation: 'vertical'
 
     # TITLE PANEL
@@ -8,19 +40,19 @@ BoxLayout:
         size_hint: 1, 0.1
         text: 'BreathEasy Ventilator Control Panel'
 
-    # GRAPHS PANEL
+
+    # GRAPHS & OUTPUTS PANEL
     BoxLayout:
-        spacing: 5
+        spacing: 10
         size_hint: 1, 0.65
-        spacing: 5
 
         # Triple Graph Group
         BoxLayout:
-            spacing: 5
+            spacing: 10
             orientation: 'vertical'
             size_hint: 0.8, 1
-            spacing: 5
-            
+            id: graph1
+
             ######################################
             Logic:
                 BoxLayout:
@@ -37,11 +69,11 @@ BoxLayout:
                         Button:
                             text: "START"
                             bold: True
-                            on_press: root.start()
+                            on_press: graph1.start()
                         Button:
                             text: "STOP"
                             bold: True
-                            on_press: root.stop()
+                            on_press: graph1.stop()
             ######################################
 
             ######################################
@@ -92,9 +124,11 @@ BoxLayout:
 
         # Output Parameters
         BoxLayout:
+            spacing: 5
             size_hint: 0.2, 1
             orientation: "vertical"
             id: outputs_panel
+
             # Parameter 1
             BoxLayout:
                 orientation: 'vertical'
@@ -140,9 +174,9 @@ BoxLayout:
                     id: output_4
                     text: '12.71'
 
-
     # Input Parameters
     BoxLayout:
+        spacing: 10
         size_hint: 1, 0.25
         id: inputs_panel
 
@@ -156,15 +190,14 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_1.value))
+            ProgressBar:
                 id: input_1
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_1.text = str(int(input_1.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_1.text = str(int(input_1.text) + 1)
+                min: 0
+                max: 10
+                value: 1
+
+
         # Parameter 2
         BoxLayout:
             orientation: 'vertical'
@@ -175,15 +208,13 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_2.value))
+            ProgressBar:
                 id: input_2
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_2.text = str(int(input_2.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_2.text = str(int(input_2.text) + 1)
+                min: 0
+                max: 10
+                value: 5
+
         # Parameter 3
         BoxLayout:
             orientation: 'vertical'
@@ -194,15 +225,13 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_3.value))
+            ProgressBar:
                 id: input_3
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_3.text = str(int(input_3.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_3.text = str(int(input_3.text) + 1)
+                min: 0
+                max: 10
+                value: 7
+
         # Parameter 4
         BoxLayout:
             orientation: 'vertical'
@@ -213,15 +242,13 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_4.value))
+            ProgressBar:
                 id: input_4
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_4.text = str(int(input_4.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_4.text = str(int(input_4.text) + 1)
+                min: 0
+                max: 10
+                value: 3
+
         # Parameter 5
         BoxLayout:
             orientation: 'vertical'
@@ -232,15 +259,13 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_5.value))
+            ProgressBar:
                 id: input_5
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_5.text = str(int(input_5.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_5.text = str(int(input_5.text) + 1)
+                min: 0
+                max: 10
+                value: 2
+
         # Parameter 6
         BoxLayout:
             size_hint: 0.125, 1
@@ -251,19 +276,17 @@ BoxLayout:
                 halign: 'center'
                 valign: 'center'
             Label:
+                text: str(int(input_6.value))
+            ProgressBar:
                 id: input_6
-                text: '0'
-            BoxLayout:
-                Button:
-                    text: '-'
-                    on_press: input_6.text = str(int(input_6.text) - 1)
-                Button:
-                    text: '+'
-                    on_press: input_6.text = str(int(input_6.text) + 1)
+                min: 0
+                max: 10
+                value: 8
 
         ################################
         # Alarms Panel
         BoxLayout:
+            spacing: 5
             orientation: 'vertical'
             size_hint: 0.25, 1
             BoxLayout:
