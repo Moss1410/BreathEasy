@@ -111,6 +111,48 @@ def get_data():
             currTime += 10
             time.sleep(0.01)
 
+def getRR():
+    newRR=0
+    average=statistics.mean(respirationRate)
+    counter=0
+    mode=1
+    length=len(respirationRate)
+    newRR=0
+    maxTimes=[0]
+    maxValues=[]
+    tpv=graphTime/len(respirationRate) #time difference between each point of data
+    times=[]
+    for value in respirationRate:
+        if mode == 1:
+            startCounter = counter
+            if value>=average+40:
+                startCounter=counter
+                mode = 2
+                maxValues.append(value)
+        elif mode == 2:
+            if maxValues[newRR]<=value:
+                maxValues[newRR]=value
+            if (value<=average+20) and startCounter+10<counter:
+                mode = 3
+                newRR+=1
+        elif mode == 3:
+            if maxValues[newRR-1]<=value:
+                maxValues[newRR-1]=value
+            if value<=average-20:
+                counter2=startCounter
+                found = False
+                while (counter2 < counter) and not found:
+                    if respirationRate[counter2] == maxValues[-1]:
+                        found = True
+                        times.append(counter2*tpv)
+                    counter2+=1
+                mode=1
+        if (counter-startCounter>length/2):
+            startCounter=counter
+        counter+=1
+    newRR=60000/((max(times)-min(times))/(len(maxValues)-1))
+    return newRR
+
 def update_level(timeIn, pp, rr, tv):
     global peakPressure
     global oldpeakPressure
@@ -123,33 +165,7 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        newRR=0
-        average=statistics.mean(respirationRate)
-        print(average)
-        counter=0
-        mode=1
-        length=len(respirationRate)
-        newRR=0
-        for value in respirationRate:
-            print(mode)
-            if mode == 1:
-                startCounter = counter
-                if value>=average+40:
-                    startCounter=counter
-                    mode = 2
-            elif mode == 2:
-                if (value<=average+40) and startCounter+10<counter:
-                    mode = 3
-            elif mode == 3:
-                if value<=average-40:
-                    newRR+=1
-                    mode=1
-            if (counter-startCounter>length/2):
-                startCounter=counter
-            counter+=1
-        newRR/=2
-        print(newRR)
-        RR=newRR
+        RR=getRR()
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
