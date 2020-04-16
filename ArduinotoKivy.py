@@ -37,6 +37,7 @@ from kivy.graphics import Color, Rectangle
 from kivy.properties import StringProperty
 import data
 import statistics
+import random
 
 #peakPressure
 #respirationRate
@@ -106,7 +107,7 @@ def get_data():
                     data = str(value.decode("utf-8"))
                     data=data.split(",")
                     dataTime = int(data[0])
-                    signal1 = int(data[1])
+                    signal1 = int(data[1])-500
                     update_level(dataTime, 0, signal1, 0)
                 except:
                     pass
@@ -170,6 +171,25 @@ def getRR():
     newRR=60000/((max(times)-min(times))/(len(maxValues)-1))
     return newRR
 
+def getPressureAverage():
+    average1 = statistics.mean(peakPressure)
+    return average1
+
+def getPressurePeak():
+    return max(peakPressure)
+
+def getVolumePeak():
+    return max(tidalVolume)
+
+def getPEEP():
+    average1 = statistics.mean(peakPressure)
+    lowerHalf = []
+    for value in peakPressure:
+        if value < average1:
+            lowerHalf.append(value)
+    average2 = statistics.mean(lowerHalf)
+    return average2
+
 def update_level(timeIn, pp, rr, tv):
     global peakPressure
     global oldpeakPressure
@@ -183,14 +203,16 @@ def update_level(timeIn, pp, rr, tv):
     incomings.inspiratory_pressure.set_value(pp)
     incomings.inspiratory_flow.set_value(rr)
     incomings.tidal_volume.set_value(tv)
-    incomings.voltage.set_value(24 + data4[timeIn/1000])
-    incomings.Fi02.set_value(settings.FiO2.get_value() + data4[timeIn/1000])
+    if timeIn%500==0:
+        incomings.voltage.set_value(24 + data4[timeIn/1000])
+        incomings.Fi02.set_value(settings.FiO2.get_value() - data4[timeIn/1000])
 
     global oldTime
     global times
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
+        incomings.PEEP.set_value(getPEEP())
         incomings.respiratory_rate.set_value(getRR())
         maxTime += timeIn
         oldTime = times.copy()
@@ -382,6 +404,7 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
+
     global incomings
     incomings = data.IncomingDatas()
     settings = data.Settings()
