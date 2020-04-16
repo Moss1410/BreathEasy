@@ -27,8 +27,6 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 import data
-from scipy import integrate
-
 
 #peakPressure
 #respirationRate
@@ -50,6 +48,7 @@ respirationRate = []
 oldrespirationRate = []
 times = []
 RR = 0
+PEEP = 100000000000000
 
 corrupt=True
 
@@ -66,10 +65,10 @@ def getCurve(file):
         
 data1=getCurve('SquareWave.csv')
 data2=getCurve('FlowWave.csv')
+data3=getCurve('VolumeWave.csv')
 
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
-    global data1
     global times
     global tidalVolume
     global oldtidalVolume
@@ -80,6 +79,7 @@ def get_data():
     global oldTime
     global maxTime
     global corrupt
+    global PEEP
     maxTime = 0
     startingTime=time.time()
     while (corrupt and (int(time.time()-startingTime)<=1)):
@@ -94,7 +94,6 @@ def get_data():
                     data = str(value.decode("utf-8"))
                     data=data.split(",")
                     dataTime = int(data[0])
-                    signal0=0
                     signal1 = int(data[1])
                     update_level(dataTime, 0, signal1, 0)
                 except:
@@ -104,13 +103,11 @@ def get_data():
     if corrupt==True:
         currTime = 0
         while True:
-            pp = data1[currTime/1000]
-            rr = data2[currTime/1000]
-            tv = 500
-            if len(times)!=0:
-                y_int = integrate.cumtrapz(times, peakPressure, initial=0)
-            else:
-                y_int = 0
+            pp = data1[currTime/1000]/30
+            rr = data2[currTime/1000]/12
+            tv = data3[currTime/1000]/2.5
+            if pp<PEEP:
+                PEEP=pp
             update_level(currTime, pp, rr, tv)
             currTime += 10
             time.sleep(0.01)
@@ -138,7 +135,6 @@ def update_level(timeIn, pp, rr, tv):
         times = []
         timeIn = 0
     times.append(timeIn)
-    #peakPressure.append(value0)
     peakPressure.append(pp)
     respirationRate.append(rr)
     tidalVolume.append(tv)
@@ -199,7 +195,7 @@ class PeakPressure(Graph):
         self.oldpeakPressure = LinePlot(line_width=1, color=[1, 0, 0, 0.2])
         self.add_plot(self.peakPressure)
         self.add_plot(self.oldpeakPressure)
-        self.ymax=1023
+        self.ymax=30
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
@@ -215,8 +211,8 @@ class RespiratoryRate(Graph):
         self.oldrespirationRate = LinePlot(line_width=1, color=[0, 0.5, 0, 0.2])
         self.add_plot(self.respirationRate)
         self.add_plot(self.oldrespirationRate)
-        self.ymax=900
-        self.ymin=-900
+        self.ymax=60
+        self.ymin=-60
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
         get_level_thread = Thread(target = get_data)
@@ -233,7 +229,7 @@ class TidalVolume(Graph):
         self.oldtidalVolume = LinePlot(line_width=1, color=[0, 0, 1, 0.2])
         self.add_plot(self.tidalVolume)
         self.add_plot(self.oldtidalVolume)
-        self.ymax=1023
+        self.ymax=400
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
