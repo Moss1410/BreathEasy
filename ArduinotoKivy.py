@@ -26,6 +26,8 @@ from kivy.uix.scatter import Scatter
 from kivy.uix.textinput import TextInput 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
+from kivy.properties import StringProperty
+
 import data
 import statistics
 
@@ -67,6 +69,11 @@ def getCurve(file):
 data1=getCurve('SquareWave.csv')
 data2=getCurve('FlowWave.csv')
 data3=getCurve('VolumeWave.csv')
+
+global incomings
+incomings = data.IncomingDatas()
+
+
 
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
@@ -160,6 +167,7 @@ def update_level(timeIn, pp, rr, tv):
     global oldrespirationRate
     global tidalVolume
     global oldtidalVolume
+
     global oldTime
     global times
     global maxTime
@@ -230,6 +238,17 @@ class Logic(BoxLayout):
         global clear
         clear = not clear
 
+
+class ChangeLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        #print("hi")
+
+    def update(self, dt):
+        self.text = str(incomings.__dict__[self.name].get_value())
+
+
 class PeakPressure(Graph):
     def __init__(self, **kwargs):
         super(PeakPressure, self).__init__(**kwargs)
@@ -291,8 +310,7 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
-    global incomings
-    incomings = data.IncomingDatas()
+    
     settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()

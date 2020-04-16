@@ -74,28 +74,19 @@ class IncomingData:
 data_list = []
 #Data(name,units)
 
+
 class IncomingDatas():
     def __init__(self):
-        # self.time = IncomingData('Time','Seconds')
-        # self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
-        # self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
-        # self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
-        # self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
-        # self.Fi02 = IncomingData('Fi02','%')
-        # self.Fe02 = IncomingData('Fe02','%')
-        # self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
-        # self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
-        # self.settings_recieved = IncomingData('Settings Recieved', '')
-        self.time = StringProperty()
-        self.inspiratory_pressure = StringProperty()
-        self.inspiratory_flow = StringProperty()
-        self.expiratory_pressure = StringProperty()
-        self.expiratory_flow = StringProperty()
-        self.Fi02 = StringProperty()
-        self.Fe02 = StringProperty()
-        self.room_air_flow_rate = StringProperty()
-        self.O2_flow_rate = StringProperty()
-        self.settings_recieved = StringProperty()
+        self.time = IncomingData('Time','Seconds')
+        self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
+        self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
+        self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
+        self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
+        self.Fi02 = IncomingData('Fi02','%')
+        self.Fe02 = IncomingData('Fe02','%')
+        self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
+        self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
+        self.settings_recieved = IncomingData('Settings Recieved', '')
 
 
 #Define Settings
@@ -105,21 +96,25 @@ class Settings():
     def __init__(self):
         self.ventilation_mode = Setting('Ventilation Mode',2.0,'','','')
         self.system_status = Setting('System Status',0.0,'','','')
+        
         self.PEEP = Setting('PEEP',5.0,'cmH2O',5,12)
-        self.Fi02 = Setting('Fi02',1.0,'%',0.3,0.6)
+        self.Fi02 = Setting('FiO2',1.0,'%',0.3,0.6)
         self.min_RR = Setting('Min RR',10.0,'Breaths/min',4,14)
         self.max_RR = Setting('Max RR',25.0,'Breaths/min',12,40)
         self.IE_ratio = Setting('I:E Ratio',0.5,'Ratio','1:1.5','1:3')
+        
         self.inspiratory_rise_time = Setting('Inspiratory Rise Time',0.2,'Seconds',0,5)
         self.inspiratory_time = Setting('Inspiratory Time',1.0,'Seconds',0.5,2)
         self.min_inspiratory_time =  Setting('Min Inspiratory Time',2.0,'Seconds',1,3)
         self.max_inspiratory_time = Setting('Max Inspiratory Time',4.0,'Seconds',0.8,3)
         self.max_inspiratory_pressure = Setting('Max Inspiratory Pressure',15.0,'cmH20',10,20)
+        
         self.tidal_volume = Setting('Tidal Volume',600.0,'mL',200,800)
         self.max_inspiratory_tidal_volume = Setting('Max Inspiratory Tidal Volume',800.0,'mL',30,2000)
         self.min_inspiratory_tidal_volume = Setting('Min Inspiratory Tidal Volume',300.0,'mL',80,3000)
         self.max_expiratory_tidal_volume = Setting('Max Expiratory Tidal Volume',800.0,'mL',30,2000)
         self.min_expiratory_tidal_volume = Setting('Min Expriatory Tidal Volume',300.0,'mL',80,3000)
+        
         self.min_leak = Setting('Min Leak',0.0,'mL/min',0,20)
         self.max_leak = Setting('Max Leak',50.0,'mL/min',10,100)
         self.apnoea_time = Setting('Apnoea Time',10.0,'Seconds',8,20)
@@ -161,7 +156,6 @@ def init_settings_and_data():
     data_list+= [datt.Fe02]
     data_list+= [datt.room_air_flow_rate]
     data_list+= [datt.O2_flow_rate]
-    data_list+= [datt.settings_recieved]
 
 # Turn Current Settings into Output String
 # Should be of the form:
