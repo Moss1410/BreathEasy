@@ -27,6 +27,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 import data
+from scipy import integrate
 
 
 #peakPressure
@@ -43,26 +44,35 @@ graphTime = 10000 #number milliseconds
 oldTime = []
 peakPressure = []
 oldpeakPressure = []
+tidalVolume = []
+oldtidalVolume = []
 respirationRate = []
 oldrespirationRate = []
 times = []
+RR = 0
+
 corrupt=True
 
-data1={}
+
 import csv
-def getSim1():
-    global data1
-    with open('sineWaveExample.csv') as csv_file:
+
+def getCurve(file):
+    dictionary = {}
+    with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-           data1[float(row[0])]=float(row[1])
+           dictionary[float(row[0])]=float(row[1])
+    return dictionary
         
-
+data1=getCurve('SquareWave.csv')
+data2=getCurve('FlowWave.csv')
 
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
     global data1
     global times
+    global tidalVolume
+    global oldtidalVolume
     global peakPressure
     global oldpeakPressure
     global respirationRate
@@ -72,7 +82,7 @@ def get_data():
     global corrupt
     maxTime = 0
     startingTime=time.time()
-    while (corrupt and (int(time.time()-startingTime)<=5)):
+    while (corrupt and (int(time.time()-startingTime)<=1)):
         try: 
             ser = serial.Serial('COM3', baudrate)
             corrupt=False
@@ -86,25 +96,32 @@ def get_data():
                     dataTime = int(data[0])
                     signal0=0
                     signal1 = int(data[1])
-                    update_level(dataTime, signal0, signal1)
+                    update_level(dataTime, 0, signal1, 0)
                 except:
                     pass
         except:
             pass
     if corrupt==True:
-        print(4)
         currTime = 0
         while True:
-            intValue = random.randint(1, 1020)
-            currTime += 200
-            update_level(currTime, 500, intValue)
-            time.sleep(0.1)
+            pp = data1[currTime/1000]
+            rr = data2[currTime/1000]
+            tv = 500
+            if len(times)!=0:
+                y_int = integrate.cumtrapz(times, peakPressure, initial=0)
+            else:
+                y_int = 0
+            update_level(currTime, pp, rr, tv)
+            currTime += 10
+            time.sleep(0.01)
 
-def update_level(timeIn, value0, value):
+def update_level(timeIn, pp, rr, tv):
     global peakPressure
     global oldpeakPressure
     global respirationRate
     global oldrespirationRate
+    global tidalVolume
+    global oldtidalVolume
     global oldTime
     global times
     global maxTime
@@ -114,14 +131,17 @@ def update_level(timeIn, value0, value):
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
         oldrespirationRate = respirationRate.copy()
+        oldtidalVolume = tidalVolume.copy()
         peakPressure = []
         respirationRate = []
+        tidalVolume=[]
         times = []
         timeIn = 0
     times.append(timeIn)
     #peakPressure.append(value0)
-    peakPressure.append(2*data1[timeIn/1000]+400)
-    respirationRate.append(value)
+    peakPressure.append(pp)
+    respirationRate.append(rr)
+    tidalVolume.append(tv)
 
 def combineLists(list1,list2):
     list=[]
@@ -172,11 +192,11 @@ class Logic(BoxLayout):
         global clear
         clear = not clear
 
-class Grapher2(Graph):
+class PeakPressure(Graph):
     def __init__(self, **kwargs):
-        super(Grapher2, self).__init__(**kwargs)
-        self.peakPressure = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
-        self.oldpeakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
+        super(PeakPressure, self).__init__(**kwargs)
+        self.peakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 1])
+        self.oldpeakPressure = LinePlot(line_width=1, color=[1, 0, 0, 0.2])
         self.add_plot(self.peakPressure)
         self.add_plot(self.oldpeakPressure)
         self.ymax=1023
@@ -188,15 +208,15 @@ class Grapher2(Graph):
         self.peakPressure.points = combineLists(times,peakPressure)
         self.oldpeakPressure.points = combineLists(oldTime,oldpeakPressure)
 
-class Grapher(Graph):
+class RespiratoryRate(Graph):
     def __init__(self, **kwargs):
-        super(Grapher, self).__init__(**kwargs)
-        self.respirationRate = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
-        self.oldrespirationRate = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
+        super(RespiratoryRate, self).__init__(**kwargs)
+        self.respirationRate = LinePlot(line_width=1.5, color=[0, 0.5, 0, 1])
+        self.oldrespirationRate = LinePlot(line_width=1, color=[0, 0.5, 0, 0.2])
         self.add_plot(self.respirationRate)
         self.add_plot(self.oldrespirationRate)
-        self.ymax=1023
-        self.ymin=0
+        self.ymax=900
+        self.ymin=-900
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
         get_level_thread = Thread(target = get_data)
@@ -206,6 +226,21 @@ class Grapher(Graph):
     def get_value(self, dt):
         self.respirationRate.points = combineLists(times,respirationRate)
         self.oldrespirationRate.points = combineLists(oldTime,oldrespirationRate)
+class TidalVolume(Graph):
+    def __init__(self, **kwargs):
+        super(TidalVolume, self).__init__(**kwargs)
+        self.tidalVolume = LinePlot(line_width=1.5, color=[0, 0, 1, 1])
+        self.oldtidalVolume = LinePlot(line_width=1, color=[0, 0, 1, 0.2])
+        self.add_plot(self.tidalVolume)
+        self.add_plot(self.oldtidalVolume)
+        self.ymax=1023
+        self.ymin=0
+        self.xmax=graphTime
+        Clock.schedule_interval(self.get_value, 0.001)
+    
+    def get_value(self, dt):
+        self.tidalVolume.points = combineLists(times,tidalVolume)
+        self.oldtidalVolume.points = combineLists(oldTime,oldtidalVolume)
 
 
 ################################### MAIN APP CLASS ###################################
@@ -217,7 +252,6 @@ class BreathEasy(App):
 
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
-    getSim1()
     global settings
     global incomings
     incomings = data.IncomingDatas()
