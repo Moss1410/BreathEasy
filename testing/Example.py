@@ -3,12 +3,16 @@ import kivy
 
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 
 
 class MyApp(App):
 
     def build(self):
-        return Label(text='Hello world')
+        button = Button(text='Hello world!!!')
+        button.text = "hi"
+        print(button.text)
+        return button
 
 
 if __name__ == '__main__':
