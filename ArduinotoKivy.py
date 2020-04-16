@@ -37,6 +37,7 @@ from kivy.graphics import Color, Rectangle
 from kivy.properties import StringProperty
 import data
 import statistics
+import random
 
 #peakPressure
 #respirationRate
@@ -109,7 +110,7 @@ def get_data():
                     data = str(value.decode("utf-8"))
                     data=data.split(",")
                     dataTime = int(data[0])
-                    signal1 = int(data[1])
+                    signal1 = int(data[1])-500
                     update_level(dataTime, 0, signal1, 0)
                 except:
                     pass
@@ -202,16 +203,17 @@ def update_level(timeIn, pp, rr, tv):
     incomings.inspiratory_pressure.set_value(pp)
     incomings.inspiratory_flow.set_value(rr)
     incomings.tidal_volume.set_value(tv)
-    incomings.voltage.set_value(24 + data4[timeIn/1000])
-    incomings.Fi02.set_value(settings.FiO2.get_value() + data4[timeIn/1000])
+    if timeIn%500==0:
+        incomings.voltage.set_value(24 + data4[timeIn/1000])
+        incomings.Fi02.set_value(settings.FiO2.get_value() - data4[timeIn/1000])
 
     global oldTime
     global times
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        RR=getRR()
-        PEEP=getPEEP()
+        #RR=getRR()
+        #PEEP=getPEEP()
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
@@ -300,7 +302,7 @@ class PeakPressure(Graph):
         self.oldpeakPressure = LinePlot(line_width=1, color=[1, 0, 0, 0.2])
         self.add_plot(self.peakPressure)
         self.add_plot(self.oldpeakPressure)
-        self.ymax=30
+        self.ymax=50
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
@@ -377,6 +379,5 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
-    
     settings = data.Settings()
     BreathEasy().run()
