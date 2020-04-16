@@ -72,7 +72,10 @@
 #     on_release: self.background_color = 0, 0, 0, 0
 
 <BigVButton@LightBlueBackgroundButton>
+
 <SmallVButton@LightBlueBackgroundButton>
+
+<VButton@LightBlueBackgroundButton>
 
 
 ### Output Buttons Area ###
@@ -97,19 +100,19 @@
     size_hint: 1, 0.2
     orientation: 'horizontal'
 
-<SettingsRowLogic@Logic>
+<SettingsColumnLogic@Logic>
     spacing: 20
     # size_hint: 1, 0.2
-    orientation: 'horizontal'
+    orientation: 'vertical'
 
 <SettingsItemLogic@Logic>
-    size_hint: 0.25, 1
+    size_hint: 1, 0.25
     orientation: 'vertical'
 
 <SettingsBottomPanelLogic@Logic>
     spacing: 20
     size_hint: 1, 0.75
-    orientation: 'vertical'
+    orientation: 'horizontal'
 
 <OutputLabel@Label>
     text_size: self.width-40, None
@@ -427,7 +430,7 @@ ScreenManager:
 
             SettingsBottomPanelLogic:
                 # Title Row
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     size_hint: 1, 0.3
                     LightBlueBackgroundLabel:
                         id: VentilationSettingstitle
@@ -435,7 +438,7 @@ ScreenManager:
                         font_size: '20dp'
                         bold: "true"
                 # Row 1
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     SettingsItemLogic:
                         Label:
                             id: FiO2label
@@ -469,7 +472,7 @@ ScreenManager:
                             text: "600"
                             on_press: self.callback()
                 # Row 2
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     SettingsItemLogic:
                         Label:
                             id: MinRRlabel
@@ -488,7 +491,7 @@ ScreenManager:
                             text: "10"
                             on_press: self.callback()
                 # Row 3
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     SettingsItemLogic:
                         Label:
                             id: MaxRRlabel
@@ -504,7 +507,7 @@ ScreenManager:
                             text: "25"
                             on_press: self.callback()
                 # Row 4
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     SettingsItemLogic:
                         Label:
                             id: IElabel
@@ -519,7 +522,7 @@ ScreenManager:
                             text: "0.2"
                             on_press: self.callback()
                 # Row 4
-                SettingsRowLogic:
+                SettingsColumnLogic:
                     SettingsItemLogic:
                         Label:
                             id: IElabel
@@ -535,13 +538,6 @@ ScreenManager:
                             on_press: self.callback()
 
         RelativeLayout:
-
-
-<<<<<<< HEAD
-
-            ### Buttons Column 2 
-
-=======
             ### Buttons Column 1 ###
             VButton:
                 id: PEEP
@@ -640,7 +636,6 @@ ScreenManager:
                 pos_hint: {'center_x':0.4, 'center_y':0.13}
                 text: "1"
                 on_press: self.callback()
->>>>>>> origin/PleaseWorkThisTimebyNick
             Label:
                 id: inspiratory_rise_timelabel
                 text: 'Inspiratory Rise Time [Seconds]'
