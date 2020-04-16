@@ -46,6 +46,7 @@ oldpeakPressure = []
 respirationRate = []
 oldrespirationRate = []
 times = []
+corrupt=True
 
 data1={}
 import csv
@@ -68,33 +69,30 @@ def get_data():
     global oldrespirationRate
     global oldTime
     global maxTime
+    global corrupt
     maxTime = 0
-    corrupt = True
     startingTime=time.time()
     print(1)
     while (corrupt and (int(time.time()-startingTime)<=5)):
         try: 
-            print(corrupt)
             ser = serial.Serial('COM3', baudrate)
             corrupt=False
+            while True:
+                while (ser.inWaiting()==0):
+                    pass
+                value = ser.readline()
+                try:
+                    data = str(value.decode("utf-8"))
+                    data=data.split(",")
+                    dataTime = int(data[0])
+                    signal0=0
+                    signal1 = int(data[1])
+                    update_level(dataTime, signal0, signal1)
+                except:
+                    pass
         except:
             pass
-    if not corrupt:
-        print(3)
-        while True:
-            while (ser.inWaiting()==0):
-                pass
-            value = ser.readline()
-            try:
-                data = str(value.decode("utf-8"))
-                data=data.split(",")
-                dataTime = int(data[0])
-                signal0=0
-                signal1 = int(data[1])
-                update_level(dataTime, signal0, signal1)
-            except:
-                pass
-    else:
+    if corrupt==True:
         print(4)
         currTime = 0
         while True:
@@ -195,10 +193,13 @@ class Grapher(Graph):
         self.oldpeakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
         self.add_plot(self.peakPressure)
         self.add_plot(self.oldpeakPressure)
-        self.ymax=1300
+        self.ymax=1023
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
+        get_level_thread = Thread(target = get_data)
+        get_level_thread.daemon = True
+        get_level_thread.start()
     
     def get_value(self, dt):
         self.peakPressure.points = combineLists(times,peakPressure)
@@ -211,13 +212,10 @@ class Grapher2(Graph):
         self.oldrespirationRate = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
         self.add_plot(self.respirationRate)
         self.add_plot(self.oldrespirationRate)
-        self.ymax=1300
+        self.ymax=1023
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
-        get_level_thread = Thread(target = get_data)
-        get_level_thread.daemon = True
-        get_level_thread.start()
     
     def get_value(self, dt):
         self.respirationRate.points = combineLists(times,respirationRate)

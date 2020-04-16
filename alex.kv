@@ -90,6 +90,20 @@
     label_options: {'color': (0,0,0,1)}
     border_color: (0,0,0,1)
 
+<Grapher2@Widget>
+    xlabel: ""
+    x_ticks_minor: 5
+    x_ticks_major: 25
+    y_ticks_major: 200
+    y_grid_label: True
+    x_grid_label: True
+    padding: 2
+    x_grid: True 
+    y_grid: True
+    label_options: {'color': (0,0,0,1)}
+    border_color: (0,0,0,1)
+
+
 ### Alarms Area ###
 <AlarmGroupLogic@Logic>
     spacing: 15
@@ -121,7 +135,7 @@ BaseLogic:
                 # Setting the background color
                 orientation: "vertical"
                 GraphLogic:
-                    Grapher:
+                    Grapher2:
                         id: "graph1"
                         xlabel: "Time(s)"
                         ylabel: "Oxygen"
@@ -165,7 +179,7 @@ BaseLogic:
                     orientation: "vertical"
                     Logic:
                         size_hint: [1, .9]
-                        Grapher:
+                        Grapher2:
                             id: "graph3"
                             xlabel: "Time(s)"
                             ylabel: "Oxygen"
