@@ -537,9 +537,110 @@ ScreenManager:
         RelativeLayout:
 
 
+<<<<<<< HEAD
 
             ### Buttons Column 2 
 
+=======
+            ### Buttons Column 1 ###
+            VButton:
+                id: PEEP
+                name: "PEEP"
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.65}
+                text: "5"
+                on_press: self.callback()
+            VButton:
+                id: FiO2
+                name: "FiO2"
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.52}
+                text: "1"
+                on_press: self.callback()
+            VButton:
+                id: min_RR
+                name: "min_RR"
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.39}
+                text: "10"
+                on_press: self.callback()
+            VButton:
+                id: max_RR
+                name: "max_RR"
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.26}
+                text: "25"
+                on_press: self.callback()
+            VButton:
+                id: IE_ratio
+                name: "IE_ratio"
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.13}
+                text: "0.5"
+                on_press: self.callback()
+            Label:
+                id: PEEPlabel
+                text: "PEEP [cmH2O]"
+                size_hint: (0.15, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.71}
+            Label:
+                id: FiO2label
+                text:"FiO2 [%]"
+                size_hint: (0.15, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.58}
+            Label:
+                id: min_RRlabel
+                text: "Min RR [Breaths/min]"
+                size_hint: (0.15, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.45}
+            Label:
+                id: max_RRlabel
+                text: "Max RR [Breaths/min]"
+                size_hint: (0.15, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.32}
+            Label:
+                id: IE_ratio
+                text: "I:E Ratio [Ratio]"
+                size_hint: (0.15, 0.08)
+                pos_hint: {'center_x':0.2, 'center_y':0.19}
+            
+            ### Buttons Column 2 ###
+            VButton:
+                id: inspiratory_rise_time
+                name: 'inspiratory_rise_time'
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.4, 'center_y':0.65}
+                text: "0.2"
+                on_press: self.callback()
+            VButton:
+                name: 'inspiratory_time'
+                id: inspiratory_time
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.4, 'center_y':0.52}
+                text: "1"
+                on_press: self.callback()
+            VButton:
+                name: 'min_inspiratory_time'
+                id: min_inspiratory_time
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.4, 'center_y':0.39}
+                text: "2"
+                on_press: self.callback()
+            VButton:
+                name: 'max_inspiratory_time'
+                id: max_inspiratory_time
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.4, 'center_y':0.26}
+                text: "2"
+                on_press: self.callback()
+            VButton:
+                name: 'max_inspiratory_pressure'
+                id: max_inspiratory_pressure
+                size_hint: (0.12, 0.08)
+                pos_hint: {'center_x':0.4, 'center_y':0.13}
+                text: "1"
+                on_press: self.callback()
+>>>>>>> origin/PleaseWorkThisTimebyNick
             Label:
                 id: inspiratory_rise_timelabel
                 text: 'Inspiratory Rise Time [Seconds]'
