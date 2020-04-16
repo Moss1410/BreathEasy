@@ -23,7 +23,7 @@ from kivy.base import runTouchApp
 from kivy.uix.gridlayout import GridLayout 
 from kivy.uix.popup import Popup  
 from kivy.uix.scatter import Scatter 
-from kivy.uix.textinput import TextInput  
+from kivy.uix.textinput import TextInput 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 import data
@@ -159,9 +159,7 @@ class VButton(Button):
         self.popup.dismiss()
         global settings
         settings.__dict__[self.name].set_value(int(self.textinput.text))
-
-    #def update_all(self):
-
+        self.text = str(settings.__dict__[self.name].get_value())
 
     def talk(self, message):
         print(message)
@@ -221,6 +219,8 @@ class BreathEasy(App):
 if __name__ == "__main__":
     getSim1()
     global settings
+    global incomings
+    incomings = data.IncomingDatas()
     settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()
