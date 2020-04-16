@@ -1,4 +1,9 @@
-######### Kivy Custom Class Devinitions: #########
+######### Kivy Custom Class Definitions: #########
+
+# Define  background color Template
+<Label@Widget>
+    color: 0,0,0,1    # Sets the default text color to black
+
 # Define  background color Template
 <BackgroundColor@Widget>
     background_color: 1, 1, 1, 1
@@ -10,270 +15,203 @@
             size: self.size
             pos: self.pos
 
-# BackgroundLogic Class
-<BackgroundLogic@Label+BackgroundColor>
-    background_color: 0, 0, 0, 0
-    # Default the background color for this label
-    # to r 0, g 0, b 0, a 0
-# Use the BackgroundLogic any where in your kv code like below:
-#BackgroundLogic
-#    background_color: 1, 0, 0, 1
-
 # BackgroundLabel Class
 <BackgroundLabel@Label+BackgroundColor>
-    background_color: 0, 0, 0, 0
-    # Default the background color for this label to r 0, g 0, b 0, a 0
-# Use the BackgroundLabel any where in your kv code like below
-#BackgroundLabel
-#    text: 'Hello'
-#    background_color: 1, 0, 0, 1
+    background_color: 0, 0, 0, 1    # Default background color
 
+# BackgroundLabel Class
+<LightBlueBackgroundLabel@Label+BackgroundColor>
+    background_color: 0.82, 0.9, 0.94, 1    # Default background color
 
-######### UI Layout: #########
-Logic:
-    id: root_box
+### Title Area ###
+# Title logic box
+<TopPanelLogic@Logic>
+    size_hint: 1, 0.05
+# BackgroundLabel Class
+<TitleLabel@Label+BackgroundColor>
+    background_color: 0.82, 0.9, 0.94, 1    # Default background color
+    font_size: '20sp'   # set the font size to BIG
+
+# BackgroundLogic Class
+<LightBlueBackgroundLogic@Logic+BackgroundColor>
+    background_color: 0.82, 0.9, 0.94, 1    # Default background color
+
+### Output Buttons Area ###
+<OutputLogic@Logic>
+    spacing: 15
+    size_hint: 0.2, 1
+    orientation: "vertical"
+
+### Whole Page Enclosing Area ###
+<BaseLogic@Logic>
     spacing: 20
     orientation: 'vertical'
     padding: 25, 25, 25, 25
+
+### Mid panel area (graph and output labels) ###
+<MidPanelLogic@Logic>
+    spacing: 20
+    size_hint: 1, 0.8
+
+### Bottom Panel Area ###
+<BottomPanelLogic@Logic>
+    spacing: 20
+    size_hint: 1, 0.15
+
+<InputLogic@LightBlueBackgroundLogic>
+    orientation: 'vertical'
+    size_hint: 0.125, 1
+
+<InputLabel@LightBlueBackgroundLabel>
+    text_size: root.width, None
+    halign: 'center'
+    valign: 'center'
+
+
+### Graphs Area ###
+<GraphGroupLogic@Logic>
+    spacing: 20
+    orientation: 'vertical'
+    size_hint: 0.8, 1
+
+<GraphLogic@LightBlueBackgroundLogic>
+    size_hint: [1, .9]
+
+<Grapher@Widget>
+    xlabel: ""
+    x_ticks_minor: 5
+    x_ticks_major: 25
+    y_ticks_major: 200
+    y_grid_label: True
+    x_grid_label: True
+    padding: 2
+    x_grid: True 
+    y_grid: True
+    label_options: {'color': (0,0,0,1)}
+    border_color: (0,0,0,1)
+
+### Alarms Area ###
+<AlarmGroupLogic@Logic>
+    spacing: 15
+
+<AlarmLabel@LightBlueBackgroundLabel>
+    text_size: root.width, None
+    halign: 'center'
+    valign: 'center'
+
+######### UI Layout: #########
+BaseLogic:
+    id: root_box
     
     # TITLE PANEL
-    Logic:
-        size_hint: 1, 0.05
-        canvas:
-            Color:
-                rgba: 0.82, 0.9, 0.94, 1
-            RoundedRectangle:
-                radius: [20,]
-                size: self.size
-                pos: self.pos
-        Label:
+    TopPanelLogic:
+        TitleLabel:
             text: 'BreathEasy Ventilator Control Panel'
-            color: 0,0,0,1
-            background_color: 0.85, 0.85, 0.85, 1
-            font_size: '20sp'
 
     # GRAPHS & OUTPUTS PANEL
-    Logic:
-        spacing: 20
-        size_hint: 1, 0.8
-
+    MidPanelLogic:
         # Triple Graph Group
-        Logic:
-            spacing: 20
-            orientation: 'vertical'
-            size_hint: 0.8, 1
-            id: graph1
+        GraphGroupLogic:
+            id: graph_group
+            ######################################
+            Logic:
+                # Setting the background color
+                orientation: "vertical"
+                GraphLogic:
+                    Grapher:
+                        id: "graph1"
+                        ylabel: "Oxygen"
+            ######################################
 
             ######################################
             Logic:
-                Logic:
-                    # Setting the background color
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
+                LightBlueBackgroundLogic:
                     orientation: "vertical"
                     Logic:
                         size_hint: [1, .9]
                         Grapher:
                             id: "graph1"
-                            xlabel: ""
                             ylabel: "Oxygen"
-                            x_ticks_minor: 5
-                            x_ticks_major: 25
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-                            label_options: {'color': (0,0,0,1)}
-                            border_color: (0,0,0,1)
             ######################################
 
             ######################################
             Logic:
-                Logic:
-                    # Setting the background color
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
+                LightBlueBackgroundLogic:
                     orientation: "vertical"
                     Logic:
                         size_hint: [1, .9]
                         Grapher:
                             id: "graph1"
-                            xlabel: ""
                             ylabel: "Oxygen"
-                            x_ticks_minor: 5
-                            x_ticks_major: 25
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-                            label_options: {'color': (0,0,0,1)}
-                            border_color: (0,0,0,1)
-            ######################################
-
-            ######################################
-            Logic:
-                Logic:
-                    # Setting the background color
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
-                    orientation: "vertical"
-                    Logic:
-                        size_hint: [1, .9]
-                        Grapher:
-                            id: "graph1"
-                            xlabel: ""
-                            ylabel: "Oxygen"
-                            x_ticks_minor: 5
-                            x_ticks_major: 25
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-                            label_options: {'color': (0,0,0,1)}
-                            border_color: (0,0,0,1)
-
             ######################################
 
         # Output Parameters
-        Logic:
-            spacing: 15
-            size_hint: 0.2, 1
-            orientation: "vertical"
+        OutputLogic:
             id: outputs_panel
 
             # Parameter 1
-            Logic:
+            LightBlueBackgroundLogic:
                 orientation: 'vertical'
-                # Setting the background color
-                canvas:
-                    Color:
-                        rgba: 0.82, 0.9, 0.94, 1
-                    RoundedRectangle:
-                        radius: [20,]
-                        size: self.size
-                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Breath Frequency (b/min):'
-                    color: 0,0,0,1
                 Label:
                     id: output_1
                     text: '6.5'
-                    color: 0,0,0,1
             # Parameter 2
-            Logic:
+            LightBlueBackgroundLogic:
                 orientation: 'vertical'
-                # Setting the background color
-                canvas:
-                    Color:
-                        rgba: 0.82, 0.9, 0.94, 1
-                    RoundedRectangle:
-                        radius: [20,]
-                        size: self.size
-                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Inspiratory Pressure (cmH2O):'
-                    color: 0,0,0,1
+                    
                 Label:
                     id: output_2
                     text: '164.35'
-                    color: 0,0,0,1
+                    
             # Parameter 3
-            Logic:
+            LightBlueBackgroundLogic:
                 orientation: 'vertical'
-                # Setting the background color
-                canvas:
-                    Color:
-                        rgba: 0.82, 0.9, 0.94, 1
-                    RoundedRectangle:
-                        radius: [20,]
-                        size: self.size
-                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'Inspiratory Time (s):'
-                    color: 0,0,0,1
+                    
                 Label:
                     id: output_3
                     text: '3'
-                    color: 0,0,0,1
+                    
             # Parameter 4
-            Logic:
+            LightBlueBackgroundLogic:
                 orientation: 'vertical'
-                # Setting the background color
-                canvas:
-                    Color:
-                        rgba: 0.82, 0.9, 0.94, 1
-                    RoundedRectangle:
-                        radius: [20,]
-                        size: self.size
-                        pos: self.pos
                 Label:
                     text_size: outputs_panel.width, None
                     halign: 'left'
                     valign: 'center'
                     text: 'PEEP (cmH2O):'
-                    color: 0,0,0,1
+                    
                 Label:
                     id: output_4
                     text: '12.71'
-                    color: 0,0,0,1
+                    
 
     # Input Parameters
-    Logic:
-        spacing: 20
-        size_hint: 1, 0.15
+    BottomPanelLogic:
         id: inputs_panel
 
         # Parameter 1
-        Logic:
-            orientation: 'vertical'
-            size_hint: 0.125, 1
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'Breath Frequency (b/min):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_1.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_1
                 min: 0
@@ -282,26 +220,13 @@ Logic:
 
 
         # Parameter 2
-        Logic:
-            orientation: 'vertical'
-            size_hint: 0.125, 1
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'Inspiratory Pressure (cmH2O):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_2.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_2
                 min: 0
@@ -309,26 +234,13 @@ Logic:
                 value: 5
 
         # Parameter 3
-        Logic:
-            orientation: 'vertical'
-            size_hint: 0.125, 1
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'Inspiratory Time (s):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_3.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_3
                 min: 0
@@ -336,26 +248,13 @@ Logic:
                 value: 7
 
         # Parameter 4
-        Logic:
-            orientation: 'vertical'
-            size_hint: 0.125, 1
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'PEEP (cmH2O):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_4.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_4
                 min: 0
@@ -363,26 +262,13 @@ Logic:
                 value: 3
 
         # Parameter 5
-        Logic:
-            orientation: 'vertical'
-            size_hint: 0.125, 1
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'Pause Time (%/s):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_5.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_5
                 min: 0
@@ -390,26 +276,13 @@ Logic:
                 value: 2
 
         # Parameter 6
-        Logic:
-            size_hint: 0.125, 1
-            orientation: 'vertical'
-            # Setting the background color
-            canvas:
-                Color:
-                    rgba: 0.82, 0.9, 0.94, 1
-                RoundedRectangle:
-                    radius: [20,]
-                    size: self.size
-                    pos: self.pos
-            Label:
+        InputLogic:
+            InputLabel:
                 text: 'Inspiratory Time (s):'
-                text_size: inputs_panel.width/8, None
-                halign: 'center'
-                valign: 'center'
-                color: 0,0,0,1
+                
             Label:
                 text: str(int(input_6.value))
-                color: 0,0,0,1
+                
             ProgressBar:
                 id: input_6
                 min: 0
@@ -418,70 +291,21 @@ Logic:
 
         ################################
         # Alarms Panel
-        Logic:
+        AlarmGroupLogic:
             spacing: 15
             orientation: 'vertical'
             size_hint: 0.25, 1
-            Logic:
-                spacing: 15
-                Logic:
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
-                    Label:
-                        text: 'Alarm 1'
-                        text_size: inputs_panel.width/16, None
-                        halign: 'center'
-                        valign: 'center'
-                        color: 0,0,0,1
-                Logic:
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
-                    Label:
-                        text: 'Alarm 2'
-                        text_size: inputs_panel.width/16, None
-                        halign: 'center'
-                        valign: 'center'
-                        color: 0,0,0,1
-            Logic:
-                spacing: 15
-                Logic:
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
-                    Label:
-                        text: 'Alarm 3'
-                        text_size: inputs_panel.width/16, None
-                        halign: 'center'
-                        valign: 'center'
-                        color: 0,0,0,1
-                Logic:
-                    canvas:
-                        Color:
-                            rgba: 0.82, 0.9, 0.94, 1
-                        RoundedRectangle:
-                            radius: [20,]
-                            size: self.size
-                            pos: self.pos
-                    Label:
-                        text: 'Alarm 4'
-                        text_size: inputs_panel.width/16, None
-                        halign: 'center'
-                        valign: 'center'
-                        color: 0,0,0,1
+            AlarmGroupLogic:
+                AlarmLabel:
+                    text: 'Alarm 1'
+                AlarmLabel:
+                    text: 'Alarm 2'
+                        
+            AlarmGroupLogic:
+                AlarmLabel:
+                    text: 'Alarm 3'
+                AlarmLabel:
+                    text: 'Alarm 4'
         ################################
 
 
