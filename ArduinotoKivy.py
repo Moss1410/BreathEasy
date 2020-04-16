@@ -1,3 +1,8 @@
+from kivy.config import Config
+Config.set('graphics', 'resizable', '0') 
+Config.set('graphics', 'width', '1500') 
+Config.set('graphics', 'height', '900')
+
 # from kivy.config import Config
 # Config.set('graphics', 'resizable', '0') 
 # Config.set('graphics', 'width', '1700') 
@@ -72,7 +77,7 @@ def getCurve(file):
            dictionary[float(row[0])]=float(row[1])
     return dictionary
         
-data1=getCurve('SquareWave.csv')
+data1=getCurve('SquareWave2.csv')
 data2=getCurve('FlowWave.csv')
 data3=getCurve('VolumeWave.csv')
 data4=getCurve('zeroes.csv')
@@ -120,8 +125,8 @@ def get_data():
             if currTime/1000 not in data1.keys():
                 currTime = 0.0
                 maxTime = 0
-            #pp = data1[currTime/1000]/30
-            pp=45
+            pp = data1[currTime/1000]/30
+            #pp=45
             rr = data2[currTime/1000]/12
             tv = data3[currTime/1000]/3
             update_level(currTime, pp, rr, tv)
@@ -238,9 +243,9 @@ def combineLists(list1,list2):
     return list
 
 ################################### CLASSES (FOR KIVY) ###################################
-class VButton(Button):
+class SmallVButton(Button):
     def __init__(self, **kwargs):
-        super(VButton, self).__init__(**kwargs)
+        super(SmallVButton, self).__init__(**kwargs)
 
     # button click function
     def callback(self):#, event): 
