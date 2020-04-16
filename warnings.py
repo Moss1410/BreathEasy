@@ -7,9 +7,7 @@ import data
 
 # Where has my wWARNING CLASSS GONE
 
-
-<<<<<<< HEAD
-    def show_warning(self):
+def show_warning(self):
         #DISPLAY OR DO SOMTHING???
         return
 
@@ -80,12 +78,6 @@ def check_all_warning_status():
     for w in warnings_list:
         if w.get_status !=0:
             w.show_warning()
-=======
-# def check_all_warning_status():
-#     for w in warnings_list:
-#         if w.get_status !=0:
-#             w.show_warning()
->>>>>>> origin/Olivia
 
 
 

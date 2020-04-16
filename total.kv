@@ -6,6 +6,10 @@
 
 <ChangeLabel@Widget>
     color: 0,0,0,1
+    font_size: str(self.height*1.2)+'sp'
+    halign: 'left'
+    valign: 'center'
+    bold: True
 
 # Define  background color Template
 <BackgroundColor@Widget>
@@ -14,7 +18,7 @@
         Color:
             rgba: root.background_color
         RoundedRectangle:
-            radius: [20,]
+            radius: [5,]
             size: self.size
             pos: self.pos
 
@@ -39,9 +43,12 @@
 
 # BackgroundLabel Class
 <TitleLabel@Label+BackgroundColor>
-    background_color: 0.82, 0.9, 0.94, 1    # Default background color
-    font_size: '20sp'   # set the font size to BIG
-    font_size: str(self.height/3)+'sp'
+    background_color: 0,0,0,0    # Invisible Background
+    font_size: str(int(self.height)/1.2)+'sp'
+    bold: True
+    italic: True
+    color: 0,166/255,255/255,1
+
 
 # BackgroundLogic Class
 <LightBlueBackgroundLogic@Logic+BackgroundColor>
@@ -54,7 +61,7 @@
         Color:
             rgba: 0.82, 0.9, 0.94, 1 # this sets the color of the background behind
         RoundedRectangle:
-            radius: [20,]
+            radius: [5,]
             size: self.size
             pos: self.pos
 # # BackgroundLogic Class
@@ -71,9 +78,18 @@
 #     on_press: self.background_color = 0, 0, 1, 1
 #     on_release: self.background_color = 0, 0, 0, 0
 
-<BigVButton@LightBlueBackgroundButton>
-<SmallVButton@LightBlueBackgroundButton>
+<BigVButton@VButton+LightBlueBackgroundButton>
+    font_size: str(int(self.height)/5)+'sp'
+    #color: 0/255,51/255,255/255,1  # Bright blue text color
+    bold: True
+    size_hint: 1,1
 
+
+<SmallVButton@VButton+LightBlueBackgroundButton>
+    font_size: str(int(self.height)/1.5)+'sp'
+    #color: 0/255,51/255,255/255,1  # Bright blue text color
+    bold: True
+    size_hint: 1,1
 
 ### Output Buttons Area ###
 <OutputLogic@Logic>
@@ -93,7 +109,7 @@
     size_hint: 1, 0.8
 
 <SettingsMidPanelLogic@Logic>
-    spacing: 20
+    spacing: 10
     size_hint: 1, 0.2
     orientation: 'horizontal'
 
@@ -107,7 +123,11 @@
     orientation: 'vertical'
 
 <SettingsItemLabel@Label>
-    size_hint: 1, 0.5
+    size_hint: 1, 1
+    text_size: self.width-80, None
+    font_size: str(int(self.height)/3)+'sp'
+    color: 0,166/255,255/255,1  # Bright blue text color
+    halign: 'center'
 
 <SettingsBottomPanelLogic@Logic>
     spacing: 20
@@ -116,9 +136,10 @@
 
 <OutputLabel@Label>
     text_size: self.width-40, None
-    font_size: str(self.height/6)+'sp'
-    halign: 'left'
-    valign: 'center'
+    font_size: str(self.height/5)+'sp'
+    bold: True
+    halign: 'center'
+    valign: 'top'
 
 ### Bottom Panel Area ###
 <BottomPanelLogic@Logic>
@@ -133,15 +154,19 @@
     text_size: root.width-40, None
     halign: 'center'
     valign: 'center'
-    font_size: str(self.height/7)+'sp'
+    font_size: str(self.height/4.5)+'sp'
     size_hint: 1, 1
+    bold: True
 
 <InputValueLabel@LightBlueBackgroundLabel>
     size_hint: 1, 0.4
+    bold: True
+    halign: 'center'
+    valign: 'top'  #I DONT THINK THESE DO ANYTHING, CANT WORK OUT PLACEMENT
+    font_size: str(self.height*1.8)+'sp'
 
 <InputProgressBar@ProgressBar>
     size_hint: 1, 0.4
-
 
 ### Graphs Area ###
 <GraphGroupLogic@Logic>
@@ -150,6 +175,7 @@
     size_hint: 0.8, 1
 
 <GraphLogic@LightBlueBackgroundLogic>
+    #background_color: 0, 0, 0, 1 #for black background graphs
     size_hint: [1, .9]
 
 <Grapher@Widget>
@@ -169,10 +195,13 @@
     spacing: 15
 
 <AlarmLabel@LightBlueBackgroundLabel>
+    background_color: 0,1,0,0.5
     text_size: root.width-60, None
     halign: 'center'
     valign: 'center'
-    font_size: str(self.height/5)+'sp'
+    font_size: str(self.height/3)+'sp'
+    bold: True
+    italic: True
 
 <MenuScreen@Screen>
 
@@ -193,13 +222,15 @@ ScreenManager:
             # TITLE PANEL
             TopPanelLogic:
                 TitleLabel:
-                    text: 'BreathEasy Ventilator Control Panel'
+                    text: 'BreathEasy Ventilator Monitor'
                 # Button:
                 #     text: 'Switch screens'
                 #     on_press: root.manager.current = 'menu'
                 LightBlueBackgroundButton:
                     size_hint: 0.2, 1
                     text: 'Edit Settings'
+                    font_size: str(int(self.height)/2)+'sp'
+                    bold: True
                     on_press: 
                         menuScreen.manager.current = 'settings'
                         menuScreen.manager.transition.direction = 'left'
@@ -248,19 +279,27 @@ ScreenManager:
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
                         OutputLabel:
-                            text: 'O2 (%):'
+                            text: 'O2 [%]:'
                         ChangeLabel:
+                            color: 0,0,1,1
                             id: Fi02
+                            font_size: str(self.height)+'sp'
+                            halign: 'left'
+                            valign: 'center'
+                            bold: True
                             name: "Fi02"
                             text: "root.Fi0"
+
+                            
                     # Parameter 2
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
 
                         OutputLabel:
-                            text: 'Voltage (V):'
+                            text: 'Voltage [V]:'
                             
                         ChangeLabel: 
+                            color: 0.45,0,1,1
                             id: voltage
                             name: "voltage"
                             text: "root.voltage"
@@ -269,9 +308,10 @@ ScreenManager:
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
                         OutputLabel:
-                            text: 'PEEP (cmH2O):'
+                            text: 'PEEP [cmH2O]:'
                             
                         ChangeLabel:
+                            color: 1,0,0,1
                             id: PEEP
                             name: "PEEP"
                             text: "root.PEEP"
@@ -280,10 +320,11 @@ ScreenManager:
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
                         OutputLabel: 
-                            text: 'Respiratory Rate (Breaths/min):'
+                            text: 'RR [Br/min]:'
 
                             
                         ChangeLabel:
+                            color: 0, 0.5, 0, 1
                             id: respiratory_rate
                             name: "respiratory_rate"
                             text: "root.respiratory_rate"
@@ -295,23 +336,23 @@ ScreenManager:
                 # Parameter 1
                 InputLogic:
                     InputLabel:
-                        text: 'Breath Frequency (b/min):'
+                        text: 'RR [b/min]:'
                         
                     InputValueLabel:
                         text: str(int(input_1.value))
 
                     InputProgressBar:
                         id: input_1
-                        min: 0
-                        max: 10
-                        value: 1
+                        min: 8
+                        max: 25
+                        value: 15
                         size_hint: 1, 0.4
 
 
                 # Parameter 2
                 InputLogic:
                     InputLabel:
-                        text: 'Inspiratory Pressure (cmH2O):'
+                        text: 'Pi [cmH2O]:'  #changed this label to Pi from Inspiratory Pressure to make it fit better
                         
                     InputValueLabel:
                         text: str(int(input_2.value))
@@ -325,7 +366,7 @@ ScreenManager:
                 # Parameter 3
                 InputLogic:
                     InputLabel:
-                        text: 'Inspiratory Time (s):'
+                        text: 'Ti [s]:'  #Inspiratory Time
                         
                     InputValueLabel:
                         text: str(int(input_3.value))
@@ -339,44 +380,44 @@ ScreenManager:
                 # Parameter 4
                 InputLogic:
                     InputLabel:
-                        text: 'PEEP (cmH2O):'
+                        text: 'PEEP [cmH2O]:'
                         
                     InputValueLabel:
                         text: str(int(input_4.value))
                         
                     InputProgressBar:
                         id: input_4
-                        min: 0
-                        max: 10
-                        value: 3
+                        min: 5
+                        max: 12
+                        value: 5
 
                 # Parameter 5
                 InputLogic:
                     InputLabel:
-                        text: 'Pause Time (%/s):'
+                        text: 'FiO2 [%]:'
                         
                     InputValueLabel:
                         text: str(int(input_5.value))
                         
                     InputProgressBar:
                         id: input_5
-                        min: 0
-                        max: 10
-                        value: 2
+                        min: 30
+                        max: 100
+                        value: 40
 
                 # Parameter 6
                 InputLogic:
                     InputLabel:
-                        text: 'Inspiratory Time (s):'
+                        text: 'TV [mL]:'    #Tidal Volume
                         
                     InputValueLabel:
                         text: str(int(input_6.value))
                         
                     InputProgressBar:
                         id: input_6
-                        min: 0
-                        max: 10
-                        value: 8
+                        min: 200
+                        max: 800
+                        value: 600
 
                 ################################
                 # Alarms Panel
@@ -386,15 +427,17 @@ ScreenManager:
                     size_hint: 0.25, 1
                     AlarmGroupLogic:
                         AlarmLabel:
-                            text: 'Alarm 1'
+                            text: 'Signal Lost'
                         AlarmLabel:
-                            text: 'Alarm 2'
+                            background_color: 252/255,127/255,3/255,1
+                            text: 'Low RR'
                                 
                     AlarmGroupLogic:
                         AlarmLabel:
-                            text: 'Alarm 3'
+                            background_color: 1,0,0,1
+                            text: 'PEEP Low'
                         AlarmLabel:
-                            text: 'Alarm 4'
+                            text: 'Low FiO2'
                 ################################
     ###### SettingsScreen UI Layout #######################################################################
     SettingsScreen:
@@ -407,9 +450,17 @@ ScreenManager:
             TopPanelLogic:
                 TitleLabel:
                     text: 'Set Ventilation Properties'
+                    font_size: str(int(self.height)/1.5)+'sp'
+                    #color: 0,166/255,255/255,1  # Bright blue text color
+                    bold: True
+
                 LightBlueBackgroundButton:
                     size_hint: 0.2, 1
                     text: 'Save Settings'
+                    font_size: str(int(self.height)/2)+'sp'
+                    #color: 0,166/255,255/255,1  # Bright blue text color
+                    bold: True
+
                     on_press: 
                         settingsScreen.manager.current = 'menu'
                         settingsScreen.manager.transition.direction = 'right'
@@ -419,14 +470,14 @@ ScreenManager:
                 BigVButton:
                     id: modeSelect
                     text: "Ventilation Mode"   
-                    on_release: ventilatorModeDropDown.open
+                    #on_release: ventilatorModeDropDown.open
                 BigVButton:
                     id: storePresetSelect
                     text: "Store Preselect"
                 BigVButton:
                     id: presetSelect
                     text: "Presets"
-                    on_release: presetModeDropDown.open
+                   # on_release: presetModeDropDown.open
 
             SettingsBottomPanelLogic:
                 # # Title Row
