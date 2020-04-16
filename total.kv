@@ -178,7 +178,7 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Inspiratory O2 (%):'
+                            text: 'O2 (%):'
                         ChangeLabel:
                             id: Fi02
                             name: "Fi02"
@@ -190,12 +190,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Expiratory O2 (%):'
+                            text: 'Voltage (V):'
                             
                         ChangeLabel: 
-                            id: Fe02
-                            name: "Fe02"
-                            text: "root.Fe02"
+                            id: voltage
+                            name: "voltage"
+                            text: "root.voltage"
                             
                     # Parameter 3
                     LightBlueBackgroundLogic:
@@ -204,12 +204,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Room Air Flow Rate (L/min):'
+                            text: 'PEEP (cmH2O):'
                             
                         ChangeLabel:
-                            id: room_air_flow_rate
-                            name: "room_air_flow_rate"
-                            text: "root.room_air_flow_rate"
+                            id: PEEP
+                            name: "PEEP"
+                            text: "root.PEEP"
                             
                     # Parameter 4
                     LightBlueBackgroundLogic:
@@ -218,12 +218,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'O2 Flow Rate (L/min):'
+                            text: 'Respiratory Rate (Breaths/10sec):'
                             
                         ChangeLabel:
-                            id: O2_flow_rate
-                            name: "O2_flow_rate"
-                            text: "root.O2_flow_rate"
+                            id: respiratory_rate
+                            name: "respiratory_rate"
+                            text: "root.respiratory_rate"
                             
             # Input Parameters
             BottomPanelLogic:

@@ -82,10 +82,12 @@ class IncomingDatas():
         self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
         self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
         self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
+        self.PEEP = IncomingData('PEEP', 'cmH2O')
+        self.respiratory_rate = IncomingData('Respiratory Rate', 'Breaths/min')
+        self.voltage = IncomingData("Voltage", "V")
+        self.tidal_volume = IncomingData("Tidal Volume", "mL")
         self.Fi02 = IncomingData('Fi02','%')
         self.Fe02 = IncomingData('Fe02','%')
-        self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
-        self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
         self.settings_recieved = IncomingData('Settings Recieved', '')
 
 

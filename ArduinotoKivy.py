@@ -1,4 +1,7 @@
 # External library imports
+#from kivy.config import Config
+#Config.set('graphics', 'fullscreen', '1')
+
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -29,7 +32,6 @@ from kivy.graphics import Color, Rectangle
 from kivy.properties import StringProperty
 
 import data
-from scipy import integrate
 
 
 #peakPressure
@@ -68,6 +70,7 @@ def getCurve(file):
         
 data1=getCurve('SquareWave.csv')
 data2=getCurve('FlowWave.csv')
+data4=getCurve('zeroes.csv')
 
 global incomings
 incomings = data.IncomingDatas()
@@ -75,6 +78,7 @@ incomings = data.IncomingDatas()
 
 
 ################################### GLOBAL FUNCTIONS ###################################
+
 def get_data():
     global data1
     global times
@@ -111,16 +115,17 @@ def get_data():
     if corrupt==True:
         currTime = 0
         while True:
+            if currTime/1000 not in data1.keys():
+                currTime = 0
+                
             pp = data1[currTime/1000]
             rr = data2[currTime/1000]
+            
             tv = 500
-            if len(times)!=0:
-                y_int = integrate.cumtrapz(times, peakPressure, initial=0)
-            else:
-                y_int = 0
             update_level(currTime, pp, rr, tv)
             currTime += 10
             time.sleep(0.01)
+            
 
 def update_level(timeIn, pp, rr, tv):
     global peakPressure
@@ -129,6 +134,13 @@ def update_level(timeIn, pp, rr, tv):
     global oldrespirationRate
     global tidalVolume
     global oldtidalVolume
+    global incomings
+    incomings.time.set_value(timeIn)
+    incomings.inspiratory_pressure.set_value(pp)
+    incomings.inspiratory_flow.set_value(rr)
+    incomings.tidal_volume.set_value(tv)
+    incomings.voltage.set_value(24 + data4[timeIn/1000])
+    incomings.Fi02.set_value(settings.Fi02.get_value() + data4[timeIn/1000])
 
     global oldTime
     global times
@@ -206,6 +218,7 @@ class ChangeLabel(Label):
         Label.__init__(self, *args, **kwargs) 
         Clock.schedule_interval(self.update, 0.001)
         #print("hi")
+        
 
     def update(self, dt):
         self.text = str(incomings.__dict__[self.name].get_value())
@@ -264,6 +277,29 @@ class TidalVolume(Graph):
 
 ################################### MAIN APP CLASS ###################################
 class BreathEasy(App):
+    close = True
+
+    def __init__(self, **kwargs):
+        super(BreathEasy, self).__init__(**kwargs)
+
+        Window.bind(on_request_close=self.exit_check)
+
+    def exit_check(self, *args):
+        layout = GridLayout(cols = 1, padding = 10) 
+        okButton = Button(text = 'OK')
+        cancelButton = Button(text = "Cancel") 
+        layout.add_widget(okButton)
+        layout.add_widget(cancelButton) 
+        popup = Popup(title ='Are you sure?', content = layout, size_hint =(None, None), size =(200, 150))
+        popup.open() 
+        cancelButton.bind(on_press = popup.dismiss)
+        okButton.bind(on_press = self.closeApp)
+        return self.close
+
+    def closeApp(self, send):
+        self.close = False
+        Window.close()
+    
     def build(self):
         # Set the initial window color for our app
         Window.clearcolor = (0.07, 0.37, 0.55, 1)
