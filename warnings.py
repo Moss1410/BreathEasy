@@ -4,43 +4,11 @@
 # Threshold comparison from 0-2, 0=less than, 1=greater than, 2=either direction of set
 import data
 
-class Warning:
-    def __init__(self, name, severity, status, threshold, comparison_type, units,incoming_data):
-        self.name = name
-        self.severity = severity
-        self.status = status
-        self.threshold = threshold
-        self.comparison_type = comparison_type
-        self.units = units
-        self.incoming_data = incoming_data
-    
-    def __repr__(self):
-        return self.name + ': ' + self.status
 
-    def set_status(self, new_status):
-        self.status = new_status
 
-    def get_name(self):
-        return self.name
-    
-    def set_threshold(self, new_threshold):
-        self.threshold = new_threshold
 
-    def get_status(self):
-        return self.status
-    
-    def get_severity(self):
-        return self.severity
-    
-    def get_threshold(self):
-        return self.threshold
-    
-    def get_comparison_type(self):
-        return self.comparison_type
-    
-    def get_sensor_data(self):
-        return self.incoming_data
 
+<<<<<<< HEAD
     def show_warning(self):
         #DISPLAY OR DO SOMTHING???
         return
