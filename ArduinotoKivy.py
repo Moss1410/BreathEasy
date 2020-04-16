@@ -76,9 +76,6 @@ data2=getCurve('FlowWave.csv')
 data3=getCurve('VolumeWave.csv')
 data4=getCurve('zeroes.csv')
 
-global incomings
-incomings = data.IncomingDatas()
-
 
 
 ################################### GLOBAL FUNCTIONS ###################################
@@ -116,11 +113,14 @@ def get_data():
         except:
             pass
     if corrupt==True:
-        currTime = 0
+        currTime = 0.0
         while True:
+            
             if currTime/1000 not in data1.keys():
-                currTime = 0
-            pp = data1[currTime/1000]/30
+                currTime = 0.0
+                maxTime = 0
+            #pp = data1[currTime/1000]/30
+            pp=45
             rr = data2[currTime/1000]/12
             tv = data3[currTime/1000]/3
             update_level(currTime, pp, rr, tv)
@@ -191,7 +191,7 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        RR=getRR()
+        incomings.respiratory_rate.set_value(getRR())
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
@@ -280,7 +280,7 @@ class PeakPressure(Graph):
         self.oldpeakPressure = LinePlot(line_width=1, color=[1, 0, 0, 0.2])
         self.add_plot(self.peakPressure)
         self.add_plot(self.oldpeakPressure)
-        self.ymax=30
+        self.ymax=50
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
@@ -330,8 +330,33 @@ class BreathEasy(App):
 
     def __init__(self, **kwargs):
         super(BreathEasy, self).__init__(**kwargs)
-
+        self.che = True
         Window.bind(on_request_close=self.exit_check)
+        # get_level_thread = Thread(target = self.show_warnings)
+        # get_level_thread.daemon = True
+        # get_level_thread.start()
+    
+    # def show_warnings(self):
+    #     global warns
+    #     warns.update_all_warning_status()
+    #     lister = warns.get_warnings()
+    #     for warn in lister:
+    #         if warn.get_status() == 1 and self.che:
+    #             self.che = False
+    #             layout = GridLayout(cols = 1, padding = 10) 
+    #             closeButton = Button(text = "Close") 
+
+    #             layout.add_widget(closeButton) 
+
+    #             self.popup = Popup(title = warn.get_name(), content = layout, size_hint =(None, None), size =(500, 500))   
+    #             self.popup.open() 
+    #             # textinput.bind(text=on_text)
+                
+    #             closeButton.bind(on_press = self.pops)
+
+    def pops(self, somethings):
+        self.popup.dismiss
+        self.che = True
 
     def exit_check(self, *args):
         layout = GridLayout(cols = 1, padding = 10) 
@@ -357,6 +382,11 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
-    
+    global incomings
+    incomings = data.IncomingDatas()
     settings = data.Settings()
+    global warns
+    warns = data.Warnings(incomings, settings)
+    
+    
     BreathEasy().run()
