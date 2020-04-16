@@ -124,9 +124,7 @@ class VButton(Button):
         self.popup.dismiss()
         global settings
         settings.__dict__[self.name].set_value(int(self.textinput.text))
-
-    #def update_all(self):
-
+        self.text = str(settings.__dict__[self.name].get_value())
 
     def talk(self, message):
         print(message)
@@ -168,6 +166,8 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
+    global incomings
+    incomings = data.IncomingDatas()
     settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()

@@ -29,6 +29,10 @@ class Setting():
 
     # instance method
     def set_value(self, new_value):
+        if (new_value > self.max):
+            new_value = self.max
+        elif (new_value < self.min):
+            new_value =  self.min
         self.value = new_value
 
     def get_value(self):
@@ -67,16 +71,19 @@ class IncomingData:
 
 data_list = []
 #Data(name,units)
-time = IncomingData('Time','Seconds')
-inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
-inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
-expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
-expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
-Fi02 = IncomingData('Fi02','%')
-Fe02 = IncomingData('Fe02','%')
-room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
-O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
-settings_recieved = IncomingData('Settings Recieved', '')
+
+class IncomingDatas():
+    def __init__(self):
+        self.time = IncomingData('Time','Seconds')
+        self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
+        self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
+        self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
+        self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
+        self.Fi02 = IncomingData('Fi02','%')
+        self.Fe02 = IncomingData('Fe02','%')
+        self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
+        self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
+        self.settings_recieved = IncomingData('Settings Recieved', '')
 
 
 #Define Settings
@@ -109,6 +116,7 @@ class Settings():
 def init_settings_and_data():
     global settings_list
     global data_list
+    datt = IncomingDatas()
     sett = Settings()
     settings_list+= [sett.ventilation_mode]
     settings_list+= [sett.system_status]
@@ -132,16 +140,16 @@ def init_settings_and_data():
     settings_list+= [sett.apnoea_time]
     settings_list+= [sett.max_pressure]
 
-    data_list+= [time]
-    data_list+= [inspiratory_pressure]
-    data_list+= [inspiratory_flow]
-    data_list+= [expiratory_pressure]
-    data_list+= [expiratory_flow]
-    data_list+= [Fi02]
-    data_list+= [Fe02]
-    data_list+= [room_air_flow_rate]
-    data_list+= [O2_flow_rate]
-    data_list+= [settings_recieved]
+    data_list+= [datt.time]
+    data_list+= [datt.inspiratory_pressure]
+    data_list+= [datt.inspiratory_flow]
+    data_list+= [datt.expiratory_pressure]
+    data_list+= [datt.expiratory_flow]
+    data_list+= [datt.Fi02]
+    data_list+= [datt.Fe02]
+    data_list+= [datt.room_air_flow_rate]
+    data_list+= [datt.O2_flow_rate]
+    data_list+= [datt.settings_recieved]
 
 # Turn Current Settings into Output String
 # Should be of the form:
