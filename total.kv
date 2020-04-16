@@ -211,9 +211,20 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            PeakPressure:
                                 id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Peak Pressure"
+                    ######################################
+
+                    ######################################
+                    Logic:
+                        LightBlueBackgroundLogic:
+                            orientation: "vertical"
+                            Logic:
+                                size_hint: [1, .9]
+                                RespiratoryRate:
+                                    id: "graph1"
+                                    ylabel: "Respiratory Rate"
                     ######################################
 
                     ######################################
@@ -221,19 +232,9 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            TidalVolume:
                                 id: "graph1"
-                                ylabel: "Oxygen"
-                    ######################################
-
-                    ######################################
-                    Logic:
-                        # Setting the background color
-                        orientation: "vertical"
-                        GraphLogic:
-                            Grapher:
-                                id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Tidal Volume"
                     ######################################
 
                 # Output Parameters
@@ -244,7 +245,7 @@ ScreenManager:
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
                         OutputLabel:
-                            text: 'Inspiratory O2 (%):'
+                            text: 'O2 (%):'
                         ChangeLabel:
                             id: Fi02
                             name: "Fi02"
@@ -252,33 +253,37 @@ ScreenManager:
                     # Parameter 2
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
+
                         OutputLabel:
-                            text: 'Expiratory O2 (%):'
-                        ChangeLabel:
-                            id: Fe02
-                            name: "Fe02"
-                            text: "root.Fe02"
+                            text: 'Voltage (V):'
+                            
+                        ChangeLabel: 
+                            id: voltage
+                            name: "voltage"
+                            text: "root.voltage"
                             
                     # Parameter 3
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
                         OutputLabel:
-                            text: 'Room Air Flow Rate (L/min):'
+                            text: 'PEEP (cmH2O):'
+                            
                         ChangeLabel:
-                            id: room_air_flow_rate
-                            name: "room_air_flow_rate"
-                            text: "root.room_air_flow_rate"
+                            id: PEEP
+                            name: "PEEP"
+                            text: "root.PEEP"
                             
                     # Parameter 4
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        OutputLabel:
-                            text: 'O2 Flow Rate (L/min):'
+                        OutputLabel: 
+                            text: 'Respiratory Rate (Breaths/min):'
+
                             
                         ChangeLabel:
-                            id: O2_flow_rate
-                            name: "O2_flow_rate"
-                            text: "root.O2_flow_rate"
+                            id: respiratory_rate
+                            name: "respiratory_rate"
+                            text: "root.respiratory_rate"
                             
             # Input Parameters
             BottomPanelLogic:
@@ -537,35 +542,36 @@ ScreenManager:
 
             Label:
                 id: inspiratory_rise_timelabel
-                text: 'Inspiratory Rise Time'
+                text: 'Inspiratory Rise Time [Seconds]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.71}
 
             # Row 4 Labels
             Label:
                 id: inspiratory_timelabel
-                text:'Inspiratory Time'
+                text:'Inspiratory Time [Seconds]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.58}
             Label:
                 id: min_inspiratory_timelabel
-                text: 'Min Inspiratory Time'
+                text: 'Min Inspiratory Time [Seconds]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.45}
             Label:
                 id: max_inspiratory_timelabel
-                text: 'Max Inspiratory Time'
+                text: 'Max Inspiratory Time [Seconds]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.32}
             Label:
                 id: max_inspiratory_pressurelabel
-                text: 'Max Inspiratory Pressure'
+                text: 'Max Inspiratory Pressure [cmH20]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.19}
 
             ### Buttons Column 3 ###
 
             VButton:
+                name:'max_inspiratory_tidal_volume'
                 id: max_inspiratory_tidal_volume
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.52}
@@ -573,60 +579,65 @@ ScreenManager:
                 on_press: self.callback()
             VButton:
                 id: min_inspiratory_tidal_volume
-                name: "PEEP"
+                name: "min_inspiratory_tidal_volume"
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.39}
                 text: "300"
                 on_press: self.callback()
             VButton:
+                name: 'max_expiratory_tidal_volume'
                 id: max_expiratory_tidal_volume
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.26}
                 text: "800"
                 on_press: self.callback()
             VButton:
+                name: 'min_expiratory_tidal_volume'
                 id: min_expiratory_tidal_volume
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.13}
                 text: "300"
                 on_press: self.callback()
-                
+
             Label:
                 id: max_inspiratory_tidal_volumelabel
-                text:'Max Inspiratory Tidal Volume'
+                text:'Max Inspiratory Tidal Volume [mL]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.58}
             Label:
                 id: min_inspiratory_tidal_volumelabel
-                text: 'Min Inspiratory Tidal Volume'
+                text: 'Min Inspiratory Tidal Volume [mL]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.45}
             Label:
                 id: max_expiratory_tidal_volumelabel
-                text: 'Max Expiratory Tidal Volume'
+                text: 'Max Expiratory Tidal Volume [mL]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.32}
             Label:
                 id: min_expiratory_tidal_volumelabel
-                text: 'Min Expriatory Tidal Volume'
+                text: 'Min Expriatory Tidal Volume [mL]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.6, 'center_y':0.19}
 
             ### Buttons Column 4 ###
             VButton:
+
                 id: max_leak
+                name: 'max_leak'
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.52}
                 text: "50"
                 on_press: self.callback()
             VButton:
+                name: 'apnoea_time'
                 id: apnoea_time
-                name: "PEEP"
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.39}
                 text: "10"
                 on_press: self.callback()
             VButton:
+                name: 'max_pressure'
                 id: max_pressure
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.26}
@@ -635,17 +646,17 @@ ScreenManager:
 
             Label:
                 id: max_leaklabel
-                text:'Max Leak'
+                text:'Max Leak [mL/min]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.58}
             Label:
                 id: apnoea_timelabel
-                text: 'Apnoea Time'
+                text: 'Apnoea Time [Seconds]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.45}
             Label:
                 id: max_pressurelabel
-                text: 'Max Pressure'
+                text: 'Max Pressure [cmH2O]'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.8, 'center_y':0.32}
 
