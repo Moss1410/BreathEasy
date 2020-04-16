@@ -89,6 +89,20 @@
     label_options: {'color': (0,0,0,1)}
     border_color: (0,0,0,1)
 
+<Grapher2@Widget>
+    xlabel: ""
+    x_ticks_minor: 5
+    x_ticks_major: 25
+    y_ticks_major: 200
+    y_grid_label: True
+    x_grid_label: True
+    padding: 2
+    x_grid: True 
+    y_grid: True
+    label_options: {'color': (0,0,0,1)}
+    border_color: (0,0,0,1)
+
+
 ### Alarms Area ###
 <AlarmGroupLogic@Logic>
     spacing: 15
@@ -117,34 +131,26 @@ BaseLogic:
             id: graph_group
             ######################################
             Logic:
-                # Setting the background color
-                orientation: "vertical"
-                GraphLogic:
-                    Grapher:
-                        id: "graph1"
-                        ylabel: "Oxygen"
+                size_hint: [1, .9]
+                Grapher:
+                    id: "graph1"
+                    ylabel: "Oxygen"
             ######################################
 
             ######################################
             Logic:
-                LightBlueBackgroundLogic:
-                    orientation: "vertical"
-                    Logic:
-                        size_hint: [1, .9]
-                        Grapher:
-                            id: "graph1"
-                            ylabel: "Oxygen"
+                size_hint: [1, .9]
+                Grapher2:
+                    id: "graph2"
+                    ylabel: "Oxygen"
             ######################################
 
             ######################################
             Logic:
-                LightBlueBackgroundLogic:
-                    orientation: "vertical"
-                    Logic:
-                        size_hint: [1, .9]
-                        Grapher:
-                            id: "graph1"
-                            ylabel: "Oxygen"
+                size_hint: [1, .9]
+                Grapher:
+                    id: "graph3"
+                    ylabel: "Oxygen"
             ######################################
 
         # Output Parameters

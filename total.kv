@@ -30,14 +30,49 @@
 # Title logic box
 <TopPanelLogic@Logic>
     size_hint: 1, 0.05
+    spacing: 20
+
+# Title logic box
+<SettingsTopPanelLogic@Logic>
+    size_hint: 1, 0.05
+    spacing: 20
+
 # BackgroundLabel Class
 <TitleLabel@Label+BackgroundColor>
     background_color: 0.82, 0.9, 0.94, 1    # Default background color
     font_size: '20sp'   # set the font size to BIG
+    font_size: str(self.height/3)+'sp'
 
 # BackgroundLogic Class
 <LightBlueBackgroundLogic@Logic+BackgroundColor>
     background_color: 0.82, 0.9, 0.94, 1    # Default background color
+
+# BackgroundLogic Class
+<LightBlueBackgroundButton@Button>
+    background_color: 0, 0, 0, 0 # this sets the button to ckear so we can see the background behind
+    canvas.before:
+        Color:
+            rgba: 0.82, 0.9, 0.94, 1 # this sets the color of the background behind
+        RoundedRectangle:
+            radius: [20,]
+            size: self.size
+            pos: self.pos
+# # BackgroundLogic Class
+# <LightBlueBackgroundButton@Button>
+#     background_color: 0, 0, 0, 0 # this sets the button to ckear so we can see the background behind
+#     canvas.before:
+#         Color:
+#             # rgba: 0.82, 0.9, 0.94, 1 # this sets the color of the background behind
+#             rgba: self.background_color
+#         RoundedRectangle:
+#             radius: [20,]
+#             size: self.size
+#             pos: self.pos
+#     on_press: self.background_color = 0, 0, 1, 1
+#     on_release: self.background_color = 0, 0, 0, 0
+
+<BigVButton@LightBlueBackgroundButton>
+<SmallVButton@LightBlueBackgroundButton>
 
 
 ### Output Buttons Area ###
@@ -57,6 +92,31 @@
     spacing: 20
     size_hint: 1, 0.8
 
+<SettingsMidPanelLogic@Logic>
+    spacing: 20
+    size_hint: 1, 0.2
+    orientation: 'horizontal'
+
+<SettingsRowLogic@Logic>
+    spacing: 20
+    # size_hint: 1, 0.2
+    orientation: 'horizontal'
+
+<SettingsItemLogic@Logic>
+    size_hint: 0.25, 1
+    orientation: 'vertical'
+
+<SettingsBottomPanelLogic@Logic>
+    spacing: 20
+    size_hint: 1, 0.75
+    orientation: 'vertical'
+
+<OutputLabel@Label>
+    text_size: self.width-40, None
+    font_size: str(self.height/6)+'sp'
+    halign: 'left'
+    valign: 'center'
+
 ### Bottom Panel Area ###
 <BottomPanelLogic@Logic>
     spacing: 20
@@ -67,9 +127,17 @@
     size_hint: 0.125, 1
 
 <InputLabel@LightBlueBackgroundLabel>
-    text_size: root.width, None
+    text_size: root.width-40, None
     halign: 'center'
     valign: 'center'
+    font_size: str(self.height/7)+'sp'
+    size_hint: 1, 1
+
+<InputValueLabel@LightBlueBackgroundLabel>
+    size_hint: 1, 0.4
+
+<InputProgressBar@ProgressBar>
+    size_hint: 1, 0.4
 
 
 ### Graphs Area ###
@@ -98,9 +166,10 @@
     spacing: 15
 
 <AlarmLabel@LightBlueBackgroundLabel>
-    text_size: root.width, None
+    text_size: root.width-60, None
     halign: 'center'
     valign: 'center'
+    font_size: str(self.height/5)+'sp'
 
 <MenuScreen@Screen>
 
@@ -125,8 +194,9 @@ ScreenManager:
                 # Button:
                 #     text: 'Switch screens'
                 #     on_press: root.manager.current = 'menu'
-                Button:
-                    text: 'Goto settings'
+                LightBlueBackgroundButton:
+                    size_hint: 0.2, 1
+                    text: 'Edit Settings'
                     on_press: 
                         menuScreen.manager.current = 'settings'
                         menuScreen.manager.transition.direction = 'left'
@@ -141,9 +211,20 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            PeakPressure:
                                 id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Peak Pressure"
+                    ######################################
+
+                    ######################################
+                    Logic:
+                        LightBlueBackgroundLogic:
+                            orientation: "vertical"
+                            Logic:
+                                size_hint: [1, .9]
+                                RespiratoryRate:
+                                    id: "graph1"
+                                    ylabel: "Respiratory Rate"
                     ######################################
 
                     ######################################
@@ -151,19 +232,9 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            TidalVolume:
                                 id: "graph1"
-                                ylabel: "Oxygen"
-                    ######################################
-
-                    ######################################
-                    Logic:
-                        # Setting the background color
-                        orientation: "vertical"
-                        GraphLogic:
-                            Grapher:
-                                id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Tidal Volume"
                     ######################################
 
                 # Output Parameters
@@ -173,11 +244,8 @@ ScreenManager:
                     # Parameter 1
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
-                            text: 'Inspiratory O2 (%):'
+                        OutputLabel:
+                            text: 'O2 (%):'
                         ChangeLabel:
                             id: Fi02
                             name: "Fi02"
@@ -185,44 +253,37 @@ ScreenManager:
                     # Parameter 2
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
-                            text: 'Expiratory O2 (%):'
+
+                        OutputLabel:
+                            text: 'Voltage (V):'
                             
                         ChangeLabel: 
-                            id: Fe02
-                            name: "Fe02"
-                            text: "root.Fe02"
+                            id: voltage
+                            name: "voltage"
+                            text: "root.voltage"
                             
                     # Parameter 3
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
-                            text: 'Room Air Flow Rate (L/min):'
+                        OutputLabel:
+                            text: 'PEEP (cmH2O):'
                             
                         ChangeLabel:
-                            id: room_air_flow_rate
-                            name: "room_air_flow_rate"
-                            text: "root.room_air_flow_rate"
+                            id: PEEP
+                            name: "PEEP"
+                            text: "root.PEEP"
                             
                     # Parameter 4
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
-                            text: 'O2 Flow Rate (L/min):'
+                        OutputLabel: 
+                            text: 'Respiratory Rate (Breaths/min):'
+
                             
                         ChangeLabel:
-                            id: O2_flow_rate
-                            name: "O2_flow_rate"
-                            text: "root.O2_flow_rate"
+                            id: respiratory_rate
+                            name: "respiratory_rate"
+                            text: "root.respiratory_rate"
                             
             # Input Parameters
             BottomPanelLogic:
@@ -233,14 +294,15 @@ ScreenManager:
                     InputLabel:
                         text: 'Breath Frequency (b/min):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_1.value))
-                        
-                    ProgressBar:
+
+                    InputProgressBar:
                         id: input_1
                         min: 0
                         max: 10
                         value: 1
+                        size_hint: 1, 0.4
 
 
                 # Parameter 2
@@ -248,10 +310,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Pressure (cmH2O):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_2.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_2
                         min: 0
                         max: 10
@@ -262,10 +324,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Time (s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_3.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_3
                         min: 0
                         max: 10
@@ -276,10 +338,10 @@ ScreenManager:
                     InputLabel:
                         text: 'PEEP (cmH2O):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_4.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_4
                         min: 0
                         max: 10
@@ -290,10 +352,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Pause Time (%/s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_5.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_5
                         min: 0
                         max: 10
@@ -304,10 +366,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Time (s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_6.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_6
                         min: 0
                         max: 10
@@ -335,47 +397,116 @@ ScreenManager:
     SettingsScreen:
         id: settingsScreen
         name: 'settings'
+
+        BaseLogic:
+            id: settings_root_box
+            # TITLE PANEL
+            TopPanelLogic:
+                TitleLabel:
+                    text: 'Set Ventilation Properties'
+                LightBlueBackgroundButton:
+                    size_hint: 0.2, 1
+                    text: 'Save Settings'
+                    on_press: 
+                        settingsScreen.manager.current = 'menu'
+                        settingsScreen.manager.transition.direction = 'right'
+
+            # GRAPHS & OUTPUTS PANEL
+            SettingsMidPanelLogic:
+                BigVButton:
+                    id: modeSelect
+                    text: "Ventilation Mode"   
+                    on_release: ventilatorModeDropDown.open
+                BigVButton:
+                    id: storePresetSelect
+                    text: "Store Preselect"
+                BigVButton:
+                    id: presetSelect
+                    text: "Presets"
+                    on_release: presetModeDropDown.open
+
+            SettingsBottomPanelLogic:
+                # Title Row
+                SettingsRowLogic:
+                    size_hint: 1, 0.3
+                    LightBlueBackgroundLabel:
+                        id: VentilationSettingstitle
+                        text: 'All Configurable Properties'
+                        font_size: '20dp'
+                        bold: "true"
+                # Row 1
+                SettingsRowLogic:
+                    SettingsItemLogic:
+                        Label:
+                            id: FiO2label
+                            text: "FiO2"
+                        SmallVButton:
+                            id: PEEP
+                            text: "100"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        Label:
+                            id: min_leaklabel
+                            text: 'Min Leak'
+                        SmallVButton:
+                            id: min_leak
+                            text: "0"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        Label:
+                            id: InspiratoryRiseTimelabel
+                            text: "Inspiratory Rise Time"
+                        SmallVButton:
+                            id: inspiratory_rise_time
+                            text: "100"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        Label:
+                            id: tidal_volumelabel
+                            text: 'Tidal Volume'
+                        SmallVButton:
+                            id: tidal_volume
+                            text: "600"
+                            on_press: self.callback()
+                # Row 2
+                SettingsRowLogic:
+                    SettingsItemLogic:
+                        Label:
+                            id: FiO2label
+                            text: "FiO2"
+                        SmallVButton:
+                            id: PEEP
+                            text: "100"
+                            on_press: self.callback()
+                # Row 3
+                SettingsRowLogic:
+                    SettingsItemLogic:
+                        Label:
+                            id: FiO2label
+                            text: "FiO2"
+                        SmallVButton:
+                            id: PEEP
+                            text: "100"
+                            on_press: self.callback()
+                # Row 4
+                SettingsRowLogic:
+                    SettingsItemLogic:
+                        Label:
+                            id: FiO2label
+                            text: "FiO2"
+                        SmallVButton:
+                            id: PEEP
+                            text: "100"
+                            on_press: self.callback()
+
         RelativeLayout:
-            VButton:
-                id: modeSelect
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.15, 'center_y':0.85}
-                text: "Ventilation Mode"   
-                on_release: ventilatorModeDropDown.open
-            VButton:
-                id: storePresetSelect
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.5, 'center_y':0.85}
-                text: "Store Preselect"
-            VButton:
-                id: presetSelect
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.85, 'center_y':0.85}
-                text: "Presets"
-                on_release: presetModeDropDown.open
-            Label:
-                id: topTitle
-                text: 'Set Ventilation Properties'
-                pos_hint: {'center_x':0.5, 'center_y':0.95}
-                font_size: '50dp'
-                bold: 'true'
+
 
             ### Column Headings ###
-            Label:
-                id: VentilationSettingstitle
-                text: 'All Configurable Properties'
-                pos_hint: {'center_x':0.5, 'center_y':0.75}
-                font_size: '20dp'
-                bold: "true"
+
 
             ### Buttons Column 1 ###
-            VButton:
-                id: PEEP
-                name: "PEEP"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.65}
-                text: "5"
-                on_press: self.callback()
+
             VButton:
                 id: FiO2
                 name: "FiO2"
@@ -404,11 +535,11 @@ ScreenManager:
                 pos_hint: {'center_x':0.2, 'center_y':0.13}
                 text: "0.5"
                 on_press: self.callback()
-            Label:
-                id: PEEPlabel
-                text: "PEEP [cmH2O]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.71}
+            # Label:
+            #     id: FiO2label
+            #     text: "FiO2"
+            #     size_hint: (0.15, 0.08)
+            #     pos_hint: {'center_x':0.2, 'center_y':0.71}
             Label:
                 id: FiO2label
                 text:"FiO2 [%]"
@@ -419,11 +550,7 @@ ScreenManager:
                 text: "Min RR [Breaths/min]"
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.2, 'center_y':0.45}
-            Label:
-                id: max_RRlabel
-                text: "Max RR [Breaths/min]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.32}
+
             Label:
                 id: IE_ratio
                 text: "I:E Ratio [Ratio]"
@@ -431,13 +558,7 @@ ScreenManager:
                 pos_hint: {'center_x':0.2, 'center_y':0.19}
             
             ### Buttons Column 2 ###
-            VButton:
-                id: inspiratory_rise_time
-                name: 'inspiratory_rise_time'
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.65}
-                text: "0.2"
-                on_press: self.callback()
+
             VButton:
                 name: 'inspiratory_time'
                 id: inspiratory_time
@@ -493,13 +614,7 @@ ScreenManager:
                 pos_hint: {'center_x':0.4, 'center_y':0.19}
 
             ### Buttons Column 3 ###
-            VButton:
-                id: tidal_volume
-                name: 'tidal_volume'
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.65}
-                text: "600"
-                on_press: self.callback()
+
             VButton:
                 name:'max_inspiratory_tidal_volume'
                 id: max_inspiratory_tidal_volume
@@ -528,11 +643,7 @@ ScreenManager:
                 pos_hint: {'center_x':0.6, 'center_y':0.13}
                 text: "300"
                 on_press: self.callback()
-            Label:
-                id: tidal_volumelabel
-                text: 'Tidal Volume [mL]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.71}
+
             Label:
                 id: max_inspiratory_tidal_volumelabel
                 text:'Max Inspiratory Tidal Volume [mL]'
@@ -556,13 +667,7 @@ ScreenManager:
 
             ### Buttons Column 4 ###
             VButton:
-                name: 'min_leak'
-                id: min_leak
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.65}
-                text: "0"
-                on_press: self.callback()
-            VButton:
+
                 id: max_leak
                 name: 'max_leak'
                 size_hint: (0.12, 0.08)
@@ -583,11 +688,7 @@ ScreenManager:
                 pos_hint: {'center_x':0.8, 'center_y':0.26}
                 text: "40"
                 on_press: self.callback()
-            Label:
-                id: min_leaklabel
-                text: 'Min Leak [mL/min]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.71}
+
             Label:
                 id: max_leaklabel
                 text:'Max Leak [mL/min]'
