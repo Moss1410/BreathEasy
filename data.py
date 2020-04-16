@@ -14,7 +14,7 @@ incoming_data_ERROR_min_threshold = 10 # number of incorrect data streams in a r
 incoming_data_ERROR_max_threshold = 20 # number of incorrect data streams in a row allowed before triggering warning
 incoming_data_ERROR_flag = 0 # 0=fine, 1=some drop of signal, 2=frequent loss of signals
 
-class Setting:
+class Setting():
     # Initializer / Instance Attributes
     def __init__(self,name, default_value, units, max, min):
         self.name = name
@@ -82,52 +82,55 @@ settings_recieved = IncomingData('Settings Recieved', '')
 #Define Settings
 settings_list = []
 #Setting(Name, default_value, units, min, max)
-ventilation_mode = Setting('Ventilation Mode',2.0,'','','')
-system_status = Setting('System Status',0.0,'','','')
-PEEP = Setting('PEEP',5.0,'cmH2O',5,12)
-Fi02 = Setting('Fi02',1.0,'%',0.3,0.6)
-min_RR = Setting('Min RR',10.0,'Breaths/min',4,14)
-max_RR = Setting('Max RR',25.0,'Breaths/min',12,40)
-IE_ratio = Setting('I:E Ratio',0.5,'Ratio','1:1.5','1:3')
-inspiratory_rise_time = Setting('Inspiratory Rise Time',0.2,'Seconds',0,5)
-inspiratory_time = Setting('Inspiratory Time',1.0,'Seconds',0.5,2)
-min_inspiratory_time =  Setting('Min Inspiratory Time',2.0,'Seconds',1,3)
-max_inspiratory_time = Setting('Max Inspiratory Time',4.0,'Seconds',0.8,3)
-max_inspiratory_pressure = Setting('Max Inspiratory Pressure',15.0,'cmH20',10,20)
-tidal_volume = Setting('Tidal Volume',600.0,'mL',200,800)
-max_inspiratory_tidal_volume = Setting('Max Inspiratory Tidal Volume',800.0,'mL',30,2000)
-min_inspiratory_tidal_volume = Setting('Min Inspiratory Tidal Volume',300.0,'mL',80,3000)
-max_expiratory_tidal_volume = Setting('Max Expiratory Tidal Volume',800.0,'mL',30,2000)
-min_expiratory_tidal_volume = Setting('Min Expriatory Tidal Volume',300.0,'mL',80,3000)
-min_leak = Setting('Min Leak',0.0,'mL/min',0,20)
-max_leak = Setting('Max Leak',50.0,'mL/min',10,100)
-apnoea_time = Setting('Apnoea Time',10.0,'Seconds',8,20)
-max_pressure = Setting('Max Pressure',40.0,'cmH2O',30,45)
+class Settings():
+    def __init__(self):
+        self.ventilation_mode = Setting('Ventilation Mode',2.0,'','','')
+        self.system_status = Setting('System Status',0.0,'','','')
+        self.PEEP = Setting('PEEP',5.0,'cmH2O',5,12)
+        self.Fi02 = Setting('Fi02',1.0,'%',0.3,0.6)
+        self.min_RR = Setting('Min RR',10.0,'Breaths/min',4,14)
+        self.max_RR = Setting('Max RR',25.0,'Breaths/min',12,40)
+        self.IE_ratio = Setting('I:E Ratio',0.5,'Ratio','1:1.5','1:3')
+        self.inspiratory_rise_time = Setting('Inspiratory Rise Time',0.2,'Seconds',0,5)
+        self.inspiratory_time = Setting('Inspiratory Time',1.0,'Seconds',0.5,2)
+        self.min_inspiratory_time =  Setting('Min Inspiratory Time',2.0,'Seconds',1,3)
+        self.max_inspiratory_time = Setting('Max Inspiratory Time',4.0,'Seconds',0.8,3)
+        self.max_inspiratory_pressure = Setting('Max Inspiratory Pressure',15.0,'cmH20',10,20)
+        self.tidal_volume = Setting('Tidal Volume',600.0,'mL',200,800)
+        self.max_inspiratory_tidal_volume = Setting('Max Inspiratory Tidal Volume',800.0,'mL',30,2000)
+        self.min_inspiratory_tidal_volume = Setting('Min Inspiratory Tidal Volume',300.0,'mL',80,3000)
+        self.max_expiratory_tidal_volume = Setting('Max Expiratory Tidal Volume',800.0,'mL',30,2000)
+        self.min_expiratory_tidal_volume = Setting('Min Expriatory Tidal Volume',300.0,'mL',80,3000)
+        self.min_leak = Setting('Min Leak',0.0,'mL/min',0,20)
+        self.max_leak = Setting('Max Leak',50.0,'mL/min',10,100)
+        self.apnoea_time = Setting('Apnoea Time',10.0,'Seconds',8,20)
+        self.max_pressure = Setting('Max Pressure',40.0,'cmH2O',30,45)
 
 def init_settings_and_data():
     global settings_list
     global data_list
-    settings_list+= [ventilation_mode]
-    settings_list+= [system_status]
-    settings_list+= [PEEP]
-    settings_list+= [Fi02]
-    settings_list+= [min_RR]
-    settings_list+= [max_RR]
-    settings_list+= [IE_ratio]
-    settings_list+= [inspiratory_rise_time]
-    settings_list+= [inspiratory_time]
-    settings_list+= [min_inspiratory_time]
-    settings_list+= [max_inspiratory_time]
-    settings_list+= [max_inspiratory_pressure]
-    settings_list+= [tidal_volume]
-    settings_list+= [max_inspiratory_tidal_volume]
-    settings_list+= [min_inspiratory_tidal_volume]
-    settings_list+= [max_expiratory_tidal_volume]
-    settings_list+= [min_expiratory_tidal_volume]
-    settings_list+= [min_leak]
-    settings_list+= [max_leak]
-    settings_list+= [apnoea_time]
-    settings_list+= [max_pressure]
+    sett = Settings()
+    settings_list+= [sett.ventilation_mode]
+    settings_list+= [sett.system_status]
+    settings_list+= [sett.PEEP]
+    settings_list+= [sett.Fi02]
+    settings_list+= [sett.min_RR]
+    settings_list+= [sett.max_RR]
+    settings_list+= [sett.IE_ratio]
+    settings_list+= [sett.inspiratory_rise_time]
+    settings_list+= [sett.inspiratory_time]
+    settings_list+= [sett.min_inspiratory_time]
+    settings_list+= [sett.max_inspiratory_time]
+    settings_list+= [sett.max_inspiratory_pressure]
+    settings_list+= [sett.tidal_volume]
+    settings_list+= [sett.max_inspiratory_tidal_volume]
+    settings_list+= [sett.min_inspiratory_tidal_volume]
+    settings_list+= [sett.max_expiratory_tidal_volume]
+    settings_list+= [sett.min_expiratory_tidal_volume]
+    settings_list+= [sett.min_leak]
+    settings_list+= [sett.max_leak]
+    settings_list+= [sett.apnoea_time]
+    settings_list+= [sett.max_pressure]
 
     data_list+= [time]
     data_list+= [inspiratory_pressure]
