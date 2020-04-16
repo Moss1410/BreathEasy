@@ -9,9 +9,9 @@ import time
 import numpy
 import matplotlib.pyplot as plt
 import serial
-from drawnow import *
 import random
 from sounds import *
+
 
 #peakPressure
 #respirationRate
@@ -23,19 +23,19 @@ clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
 
+data1={}
 import csv
 def getSim1():
     global data1
-    data1={}
     with open('sineWaveExample.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
            data1[float(row[0])]=float(row[1])
+        
 
 
 def get_data():
     global data1
-
     global times
     global peakPressure
     global oldpeakPressure
@@ -50,8 +50,15 @@ def get_data():
     oldrespirationRate = []
     times = []
     maxTime = 0
-    ser = serial.Serial('COM3', baudrate)
-    try:
+    corrupt = True
+    startingTime=time.time()
+    while (corrupt and (int(time.time()-startingTime)<=5)):
+        try: 
+            ser = serial.Serial('COM3', baudrate)
+            corrupt=False
+        except:
+            pass
+    if not corrupt:
         while True:
             while (ser.inWaiting()==0):
                 pass
@@ -60,13 +67,12 @@ def get_data():
                 data = str(value.decode("utf-8"))
                 data=data.split(",")
                 dataTime = int(data[0])
-                signal0 = 500
+                signal0=0
                 signal1 = int(data[1])
                 update_level(dataTime, signal0, signal1)
-                update_sim1(dataTime)
             except:
                 pass
-    except:
+    else:
         currTime = 0
         while True:
             intValue = random.randint(1, 1020)
@@ -93,7 +99,8 @@ def update_level(timeIn, value0, value):
         times = []
         timeIn = 0
     times.append(timeIn)
-    peakPressure.append(value0)
+    #peakPressure.append(value0)
+    peakPressure.append(2*data1[timeIn/1000]+400)
     respirationRate.append(value)
 
 def combineLists(list1,list2):
@@ -115,11 +122,28 @@ class Logic(BoxLayout):
 class Grapher(Graph):
     def __init__(self, **kwargs):
         super(Grapher, self).__init__(**kwargs)
+        self.peakPressure = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
+        self.oldpeakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
+        self.add_plot(self.peakPressure)
+        self.add_plot(self.oldpeakPressure)
+        self.ymax=1300
+        self.ymin=0
+        self.xmax=graphTime
+        Clock.schedule_interval(self.get_value, 0.001)
+    
+    def get_value(self, dt):
+        self.peakPressure.points = combineLists(times,peakPressure)
+        self.oldpeakPressure.points = combineLists(oldTime,oldpeakPressure)
+
+class Grapher2(Graph):
+    def __init__(self, **kwargs):
+        super(Grapher2, self).__init__(**kwargs)
         self.respirationRate = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
         self.oldrespirationRate = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
         self.add_plot(self.respirationRate)
         self.add_plot(self.oldrespirationRate)
-        self.ymax=1023
+        self.ymax=1300
+        self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
         get_level_thread = Thread(target = get_data)
