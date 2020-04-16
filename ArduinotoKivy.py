@@ -17,13 +17,11 @@ from sounds import *
 #respirationRate
 #tidalVolume
 
-sim = True
 import dataTransferStorage as dt
 
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
-
 
 import csv
 def getSim1():
@@ -37,8 +35,6 @@ def getSim1():
 
 def get_data():
     global data1
-
-
 
     global times
     global peakPressure
