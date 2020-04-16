@@ -245,10 +245,6 @@ def combineLists(list1,list2):
 class VButton(Button):
     def __init__(self, **kwargs):
         super(VButton, self).__init__(**kwargs)
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/PleaseWorkThisTimebyNick
     # button click function
     def callback(self):#, event): 
        
