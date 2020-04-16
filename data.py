@@ -16,7 +16,7 @@ incoming_data_ERROR_flag = 0 # 0=fine, 1=some drop of signal, 2=frequent loss of
 
 class Setting():
     # Initializer / Instance Attributes
-    def __init__(self,name, default_value, units, max, min):
+    def __init__(self,name, default_value, units, min, max):
         self.name = name
         self.value = default_value
         self.units = units
