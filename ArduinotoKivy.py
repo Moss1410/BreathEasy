@@ -1,7 +1,7 @@
-from kivy.config import Config
-Config.set('graphics', 'resizable', '0') 
-Config.set('graphics', 'width', '1700') 
-Config.set('graphics', 'height', '900')
+# from kivy.config import Config
+# Config.set('graphics', 'resizable', '0') 
+# Config.set('graphics', 'width', '1700') 
+# Config.set('graphics', 'height', '900')
 
 # External library imports
 #from kivy.config import Config
@@ -35,7 +35,6 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 from kivy.properties import StringProperty
-
 import data
 import statistics
 
@@ -44,8 +43,6 @@ import statistics
 #tidalVolume
 
 # Our code file imports
-import dataTransferStorage as dt
-import inputScreen as inputScreen
 
 clear = True
 baudrate = 9600
@@ -181,12 +178,13 @@ def update_level(timeIn, pp, rr, tv):
     global tidalVolume
     global oldtidalVolume
     global incomings
+
     incomings.time.set_value(timeIn)
     incomings.inspiratory_pressure.set_value(pp)
     incomings.inspiratory_flow.set_value(rr)
     incomings.tidal_volume.set_value(tv)
     incomings.voltage.set_value(24 + data4[timeIn/1000])
-    incomings.Fi02.set_value(settings.Fi02.get_value() + data4[timeIn/1000])
+    incomings.Fi02.set_value(settings.FiO2.get_value() + data4[timeIn/1000])
 
     global oldTime
     global times
@@ -361,7 +359,4 @@ if __name__ == "__main__":
     global settings
     
     settings = data.Settings()
-    dt.make_setttings_default()
-    dt.create_settings_string()
-    dt.interpret_input()
     BreathEasy().run()
