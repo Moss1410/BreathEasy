@@ -41,6 +41,10 @@ class Warning:
     def get_sensor_data(self):
         return self.incoming_data
 
+    def show_warning(self):
+        #DISPLAY OR DO SOMTHING???
+        return
+
 inc = data.IncomingDatas()
 sett= data.Settings()
 warnings_list = []
@@ -54,8 +58,8 @@ class Warnings():
         self.loss_of_data_transfer = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_flow)
         self.respiratory_rate_low = Warning('Respiratory Rate Low',4,0,sett.min_RR.get_value(),0,'Breaths/min',inc.expiratory_flow)
         self.ventilator_power_level = Warning('Ventilator Power Level',5,0,10,0,'Voltage',inc.expiratory_flow)
-        self.eTv_not_achieved = Warning('eTv not achieved',4,0,10,2,'%',inc.expiratory_flow)
-        self.iTv_not_achieved = Warning('iTv not achieved',4,0,10,2,'%',inc.expiratory_flow)
+        self.eTv_not_achieved = Warning('eTv not achieved',4,0,sett.min_expiratory_tidal_volume,2,'%',inc.expiratory_flow)
+        self.iTv_not_achieved = Warning('iTv not achieved',4,0,sett.max_inspiratory_tidal_volume,2,'%',inc.expiratory_flow)
         self.min_leak = Warning('Min Leak',4,0,0,0,'mL/min',inc.expiratory_flow)
         self.max_leak = Warning('Max Leak',4,0,50,1,'mL/min',inc.expiratory_flow)
         self.low_FiO2 = Warning('Low FiO2',4,0,0.9,0,'mL/min', inc.expiratory_flow,)
@@ -79,17 +83,35 @@ def init_warnings():
     warnings_list += [warn.high_Fi02]
 
 # Warning Management -Know when to display warnings
-def check_all_warning_status():
+def update_all_warning_status():
     global warnings_list
     for warning in warnings_list:
         comparison_type = warning.get_comparison_type()
-        if comparison_value == 0:
+        if comparison_type == 0:
             #need to check if less than
-            if warning.get_sensor_data().get_value < warning.get_threshold:
+            if warning.get_sensor_data().get_value() < warning.get_threshold():
                 warning.set_status(1)
-        elif comparison_value == 1:
-            
-    #this is undeveloped functionality, must check warning limits against corresonding sensor information
+            else:
+                warning.set_status(0)
+        elif comparison_type == 1:
+            #needs to be less than
+            if warning.get_sensor_data().get_value() > warning.get_threshold():
+                warning.set_status(1)
+            else:
+                warning.set_status(0)
+        else:
+            #needs to be within 10% of threshold
+            vmin = 0.9*warning.get_threshold()
+            vmax = 1.1*warning.get_threshold()
+            if warning.get_sensor_data().get_value() < vmin:
+                warning.set_status(1)
+            if warning.get_sensor_data().get_value() > vmax:
+                warning.set_status(2)
+
+def check_all_warning_status():
+    for w in warnings_list:
+        if w.get_status !=0:
+            w.show_warning()
 
 
 
