@@ -141,9 +141,20 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            PeakPressure:
                                 id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Peak Pressure"
+                    ######################################
+
+                    ######################################
+                    Logic:
+                        LightBlueBackgroundLogic:
+                            orientation: "vertical"
+                            Logic:
+                                size_hint: [1, .9]
+                                RespiratoryRate:
+                                    id: "graph1"
+                                    ylabel: "Respiratory Rate"
                     ######################################
 
                     ######################################
@@ -151,19 +162,9 @@ ScreenManager:
                         # Setting the background color
                         orientation: "vertical"
                         GraphLogic:
-                            Grapher:
+                            TidalVolume:
                                 id: "graph1"
-                                ylabel: "Oxygen"
-                    ######################################
-
-                    ######################################
-                    Logic:
-                        # Setting the background color
-                        orientation: "vertical"
-                        GraphLogic:
-                            Grapher:
-                                id: "graph1"
-                                ylabel: "Oxygen"
+                                ylabel: "Tidal Volume"
                     ######################################
 
                 # Output Parameters

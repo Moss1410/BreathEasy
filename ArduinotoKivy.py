@@ -11,7 +11,6 @@ import time
 import numpy
 import matplotlib.pyplot as plt
 import serial
-from drawnow import *
 import random
 from sounds import *
 import kivy
@@ -30,6 +29,12 @@ from kivy.graphics import Color, Rectangle
 from kivy.properties import StringProperty
 
 import data
+from scipy import integrate
+
+
+#peakPressure
+#respirationRate
+#tidalVolume
 
 # Our code file imports
 import dataTransferStorage as dt
@@ -38,61 +43,113 @@ import inputScreen as inputScreen
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
+oldTime = []
+peakPressure = []
+oldpeakPressure = []
+tidalVolume = []
+oldtidalVolume = []
+respirationRate = []
+oldrespirationRate = []
+times = []
+RR = 0
+
+corrupt=True
+
+
+import csv
+
+def getCurve(file):
+    dictionary = {}
+    with open(file) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+           dictionary[float(row[0])]=float(row[1])
+    return dictionary
+        
+data1=getCurve('SquareWave.csv')
+data2=getCurve('FlowWave.csv')
+
 global incomings
 incomings = data.IncomingDatas()
 
 
+
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
-    global levels
+    global data1
     global times
-    global oldLevels
+    global tidalVolume
+    global oldtidalVolume
+    global peakPressure
+    global oldpeakPressure
+    global respirationRate
+    global oldrespirationRate
     global oldTime
     global maxTime
-    oldTime = []
-    levels = []
-    oldLevels = []
-    times = []
+    global corrupt
     maxTime = 0
-    try:
-        ser = serial.Serial('COM3', baudrate)
-        while True:
-            while (ser.inWaiting()==0):
-                pass
-            value = ser.readline()
-            try:
-                data = str(value.decode("utf-8"))
-                data=data.split(",")
-                dataTime = int(data[0])
-                signal1 = int(data[1])
-                update_level(dataTime, signal1)
-            except:
-                pass
-    except:
+    startingTime=time.time()
+    while (corrupt and (int(time.time()-startingTime)<=1)):
+        try: 
+            ser = serial.Serial('COM3', baudrate)
+            corrupt=False
+            while True:
+                while (ser.inWaiting()==0):
+                    pass
+                value = ser.readline()
+                try:
+                    data = str(value.decode("utf-8"))
+                    data=data.split(",")
+                    dataTime = int(data[0])
+                    signal0=0
+                    signal1 = int(data[1])
+                    update_level(dataTime, 0, signal1, 0)
+                except:
+                    pass
+        except:
+            pass
+    if corrupt==True:
         currTime = 0
         while True:
-            incomings.Fe02.set_value(incomings.Fe02.get_value()+1)
-            intValue = random.randint(1, 1020)
-            currTime += 200
-            update_level(currTime, intValue)
-            time.sleep(0.1)
+            pp = data1[currTime/1000]
+            rr = data2[currTime/1000]
+            tv = 500
+            if len(times)!=0:
+                y_int = integrate.cumtrapz(times, peakPressure, initial=0)
+            else:
+                y_int = 0
+            update_level(currTime, pp, rr, tv)
+            currTime += 10
+            time.sleep(0.01)
 
-def update_level(timeIn, value):
-    global levels
-    global oldLevels
+def update_level(timeIn, pp, rr, tv):
+    global peakPressure
+    global oldpeakPressure
+    global respirationRate
+    global oldrespirationRate
+    global tidalVolume
+    global oldtidalVolume
+
     global oldTime
     global times
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        maxTime +=timeIn
-        oldLevels = levels.copy()
+        maxTime += timeIn
         oldTime = times.copy()
-        levels = []
+        oldpeakPressure = peakPressure.copy()
+        oldrespirationRate = respirationRate.copy()
+        oldtidalVolume = tidalVolume.copy()
+        peakPressure = []
+        respirationRate = []
+        tidalVolume=[]
         times = []
         timeIn = 0
-    levels.append(value)
     times.append(timeIn)
+    #peakPressure.append(value0)
+    peakPressure.append(pp)
+    respirationRate.append(rr)
+    tidalVolume.append(tv)
 
 def combineLists(list1,list2):
     list=[]
@@ -143,6 +200,7 @@ class Logic(BoxLayout):
         global clear
         clear = not clear
 
+
 class ChangeLabel(Label):
     def __init__(self, *args, **kwargs):
         Label.__init__(self, *args, **kwargs) 
@@ -153,14 +211,31 @@ class ChangeLabel(Label):
         self.text = str(incomings.__dict__[self.name].get_value())
 
 
-class Grapher(Graph):
+class PeakPressure(Graph):
     def __init__(self, **kwargs):
-        super(Grapher, self).__init__(**kwargs)
-        self.plot = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
-        self.plot2 = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
-        self.add_plot(self.plot)
-        self.add_plot(self.plot2)
+        super(PeakPressure, self).__init__(**kwargs)
+        self.peakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 1])
+        self.oldpeakPressure = LinePlot(line_width=1, color=[1, 0, 0, 0.2])
+        self.add_plot(self.peakPressure)
+        self.add_plot(self.oldpeakPressure)
         self.ymax=1023
+        self.ymin=0
+        self.xmax=graphTime
+        Clock.schedule_interval(self.get_value, 0.001)
+    
+    def get_value(self, dt):
+        self.peakPressure.points = combineLists(times,peakPressure)
+        self.oldpeakPressure.points = combineLists(oldTime,oldpeakPressure)
+
+class RespiratoryRate(Graph):
+    def __init__(self, **kwargs):
+        super(RespiratoryRate, self).__init__(**kwargs)
+        self.respirationRate = LinePlot(line_width=1.5, color=[0, 0.5, 0, 1])
+        self.oldrespirationRate = LinePlot(line_width=1, color=[0, 0.5, 0, 0.2])
+        self.add_plot(self.respirationRate)
+        self.add_plot(self.oldrespirationRate)
+        self.ymax=900
+        self.ymin=-900
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
         get_level_thread = Thread(target = get_data)
@@ -168,8 +243,23 @@ class Grapher(Graph):
         get_level_thread.start()
     
     def get_value(self, dt):
-        self.plot.points = combineLists(times,levels)
-        self.plot2.points = combineLists(oldTime,oldLevels)
+        self.respirationRate.points = combineLists(times,respirationRate)
+        self.oldrespirationRate.points = combineLists(oldTime,oldrespirationRate)
+class TidalVolume(Graph):
+    def __init__(self, **kwargs):
+        super(TidalVolume, self).__init__(**kwargs)
+        self.tidalVolume = LinePlot(line_width=1.5, color=[0, 0, 1, 1])
+        self.oldtidalVolume = LinePlot(line_width=1, color=[0, 0, 1, 0.2])
+        self.add_plot(self.tidalVolume)
+        self.add_plot(self.oldtidalVolume)
+        self.ymax=1023
+        self.ymin=0
+        self.xmax=graphTime
+        Clock.schedule_interval(self.get_value, 0.001)
+    
+    def get_value(self, dt):
+        self.tidalVolume.points = combineLists(times,tidalVolume)
+        self.oldtidalVolume.points = combineLists(oldTime,oldtidalVolume)
 
 
 ################################### MAIN APP CLASS ###################################
