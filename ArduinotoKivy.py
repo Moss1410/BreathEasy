@@ -5,6 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.garden.graph import MeshLinePlot, LinePlot, Plot, Graph
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen, ScreenManager
 from threading import Thread
 import time
 import numpy
@@ -141,7 +142,6 @@ class VButton(Button):
     def talk(self, message):
         print(message)
 
-
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
@@ -169,24 +169,12 @@ class Grapher(Graph):
         self.plot2.points = combineLists(oldTime,oldLevels)
 
 
-
-
 ################################### MAIN APP CLASS ###################################
 class BreathEasy(App):
     def build(self):
+        # Set the initial window color for our app
         Window.clearcolor = (0.07, 0.37, 0.55, 1)
-        return Builder.load_file("vedant.kv")
-
-        # # Declare both screens
-        # class MenuScreen(Screen):
-        #     pass
-        # class SettingsScreen(Screen):
-        #     pass
-
-        # # Create the screen manager
-        # sm = ScreenManager()
-        # sm.add_widget(MenuScreen(name='menu'))
-        # sm.add_widget(SettingsScreen(name='settings'))
+        return Builder.load_file("total.kv")
 
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
@@ -194,39 +182,3 @@ if __name__ == "__main__":
     dt.create_settings_string()
     dt.interpret_input()
     BreathEasy().run()
-
-
-
-
-# # Create both screens. Please note the root.manager.current: this is how
-# # you can control the ScreenManager from kv. Each screen has by default a
-# # property manager that gives you the instance of the ScreenManager used.
-# Builder.load_string("""
-# <MenuScreen>:
-#     BoxLayout:
-#         Button:
-#             text: 'Goto settings'
-#             on_press: root.manager.current = 'settings'
-#         Button:
-#             text: 'Quit'
-
-# <SettingsScreen>:
-#     BoxLayout:
-#         Button:
-#             text: 'My settings button'
-#         Button:
-#             text: 'Back to menu'
-#             on_press: root.manager.current = 'menu'
-# """)
-
-# # Declare both screens
-# class MenuScreen(Screen):
-#     pass
-
-# class SettingsScreen(Screen):
-#     pass
-
-# # Create the screen manager
-# sm = ScreenManager()
-# sm.add_widget(MenuScreen(name='menu'))
-# sm.add_widget(SettingsScreen(name='settings'))
