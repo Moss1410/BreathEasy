@@ -40,6 +40,12 @@ import inputScreen as inputScreen
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
+oldTime = []
+peakPressure = []
+oldpeakPressure = []
+respirationRate = []
+oldrespirationRate = []
+times = []
 
 data1={}
 import csv
@@ -62,22 +68,19 @@ def get_data():
     global oldrespirationRate
     global oldTime
     global maxTime
-    oldTime = []
-    peakPressure = []
-    oldpeakPressure = []
-    respirationRate = []
-    oldrespirationRate = []
-    times = []
     maxTime = 0
     corrupt = True
     startingTime=time.time()
+    print(1)
     while (corrupt and (int(time.time()-startingTime)<=5)):
         try: 
+            print(corrupt)
             ser = serial.Serial('COM3', baudrate)
             corrupt=False
         except:
             pass
     if not corrupt:
+        print(3)
         while True:
             while (ser.inWaiting()==0):
                 pass
@@ -92,6 +95,7 @@ def get_data():
             except:
                 pass
     else:
+        print(4)
         currTime = 0
         while True:
             intValue = random.randint(1, 1020)
