@@ -53,7 +53,6 @@ def make_setttings_default():
         'max_pressure' : (40.0,'cmH2O',(30,45))
     }
 
-
 # Turn Current Settings into Output String
 # Should be of the form:
 # $Breatheout,002.0,000.0,005.0,001.0,010.0,025.0,000.5,000.2,001.0,002.0,004.0,015.0,600.0,800.0,300.0,800.0,300.0,000.0,050.0,010.0,040.0,
@@ -72,16 +71,14 @@ def create_settings_string():
     print(output)
     return output
 
-    
 # Intake Serial Data
 # Something similar will have to be done in Arduino/C for interpretting the user settings
-# Example expected string $Breathein,000.0,001.0,002.0,003.0,004.0,005.0,006.0,007.0,008.0,001.0,
+# Example expected string $Breathein,000.0,001.0,002.0,003.0,14.0,005.0,006.0,007.0,008.0,001.0,
+# Length must be 71
 def interpret_input():
     # data string is ready for processing
     lst = data_string.split(',')
-    print(lst)
     lst=lst[1:len(lst)-1]
-    print(lst)
     i=0
     for x in lst:
         #Strip off the extra zeros at the beginning
@@ -93,7 +90,6 @@ def interpret_input():
         i+=1
     print(incoming_data)
     return
-
 
 # WORK OUT HOW TO CHECK IF DATA HAS BEEN LOST- PROBS NEED EXPECTED LENGTH, MEANS MIGHT NEED TO PAD VALUES TO THEIR MAX SIZE
 # Storage of comlete data strings - then to be used for updates
@@ -125,7 +121,7 @@ def serial_storing():
         data_string += serial_in
 
 
-if __name__ == "__main__":
-    make_setttings_default()
-    create_settings_string()
-    interpret_input()
+#if __name__ == "__main__":
+    #make_setttings_default()
+    #create_settings_string()
+    #interpret_input()

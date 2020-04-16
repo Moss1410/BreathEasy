@@ -13,6 +13,8 @@ from drawnow import *
 import random
 from sounds import *
 
+import dataTransferStorage as dt
+
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
@@ -107,5 +109,7 @@ class BreathEasy(App):
         return Builder.load_file("alex.kv")
 
 if __name__ == "__main__":
-    
+    dt.make_setttings_default()
+    dt.create_settings_string()
+    dt.interpret_input()
     BreathEasy().run()
