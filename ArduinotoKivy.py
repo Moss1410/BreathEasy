@@ -212,8 +212,8 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        #RR=getRR()
-        #PEEP=getPEEP()
+        RR=getRR()
+        PEEP=getPEEP()
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
