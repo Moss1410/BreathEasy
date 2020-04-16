@@ -27,6 +27,8 @@ from kivy.uix.scatter import Scatter
 from kivy.uix.textinput import TextInput 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
+from kivy.properties import StringProperty
+
 import data
 
 # Our code file imports
@@ -36,6 +38,9 @@ import inputScreen as inputScreen
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
+global incomings
+incomings = data.IncomingDatas()
+
 
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
@@ -66,6 +71,7 @@ def get_data():
     except:
         currTime = 0
         while True:
+            incomings.Fe02.set_value(incomings.Fe02.get_value()+1)
             intValue = random.randint(1, 1020)
             currTime += 200
             update_level(currTime, intValue)
@@ -137,6 +143,16 @@ class Logic(BoxLayout):
         global clear
         clear = not clear
 
+class ChangeLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        #print("hi")
+
+    def update(self, dt):
+        self.text = str(incomings.__dict__[self.name].get_value())
+
+
 class Grapher(Graph):
     def __init__(self, **kwargs):
         super(Grapher, self).__init__(**kwargs)
@@ -166,8 +182,7 @@ class BreathEasy(App):
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     global settings
-    global incomings
-    incomings = data.IncomingDatas()
+    
     settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()

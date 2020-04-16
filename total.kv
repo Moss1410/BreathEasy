@@ -4,6 +4,9 @@
 <Label@Widget>
     color: 0,0,0,1    # Sets the default text color to black
 
+<ChangeLabel@Widget>
+    color: 0,0,0,1
+
 # Define  background color Template
 <BackgroundColor@Widget>
     background_color: 1, 1, 1, 1
@@ -173,10 +176,11 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Breath Frequency (b/min):'
-                        Label:
-                            id: output_1
-                            text: '6.5'
+                            text: 'Inspiratory O2 (%):'
+                        ChangeLabel:
+                            id: Fi02
+                            name: "Fi02"
+                            text: "root.Fi0"
                     # Parameter 2
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
@@ -184,11 +188,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Inspiratory Pressure (cmH2O):'
+                            text: 'Expiratory O2 (%):'
                             
-                        Label:
-                            id: output_2
-                            text: '164.35'
+                        ChangeLabel: 
+                            id: Fe02
+                            name: "Fe02"
+                            text: "root.Fe02"
                             
                     # Parameter 3
                     LightBlueBackgroundLogic:
@@ -197,11 +202,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'Inspiratory Time (s):'
+                            text: 'Room Air Flow Rate (L/min):'
                             
-                        Label:
-                            id: output_3
-                            text: '3'
+                        ChangeLabel:
+                            id: room_air_flow_rate
+                            name: "room_air_flow_rate"
+                            text: "root.room_air_flow_rate"
                             
                     # Parameter 4
                     LightBlueBackgroundLogic:
@@ -210,11 +216,12 @@ ScreenManager:
                             text_size: outputs_panel.width, None
                             halign: 'left'
                             valign: 'center'
-                            text: 'PEEP (cmH2O):'
+                            text: 'O2 Flow Rate (L/min):'
                             
-                        Label:
-                            id: output_4
-                            text: '12.71'
+                        ChangeLabel:
+                            id: O2_flow_rate
+                            name: "O2_flow_rate"
+                            text: "root.O2_flow_rate"
                             
             # Input Parameters
             BottomPanelLogic:
@@ -487,20 +494,12 @@ ScreenManager:
                 pos_hint: {'center_x':0.8, 'center_y':0.61}
 
             ### Accept and Cancel Buttons ###
-            VButton:
-                id: acceptVButton
-                size_hint: (0.1, 0.05)
-                pos_hint: {'center_x':0.72, 'center_y':0.1}
-                text: "ACCEPT"
-                on_press: 
-                    settingsScreen.manager.current = 'menu'
-                    settingsScreen.manager.transition.direction = 'right'
 
             VButton:
                 id: cancelVButton
                 size_hint: (0.1, 0.05)
                 pos_hint: {'center_x':0.85, 'center_y':0.1}
-                text: "CANCEL"
+                text: "Back"
                 on_press: 
                     settingsScreen.manager.current = 'menu'
                     settingsScreen.manager.transition.direction = 'right'
