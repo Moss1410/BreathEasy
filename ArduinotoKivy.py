@@ -170,6 +170,16 @@ def getRR():
     newRR=60000/((max(times)-min(times))/(len(maxValues)-1))
     return newRR
 
+def getPEEP():
+    average1 = statistics.mean(peakPressure)
+    lowerHalf = []
+    counter = 0
+    for value in peakPressure:
+        if value < average1:
+            lowerHalf.append(value)
+    average2 = statistics.mean(lowerHalf)
+    return average2
+
 def update_level(timeIn, pp, rr, tv):
     global peakPressure
     global oldpeakPressure
@@ -192,6 +202,7 @@ def update_level(timeIn, pp, rr, tv):
     timeIn -= maxTime
     if timeIn >= graphTime:
         RR=getRR()
+        getPEEP()
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
