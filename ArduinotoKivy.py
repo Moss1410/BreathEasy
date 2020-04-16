@@ -1,9 +1,11 @@
+# External library imports
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.garden.graph import MeshLinePlot, LinePlot, Plot, Graph
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen, ScreenManager
 from threading import Thread
 import time
 import numpy
@@ -11,13 +13,29 @@ import matplotlib.pyplot as plt
 import serial
 import random
 from sounds import *
+import kivy
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.dropdown import DropDown 
+from kivy.uix.label import Label
+from kivy.uix.relativelayout import RelativeLayout 
+from kivy.config import Config  
+from kivy.base import runTouchApp 
+from kivy.uix.gridlayout import GridLayout 
+from kivy.uix.popup import Popup  
+from kivy.uix.scatter import Scatter 
+from kivy.uix.textinput import TextInput  
+from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Rectangle 
 
 
 #peakPressure
 #respirationRate
 #tidalVolume
 
+# Our code file imports
 import dataTransferStorage as dt
+import inputScreen as inputScreen
 
 clear = True
 baudrate = 9600
@@ -34,6 +52,7 @@ def getSim1():
         
 
 
+################################### GLOBAL FUNCTIONS ###################################
 def get_data():
     global data1
     global times
@@ -111,6 +130,52 @@ def combineLists(list1,list2):
         index+=1
     return list
 
+################################### CLASSES (FOR KIVY) ###################################
+class VButton(Button):
+    def __init__(self, **kwargs):
+        super(VButton, self).__init__(**kwargs)
+
+    # button click function
+    def callback(self):#, event): 
+        # # function for saving input data to the correct button
+        # def on_text(instance, value):
+        #     if(event == self.mandatoryBreath1):
+        #         self.mandatoryBreath1.text = value
+        #     elif(event == self.mandatoryBreath2):
+        #         self.mandatoryBreath2.text = value
+        #     elif(event == self.mandatoryBreath3):
+        #         self.mandatoryBreath3.text = value
+        #     elif(event == self.mandatoryBreath4):
+        #         self.mandatoryBreath4.text = value
+        #     elif (event == self.tiButton):
+        #         self.tiButton.text = value
+        #     elif (event == self.tinspRiseButton):
+        #         self.tinspRiseButton.text = value
+        #     elif (self.triggerButton == event):
+        #         self.triggerButton.text = value
+        #     elif (self.inspCycleRiseButton == event):
+        #         self.inspCycleRiseButton.text = value
+        #     else:
+        #         self.psAbovePeepButton.text = value
+
+        # Setup the popup layout    
+        layout = GridLayout(cols = 1, padding = 10) 
+        print("\u2193")
+
+        textinput = TextInput(multiline=False, text = '40')
+        closeButton = Button(text = "OK") 
+
+        layout.add_widget(textinput)      
+        layout.add_widget(closeButton) 
+
+        popup = Popup(title ='Please Enter the Value:', content = layout, size_hint =(None, None), size =(200, 150))   
+        popup.open() 
+        # textinput.bind(text=on_text)
+        closeButton.bind(on_press = popup.dismiss)
+
+    def talk(self, message):
+        print(message)
+
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
@@ -154,11 +219,15 @@ class Grapher2(Graph):
         self.respirationRate.points = combineLists(times,respirationRate)
         self.oldrespirationRate.points = combineLists(oldTime,oldrespirationRate)
 
+
+################################### MAIN APP CLASS ###################################
 class BreathEasy(App):
     def build(self):
+        # Set the initial window color for our app
         Window.clearcolor = (0.07, 0.37, 0.55, 1)
-        return Builder.load_file("alex.kv")
+        return Builder.load_file("total.kv")
 
+################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
     getSim1()
     dt.make_setttings_default()
