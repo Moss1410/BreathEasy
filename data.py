@@ -74,7 +74,6 @@ class IncomingData:
 data_list = []
 #Data(name,units)
 
-
 class IncomingDatas():
     def __init__(self):
         self.time = IncomingData('Time','Seconds')
@@ -100,15 +99,15 @@ class Settings():
         self.system_status = Setting('System Status',0.0,'','','')
         
         self.PEEP = Setting('PEEP',5.0,'cmH2O',5,12)
-        self.Fi02 = Setting('FiO2',1.0,'%',0.3,0.6)
+        self.FiO2 = Setting('FiO2',1.0,'%',0.3,1)
         self.min_RR = Setting('Min RR',10.0,'Breaths/min',4,14)
         self.max_RR = Setting('Max RR',25.0,'Breaths/min',12,40)
-        self.IE_ratio = Setting('I:E Ratio',0.5,'Ratio','1:1.5','1:3')
+        self.IE_ratio = Setting('I:E Ratio',0.5,'Ratio',0,1)
         
         self.inspiratory_rise_time = Setting('Inspiratory Rise Time',0.2,'Seconds',0,5)
         self.inspiratory_time = Setting('Inspiratory Time',1.0,'Seconds',0.5,2)
         self.min_inspiratory_time =  Setting('Min Inspiratory Time',2.0,'Seconds',1,3)
-        self.max_inspiratory_time = Setting('Max Inspiratory Time',4.0,'Seconds',0.8,3)
+        self.max_inspiratory_time = Setting('Max Inspiratory Time',2,'Seconds',0.8,3)
         self.max_inspiratory_pressure = Setting('Max Inspiratory Pressure',15.0,'cmH20',10,20)
         
         self.tidal_volume = Setting('Tidal Volume',600.0,'mL',200,800)
