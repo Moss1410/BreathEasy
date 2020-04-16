@@ -79,8 +79,7 @@
 
 <Grapher@Widget>
     xlabel: ""
-    x_ticks_minor: 5
-    x_ticks_major: 25
+    x_ticks_major: 500
     y_ticks_major: 200
     y_grid_label: True
     x_grid_label: True
@@ -118,35 +117,12 @@ BaseLogic:
             id: graph_group
             ######################################
             Logic:
-<<<<<<< HEAD
-                BoxLayout:
-                    canvas:
-                        Color:
-                            rgba: 0.85, 0.85, 0.85, 1
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    orientation: "vertical"
-                    BoxLayout:
-                        size_hint: [1, .9]
-                        Grapher:
-                            xlabel: ""
-                            ylabel: "Oxygen"
-                            x_ticks_major: 100
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-=======
                 # Setting the background color
                 orientation: "vertical"
                 GraphLogic:
                     Grapher:
                         id: "graph1"
                         ylabel: "Oxygen"
->>>>>>> 3e3cbf133d8aa7c4fd2d89ee2404cc311171e0c0
             ######################################
 
             ######################################
@@ -156,20 +132,8 @@ BaseLogic:
                     Logic:
                         size_hint: [1, .9]
                         Grapher:
-<<<<<<< HEAD
-                            xlabel: ""
-                            ylabel: "Oxygen"
-                            x_ticks_major: 100
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-=======
                             id: "graph1"
                             ylabel: "Oxygen"
->>>>>>> 3e3cbf133d8aa7c4fd2d89ee2404cc311171e0c0
             ######################################
 
             ######################################
@@ -179,21 +143,8 @@ BaseLogic:
                     Logic:
                         size_hint: [1, .9]
                         Grapher:
-<<<<<<< HEAD
-                            xlabel: ""
-                            ylabel: "Oxygen"
-                            x_ticks_major: 100
-                            y_ticks_major: 200
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 2
-                            x_grid: True 
-                            y_grid: True
-
-=======
                             id: "graph1"
                             ylabel: "Oxygen"
->>>>>>> 3e3cbf133d8aa7c4fd2d89ee2404cc311171e0c0
             ######################################
 
         # Output Parameters

@@ -27,6 +27,7 @@ from kivy.uix.scatter import Scatter
 from kivy.uix.textinput import TextInput  
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
+import data
 
 # Our code file imports
 import dataTransferStorage as dt
@@ -102,41 +103,29 @@ class VButton(Button):
 
     # button click function
     def callback(self):#, event): 
-        # # function for saving input data to the correct button
-        # def on_text(instance, value):
-        #     if(event == self.mandatoryBreath1):
-        #         self.mandatoryBreath1.text = value
-        #     elif(event == self.mandatoryBreath2):
-        #         self.mandatoryBreath2.text = value
-        #     elif(event == self.mandatoryBreath3):
-        #         self.mandatoryBreath3.text = value
-        #     elif(event == self.mandatoryBreath4):
-        #         self.mandatoryBreath4.text = value
-        #     elif (event == self.tiButton):
-        #         self.tiButton.text = value
-        #     elif (event == self.tinspRiseButton):
-        #         self.tinspRiseButton.text = value
-        #     elif (self.triggerButton == event):
-        #         self.triggerButton.text = value
-        #     elif (self.inspCycleRiseButton == event):
-        #         self.inspCycleRiseButton.text = value
-        #     else:
-        #         self.psAbovePeepButton.text = value
-
+       
         # Setup the popup layout    
         layout = GridLayout(cols = 1, padding = 10) 
         print("\u2193")
 
-        textinput = TextInput(multiline=False, text = '40')
+        self.textinput = TextInput(multiline=False, text = '40')
         closeButton = Button(text = "OK") 
 
-        layout.add_widget(textinput)      
+        layout.add_widget(self.textinput)      
         layout.add_widget(closeButton) 
 
-        popup = Popup(title ='Please Enter the Value:', content = layout, size_hint =(None, None), size =(200, 150))   
-        popup.open() 
+        self.popup = Popup(title ='Please Enter the Value:', content = layout, size_hint =(None, None), size =(200, 150))   
+        self.popup.open() 
         # textinput.bind(text=on_text)
-        closeButton.bind(on_press = popup.dismiss)
+        
+        closeButton.bind(on_press = self.setValue)
+    
+    def setValue(self, send):
+        self.popup.dismiss()
+        global settings
+        print(self.name)
+        print(self.textinput.text)
+        settings.__dict__[self.name].set_value(int(self.textinput.text))
 
     def talk(self, message):
         print(message)
@@ -177,6 +166,8 @@ class BreathEasy(App):
 
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
+    global settings
+    settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()
     dt.interpret_input()

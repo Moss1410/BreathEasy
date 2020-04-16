@@ -79,8 +79,7 @@
 
 <Grapher@Widget>
     xlabel: ""
-    x_ticks_minor: 5
-    x_ticks_major: 25
+    x_ticks_major: 500
     y_ticks_major: 200
     y_grid_label: True
     x_grid_label: True
@@ -107,7 +106,7 @@
 ###### Screenmanager #######################################################################
 ScreenManager:
     id: sm
-    ###### SettingsScreen UI Layout #######################################################################
+    ###### Main Screen UI Layout #######################################################################
     MenuScreen:
         name: 'menu'
         id: menuScreen
@@ -145,24 +144,22 @@ ScreenManager:
 
                     ######################################
                     Logic:
-                        LightBlueBackgroundLogic:
-                            orientation: "vertical"
-                            Logic:
-                                size_hint: [1, .9]
-                                Grapher:
-                                    id: "graph1"
-                                    ylabel: "Oxygen"
+                        # Setting the background color
+                        orientation: "vertical"
+                        GraphLogic:
+                            Grapher:
+                                id: "graph1"
+                                ylabel: "Oxygen"
                     ######################################
 
                     ######################################
                     Logic:
-                        LightBlueBackgroundLogic:
-                            orientation: "vertical"
-                            Logic:
-                                size_hint: [1, .9]
-                                Grapher:
-                                    id: "graph1"
-                                    ylabel: "Oxygen"
+                        # Setting the background color
+                        orientation: "vertical"
+                        GraphLogic:
+                            Grapher:
+                                id: "graph1"
+                                ylabel: "Oxygen"
                     ######################################
 
                 # Output Parameters
@@ -387,21 +384,26 @@ ScreenManager:
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.2, 'center_y':0.55}
                 text: "40"
+                on_press: self.callback()
             VButton:
                 id: mandatoryBreath2
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.2, 'center_y':0.42}
                 text: "40"
+                on_press: self.callback()
             VButton:
-                id: mandatoryBreath3
+                id: PEEP
+                name: "PEEP"
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.2, 'center_y':0.29}
                 text: "40"
+                on_press: self.callback()
             VButton:
                 id: mandatoryBreath4
                 size_hint: (0.12, 0.08)
                 pos_hint: {'center_x':0.2, 'center_y':0.16}
                 text: "40"
+                on_press: self.callback()
             Label:
                 id: pcpeepLabel
                 text: "PC above PEEP"
