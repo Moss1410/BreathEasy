@@ -170,6 +170,13 @@ def getRR():
     newRR=60000/((max(times)-min(times))/(len(maxValues)-1))
     return newRR
 
+def getPressureAverage():
+    average1 = statistics.mean(peakPressure)
+    return average1
+
+def getPressurePeak():
+    return max(peakPressure)
+
 def getPEEP():
     average1 = statistics.mean(peakPressure)
     lowerHalf = []
