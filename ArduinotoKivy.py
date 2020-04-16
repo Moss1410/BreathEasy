@@ -15,7 +15,6 @@ from drawnow import *
 import random
 from sounds import *
 import kivy
-from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown 
 from kivy.uix.label import Label
@@ -25,9 +24,12 @@ from kivy.base import runTouchApp
 from kivy.uix.gridlayout import GridLayout 
 from kivy.uix.popup import Popup  
 from kivy.uix.scatter import Scatter 
-from kivy.uix.textinput import TextInput  
+from kivy.uix.textinput import TextInput 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
+from kivy.properties import StringProperty
+
+import data
 
 # Our code file imports
 import dataTransferStorage as dt
@@ -36,6 +38,9 @@ import inputScreen as inputScreen
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
+global incomings
+incomings = data.IncomingDatas()
+
 
 ################################### GLOBAL FUNCTIONS ###################################
 def get_data():
@@ -66,6 +71,7 @@ def get_data():
     except:
         currTime = 0
         while True:
+            incomings.Fe02.set_value(incomings.Fe02.get_value()+1)
             intValue = random.randint(1, 1020)
             currTime += 200
             update_level(currTime, intValue)
@@ -103,41 +109,28 @@ class VButton(Button):
 
     # button click function
     def callback(self):#, event): 
-        # # function for saving input data to the correct button
-        # def on_text(instance, value):
-        #     if(event == self.mandatoryBreath1):
-        #         self.mandatoryBreath1.text = value
-        #     elif(event == self.mandatoryBreath2):
-        #         self.mandatoryBreath2.text = value
-        #     elif(event == self.mandatoryBreath3):
-        #         self.mandatoryBreath3.text = value
-        #     elif(event == self.mandatoryBreath4):
-        #         self.mandatoryBreath4.text = value
-        #     elif (event == self.tiButton):
-        #         self.tiButton.text = value
-        #     elif (event == self.tinspRiseButton):
-        #         self.tinspRiseButton.text = value
-        #     elif (self.triggerButton == event):
-        #         self.triggerButton.text = value
-        #     elif (self.inspCycleRiseButton == event):
-        #         self.inspCycleRiseButton.text = value
-        #     else:
-        #         self.psAbovePeepButton.text = value
-
+       
         # Setup the popup layout    
         layout = GridLayout(cols = 1, padding = 10) 
         print("\u2193")
 
-        textinput = TextInput(multiline=False, text = '40')
+        self.textinput = TextInput(multiline=False, text = '40')
         closeButton = Button(text = "OK") 
 
-        layout.add_widget(textinput)      
+        layout.add_widget(self.textinput)      
         layout.add_widget(closeButton) 
 
-        popup = Popup(title ='Please Enter the Value:', content = layout, size_hint =(None, None), size =(200, 150))   
-        popup.open() 
+        self.popup = Popup(title ='Please Enter the Value:', content = layout, size_hint =(None, None), size =(200, 150))   
+        self.popup.open() 
         # textinput.bind(text=on_text)
-        closeButton.bind(on_press = popup.dismiss)
+        
+        closeButton.bind(on_press = self.setValue)
+    
+    def setValue(self, send):
+        self.popup.dismiss()
+        global settings
+        settings.__dict__[self.name].set_value(int(self.textinput.text))
+        self.text = str(settings.__dict__[self.name].get_value())
 
     def talk(self, message):
         print(message)
@@ -149,6 +142,16 @@ class Logic(BoxLayout):
     def toggle(self):
         global clear
         clear = not clear
+
+class ChangeLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        #print("hi")
+
+    def update(self, dt):
+        self.text = str(incomings.__dict__[self.name].get_value())
+
 
 class Grapher(Graph):
     def __init__(self, **kwargs):
@@ -178,6 +181,9 @@ class BreathEasy(App):
 
 ################################### MAIN LOOP (RUNS APP) ###################################
 if __name__ == "__main__":
+    global settings
+    
+    settings = data.Settings()
     dt.make_setttings_default()
     dt.create_settings_string()
     dt.interpret_input()
