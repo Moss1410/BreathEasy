@@ -7,6 +7,11 @@ import dataTransferStorage as data
 # (Name: (Severity, Status, threshold, threshold comparison, units))
 # Severity ranges from 0-5 (5 being the worst)
 # Threshold comparison from 0-2, 0=less than, 1=greater than, 2=either direction of set
+
+
+class Warning:
+    def __init__ 
+
 warnings = {
     ('Peak Pressure High':(4,0,40,1,'cmH20')), 
     ('Peak Pressure Low':(4,0,10,0,'cmH20')),
