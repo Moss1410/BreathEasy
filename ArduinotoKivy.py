@@ -18,6 +18,8 @@ from sounds import *
 #tidalVolume
 
 sim = True
+import dataTransferStorage as dt
+
 clear = True
 baudrate = 9600
 graphTime = 10000 #number milliseconds
@@ -139,4 +141,7 @@ class BreathEasy(App):
 
 if __name__ == "__main__":
     getSim1()
+    dt.make_setttings_default()
+    dt.create_settings_string()
+    dt.interpret_input()
     BreathEasy().run()
