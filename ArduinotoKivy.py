@@ -1,5 +1,4 @@
 from kivy.config import Config
-Config.set('graphics', 'resizable', '0') 
 Config.set('graphics', 'width', '1500') 
 Config.set('graphics', 'height', '900')
 
@@ -217,8 +216,8 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        incomings.PEEP.set_value(getPEEP())
-        incomings.respiratory_rate.set_value(getRR())
+        incomings.PEEP.set_value(round(getPEEP(),2))
+        incomings.respiratory_rate.set_value(round(getRR(),2)) # this seems to give a constant value for some reason -Nick
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
@@ -246,7 +245,10 @@ def combineLists(list1,list2):
 class VButton(Button):
     def __init__(self, **kwargs):
         super(VButton, self).__init__(**kwargs)
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/PleaseWorkThisTimebyNick
     # button click function
     def callback(self):#, event): 
        
@@ -403,7 +405,7 @@ class BreathEasy(App):
     
     def build(self):
         # Set the initial window color for our app
-        Window.clearcolor = (0.07, 0.37, 0.55, 1)
+        Window.clearcolor = (24/255, 24/255, 24/255, 1)
         return Builder.load_file("total.kv")
 
 ################################### MAIN LOOP (RUNS APP) ###################################
