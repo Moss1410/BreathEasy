@@ -34,6 +34,7 @@
 <TitleLabel@Label+BackgroundColor>
     background_color: 0.82, 0.9, 0.94, 1    # Default background color
     font_size: '20sp'   # set the font size to BIG
+    font_size: str(self.height/3)+'sp'
 
 # BackgroundLogic Class
 <LightBlueBackgroundLogic@Logic+BackgroundColor>
@@ -57,6 +58,12 @@
     spacing: 20
     size_hint: 1, 0.8
 
+<OutputLabel@Label>
+    text_size: self.width-40, None
+    font_size: str(self.height/6)+'sp'
+    halign: 'left'
+    valign: 'center'
+
 ### Bottom Panel Area ###
 <BottomPanelLogic@Logic>
     spacing: 20
@@ -67,9 +74,17 @@
     size_hint: 0.125, 1
 
 <InputLabel@LightBlueBackgroundLabel>
-    text_size: root.width, None
+    text_size: root.width-40, None
     halign: 'center'
     valign: 'center'
+    font_size: str(self.height/7)+'sp'
+    size_hint: 1, 1
+
+<InputValueLabel@LightBlueBackgroundLabel>
+    size_hint: 1, 0.4
+
+<InputProgressBar@ProgressBar>
+    size_hint: 1, 0.4
 
 
 ### Graphs Area ###
@@ -98,9 +113,10 @@
     spacing: 15
 
 <AlarmLabel@LightBlueBackgroundLabel>
-    text_size: root.width, None
+    text_size: root.width-60, None
     halign: 'center'
     valign: 'center'
+    font_size: str(self.height/5)+'sp'
 
 <MenuScreen@Screen>
 
@@ -173,10 +189,7 @@ ScreenManager:
                     # Parameter 1
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
+                        OutputLabel:
                             text: 'Inspiratory O2 (%):'
                         ChangeLabel:
                             id: Fi02
@@ -185,13 +198,9 @@ ScreenManager:
                     # Parameter 2
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
+                        OutputLabel:
                             text: 'Expiratory O2 (%):'
-                            
-                        ChangeLabel: 
+                        ChangeLabel:
                             id: Fe02
                             name: "Fe02"
                             text: "root.Fe02"
@@ -199,12 +208,8 @@ ScreenManager:
                     # Parameter 3
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
+                        OutputLabel:
                             text: 'Room Air Flow Rate (L/min):'
-                            
                         ChangeLabel:
                             id: room_air_flow_rate
                             name: "room_air_flow_rate"
@@ -213,10 +218,7 @@ ScreenManager:
                     # Parameter 4
                     LightBlueBackgroundLogic:
                         orientation: 'vertical'
-                        Label:
-                            text_size: outputs_panel.width, None
-                            halign: 'left'
-                            valign: 'center'
+                        OutputLabel:
                             text: 'O2 Flow Rate (L/min):'
                             
                         ChangeLabel:
@@ -233,14 +235,15 @@ ScreenManager:
                     InputLabel:
                         text: 'Breath Frequency (b/min):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_1.value))
-                        
-                    ProgressBar:
+
+                    InputProgressBar:
                         id: input_1
                         min: 0
                         max: 10
                         value: 1
+                        size_hint: 1, 0.4
 
 
                 # Parameter 2
@@ -248,10 +251,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Pressure (cmH2O):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_2.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_2
                         min: 0
                         max: 10
@@ -262,10 +265,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Time (s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_3.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_3
                         min: 0
                         max: 10
@@ -276,10 +279,10 @@ ScreenManager:
                     InputLabel:
                         text: 'PEEP (cmH2O):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_4.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_4
                         min: 0
                         max: 10
@@ -290,10 +293,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Pause Time (%/s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_5.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_5
                         min: 0
                         max: 10
@@ -304,10 +307,10 @@ ScreenManager:
                     InputLabel:
                         text: 'Inspiratory Time (s):'
                         
-                    Label:
+                    InputValueLabel:
                         text: str(int(input_6.value))
                         
-                    ProgressBar:
+                    InputProgressBar:
                         id: input_6
                         min: 0
                         max: 10
