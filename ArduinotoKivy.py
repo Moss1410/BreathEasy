@@ -123,9 +123,10 @@ class VButton(Button):
     def setValue(self, send):
         self.popup.dismiss()
         global settings
-        print(self.name)
-        print(self.textinput.text)
         settings.__dict__[self.name].set_value(int(self.textinput.text))
+
+    #def update_all(self):
+
 
     def talk(self, message):
         print(message)
