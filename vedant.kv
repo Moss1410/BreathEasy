@@ -1,0 +1,224 @@
+###### UI Layout #######
+RelativeLayout:
+    VButton:
+        id: modeSelect
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.15, 'center_y':0.85}
+        text: "Mode"   
+        on_release: ventilatorModeDropDown.open
+    VButton:
+        id: storePresetSelect
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.5, 'center_y':0.85}
+        text: "Store Preselect"
+    VButton:
+        id: presetSelect
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.85, 'center_y':0.85}
+        text: "Presets"
+        on_release: presetModeDropDown.open
+    Label:
+        id: topTitle
+        text: 'Set Ventilation Properties'
+        pos_hint: {'center_x':0.5, 'center_y':0.95}
+        font_size: '50dp'
+        bold: 'true'
+
+    ### Column Headings ###
+    Label:
+        id: mandatoryBreathTitle
+        text: 'Mandatory Breath'
+        pos_hint: {'center_x':0.2, 'center_y':0.70}
+        font_size: '20dp'
+        bold: "true"
+    Label:
+        id: inspTimesTitle
+        text: 'Insp. times'
+        pos_hint: {'center_x':0.4, 'center_y':0.70}
+        font_size: '20dp'
+        bold: "true"
+    Label:
+        id: triggerTitle
+        text: 'Trigger'
+        pos_hint: {'center_x':0.6, 'center_y':0.70}
+        font_size: '20dp'
+        bold: "true"
+    Label:
+        id: supportBreathTitle
+        text: 'Supported Breath'
+        pos_hint: {'center_x':0.8, 'center_y':0.70}
+        font_size: '20dp'
+        bold: "true"
+
+    ### Buttons Column 1 ###
+    VButton:
+        id: mandatoryBreath1
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.55}
+        text: "40"
+    VButton:
+        id: mandatoryBreath2
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.42}
+        text: "40"
+    VButton:
+        id: mandatoryBreath3
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.29}
+        text: "40"
+    VButton:
+        id: mandatoryBreath4
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.16}
+        text: "40"
+    Label:
+        id: pcpeepLabel
+        text: "PC above PEEP"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.61}
+    Label:
+        id: simvLabel
+        text:"SIMV Rate"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.48}
+    Label:
+        id: peepLabel
+        text: "PEEP"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.35}
+    Label:
+        id: oxygenLabel
+        text: "Oxygen Conc."
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.2, 'center_y':0.22}
+    
+    ### Buttons Column 2 ###
+    VButton:
+        id: tiVButton
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.4, 'center_y':0.55}
+        text: "40"
+        on_press: self.callback()
+    VButton:
+        id: tinspRiseVButton
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.4, 'center_y':0.42}
+        text: "40"
+        on_press: self.callback()
+    Label:
+        id: tiLabel
+        text: "Ti"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.4, 'center_y':0.61}
+    Label:
+        id: tiInspRiseLabel
+        text: "T insp. rise"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.4, 'center_y':0.48}
+
+    ### Buttons Column 3 ###
+    Label:
+        id: triggerLabel
+        text: "Trigg. Flow"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.6, 'center_y':0.61}
+    Label:
+        id: inspCycleRiseLabel
+        text: "Insp. cycle off"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.6, 'center_y':0.48}
+    VButton:
+        id: triggerVButton
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.6, 'center_y':0.55}
+        text: "40"
+        on_press: self.callback()
+    VButton:
+        id: inspCycleRiseVButton
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.6, 'center_y':0.42}
+        text: "40"
+        on_press: self.callback()
+
+    ### Buttons Column 4 ###
+    VButton:
+        id: psAbovePeepVButton
+        size_hint: (0.12, 0.08)
+        pos_hint: {'center_x':0.8, 'center_y':0.55}
+        text: "40"
+        on_press: self.callback()
+    Label:
+        id: psAbovePeepLabel
+        text: "PS above PEEP"
+        size_hint: (0.15, 0.08)
+        pos_hint: {'center_x':0.8, 'center_y':0.61}
+
+    ### Accept and Cancel Buttons ###
+    VButton:
+        id: acceptVButton
+        size_hint: (0.1, 0.05)
+        pos_hint: {'center_x':0.72, 'center_y':0.1}
+        text: "ACCEPT"
+    VButton:
+        id: cancelVButton
+        size_hint: (0.1, 0.05)
+        pos_hint: {'center_x':0.85, 'center_y':0.1}
+        text: "CANCEL"
+
+    ### Dropdowns ###
+    DropDown:
+        id: ventilatorModeDropDown
+        on_select: lambda instance, x:setattr(modeSelect, 'text', x)
+        ### Dropdown VButtons ###
+        VButton:
+            id: vcMode
+            text: "Volume Control"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: ventilatorModeDropDown.select(vcMode.text)
+        VButton:
+            id: pcMode
+            text: "Pressure Control"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: ventilatorModeDropDown.select(pcMode.text)
+        VButton:
+            id: vsMode
+            text: "Volume Support"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: ventilatorModeDropDown.select(vsMode.text)
+        VButton:
+            id: psMode
+            text: "Pressure Support"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: ventilatorModeDropDown.select(psMode.text)
+        VButton:
+            id: bvMode
+            text: "Bi-vent"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: ventilatorModeDropDown.select(bvMode.text)
+
+    DropDown:
+        id: presetModeDropDown
+        on_select: lambda instance, x:setattr(presetSelect, 'text', x)
+        VButton:
+            id: presetMode1
+            text: "Preset1"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: presetModeDropDown.select(presetMode1.text)
+        VButton:
+            id: presetMode2
+            text: "Preset2"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: presetModeDropDown.select(presetMode2.text)
+        VButton:
+            id: presetMode3
+            text: "Preset3"
+            size_hint_y: None
+            height: 40
+            on_release: lambda btn: presetModeDropDown.select(presetMode3.text)
