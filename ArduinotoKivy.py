@@ -24,7 +24,7 @@ from kivy.base import runTouchApp
 from kivy.uix.gridlayout import GridLayout 
 from kivy.uix.popup import Popup  
 from kivy.uix.scatter import Scatter 
-from kivy.uix.textinput import TextInput  
+from kivy.uix.textinput import TextInput 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 import data

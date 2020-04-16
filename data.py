@@ -5,6 +5,8 @@
 #NOTE MUST CALL init_settings_and_data() before program begins
 # contains data input interpretation and data output string creation
 
+from kivy.properties import StringProperty
+
 #Example Data String
 data_string = '$Breathein,000.0,001.0,002.0,003.0,004.0,005.0,006.0,007.0,008.0,001.0,'
 
@@ -74,16 +76,26 @@ data_list = []
 
 class IncomingDatas():
     def __init__(self):
-        self.time = IncomingData('Time','Seconds')
-        self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
-        self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
-        self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
-        self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
-        self.Fi02 = IncomingData('Fi02','%')
-        self.Fe02 = IncomingData('Fe02','%')
-        self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
-        self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
-        self.settings_recieved = IncomingData('Settings Recieved', '')
+        # self.time = IncomingData('Time','Seconds')
+        # self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
+        # self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
+        # self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
+        # self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
+        # self.Fi02 = IncomingData('Fi02','%')
+        # self.Fe02 = IncomingData('Fe02','%')
+        # self.room_air_flow_rate = IncomingData('Room Air Flow Rate','L/min')
+        # self.O2_flow_rate = IncomingData('O2 Flow Rate','L/min')
+        # self.settings_recieved = IncomingData('Settings Recieved', '')
+        self.time = StringProperty()
+        self.inspiratory_pressure = StringProperty()
+        self.inspiratory_flow = StringProperty()
+        self.expiratory_pressure = StringProperty()
+        self.expiratory_flow = StringProperty()
+        self.Fi02 = StringProperty()
+        self.Fe02 = StringProperty()
+        self.room_air_flow_rate = StringProperty()
+        self.O2_flow_rate = StringProperty()
+        self.settings_recieved = StringProperty()
 
 
 #Define Settings
