@@ -15,9 +15,7 @@ from kivy.graphics import Color, Rectangle
 
 
 kivy.require('1.9.0')  
-
 Config.set('graphics', 'resizable', True)  
-
 
 ventilatorModeDropDown = DropDown()
 presetModeDropDown = DropDown()
@@ -40,6 +38,7 @@ class MyApp(App):
 
     acceptButton= Button(size_hint = (0.1, 0.05), pos_hint = {'center_x':0.72, 'center_y':0.1}, text="ACCEPT")
     cancelButton= Button(size_hint = (0.1, 0.05), pos_hint = {'center_x':0.85, 'center_y':0.1}, text="CANCEL")
+
 
     # button click function
     def callback(self, event): 
@@ -80,7 +79,6 @@ class MyApp(App):
         textinput.bind(text=on_text)
         closeButton.bind(on_press = popup.dismiss)
 
-        
 
     def build(self):
         
@@ -139,7 +137,6 @@ class MyApp(App):
         triggerTitle = Label(text='Trigger', pos_hint = {'center_x':0.6, 'center_y':0.70}, font_size = '20dp', bold = "true")
         supportBreathTitle = Label(text='Supported Breath', pos_hint = {'center_x':0.8, 'center_y':0.70}, font_size = '20dp', bold = "true")
         
-
         # bind button action
         self.mandatoryBreath1.bind(on_press = self.callback)
         self.mandatoryBreath2.bind(on_press = self.callback)
