@@ -27,6 +27,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle 
 import data
+import statistics
 
 #peakPressure
 #respirationRate
@@ -105,9 +106,7 @@ def get_data():
         while True:
             pp = data1[currTime/1000]/30
             rr = data2[currTime/1000]/12
-            tv = data3[currTime/1000]/2.5
-            if pp<PEEP:
-                PEEP=pp
+            tv = data3[currTime/1000]/3
             update_level(currTime, pp, rr, tv)
             currTime += 10
             time.sleep(0.01)
@@ -124,6 +123,33 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
+        newRR=0
+        average=statistics.mean(respirationRate)
+        print(average)
+        counter=0
+        mode=1
+        length=len(respirationRate)
+        newRR=0
+        for value in respirationRate:
+            print(mode)
+            if mode == 1:
+                startCounter = counter
+                if value>=average+40:
+                    startCounter=counter
+                    mode = 2
+            elif mode == 2:
+                if (value<=average+40) and startCounter+10<counter:
+                    mode = 3
+            elif mode == 3:
+                if value<=average-40:
+                    newRR+=1
+                    mode=1
+            if (counter-startCounter>length/2):
+                startCounter=counter
+            counter+=1
+        newRR/=2
+        print(newRR)
+        RR=newRR
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
