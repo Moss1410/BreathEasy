@@ -71,12 +71,9 @@
 #     on_press: self.background_color = 0, 0, 1, 1
 #     on_release: self.background_color = 0, 0, 0, 0
 
-<BigVButton@LightBlueBackgroundButton>
+<BigVButton@VButton+LightBlueBackgroundButton>
 
-<SmallVButton@LightBlueBackgroundButton>
-
-<VButton@LightBlueBackgroundButton>
-
+<SmallVButton@VButton+LightBlueBackgroundButton>
 
 ### Output Buttons Area ###
 <OutputLogic@Logic>
@@ -106,11 +103,7 @@
     orientation: 'vertical'
 
 <SettingsItemLogic@Logic>
-<<<<<<< HEAD
-    size_hint: 1, 0.25
-=======
     size_hint: 1, 1
->>>>>>> origin/PleaseWorkThisTimebyNick
     orientation: 'vertical'
 
 <SettingsItemLabel@Label>
@@ -436,17 +429,6 @@ ScreenManager:
                     on_release: presetModeDropDown.open
 
             SettingsBottomPanelLogic:
-<<<<<<< HEAD
-                # Title Row
-                SettingsColumnLogic:
-                    size_hint: 1, 0.3
-                    LightBlueBackgroundLabel:
-                        id: VentilationSettingstitle
-                        text: 'All Configurable Properties'
-                        font_size: '20dp'
-                        bold: "true"
-                # Row 1
-=======
                 # # Title Row
                 # SettingsColumnLogic:
                 #     size_hint: 1, 0.3
@@ -456,7 +438,6 @@ ScreenManager:
                 #         font_size: '20dp'
                 #         bold: "true"
                 # Column 1
->>>>>>> origin/PleaseWorkThisTimebyNick
                 SettingsColumnLogic:
                     SettingsItemLogic:
                         SettingsItemLabel:
@@ -562,42 +543,6 @@ ScreenManager:
                             id: tidal_volume
                             text: "800.0"
                             on_press: self.callback()
-<<<<<<< HEAD
-                # Row 2
-                SettingsColumnLogic:
-                    SettingsItemLogic:
-                        Label:
-                            id: MinRRlabel
-                            text:"Min RR"
-                        SmallVButton:
-                            id: min_RR
-                            name: "PEEP"
-                            text: "25"
-                            on_press: self.callback()
-                    SettingsItemLogic:
-                        Label:
-                            id: InspiratoryTimelabel
-                            text: "Inspiratory Time"
-                        SmallVButton:
-                            id: inspiratory_time
-                            text: "10"
-                            on_press: self.callback()
-                # Row 3
-                SettingsColumnLogic:
-                    SettingsItemLogic:
-                        Label:
-                            id: MaxRRlabel
-                            text: "Max RR"
-                        SmallVButton:
-                            id: max_RR
-                            text: "0.2"
-                            on_press: self.callback()
-                    SettingsItemLogic:
-                        SmallVButton:
-                            id: min_inspiratory_time
-                            name: "PEEP"
-                            text: "25"
-=======
                     SettingsItemLogic:
                         SettingsItemLabel:
                             id: max_inspiratory_tidal_volume
@@ -633,39 +578,10 @@ ScreenManager:
                             name: 'Min Expriatory Tidal Volume [mL]'
                             id: min_expiratory_tidal_volume
                             text: "300.0"
->>>>>>> origin/PleaseWorkThisTimebyNick
                             on_press: self.callback()
                 # Row 4
                 SettingsColumnLogic:
                     SettingsItemLogic:
-<<<<<<< HEAD
-                        Label:
-                            id: IElabel
-                            text: "IE Ratio"
-                        SmallVButton:
-                            id: IE_ratio
-                            text: "1"
-                            on_press: self.callback()
-                    SettingsItemLogic:
-                        SmallVButton:
-                            id: max_inspiratory_time
-                            text: "0.2"
-                            on_press: self.callback()
-                # Row 4
-                SettingsColumnLogic:
-                    SettingsItemLogic:
-                        Label:
-                            id: IElabel
-                            text: "IE Ratio"
-                        SmallVButton:
-                            id: IE_ratio
-                            text: "1"
-                            on_press: self.callback()
-                    SettingsItemLogic:
-                        SmallVButton:
-                            id: max_inspiratory_pressure
-                            text: "1"
-=======
                         SettingsItemLabel:
                             id: min_leak
                             text: 'Min Leak [mL/min]'
@@ -691,7 +607,6 @@ ScreenManager:
                             name: 'apnoea_time'
                             id: apnoea_time
                             text: "10.0"
->>>>>>> origin/PleaseWorkThisTimebyNick
                             on_press: self.callback()
                     SettingsItemLogic:
                         SettingsItemLabel:
@@ -713,297 +628,6 @@ ScreenManager:
                             on_press: self.callback()
                         
 
-<<<<<<< HEAD
-        RelativeLayout:
-            ### Buttons Column 1 ###
-            VButton:
-                id: PEEP
-                name: "PEEP"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.65}
-                text: "5"
-                on_press: self.callback()
-            VButton:
-                id: FiO2
-                name: "FiO2"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.52}
-                text: "1"
-                on_press: self.callback()
-            VButton:
-                id: min_RR
-                name: "min_RR"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.39}
-                text: "10"
-                on_press: self.callback()
-            VButton:
-                id: max_RR
-                name: "max_RR"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.26}
-                text: "25"
-                on_press: self.callback()
-            VButton:
-                id: IE_ratio
-                name: "IE_ratio"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.13}
-                text: "0.5"
-                on_press: self.callback()
-            Label:
-                id: PEEPlabel
-                text: "PEEP [cmH2O]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.71}
-            Label:
-                id: FiO2label
-                text:"FiO2 [%]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.58}
-            Label:
-                id: min_RRlabel
-                text: "Min RR [Breaths/min]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.45}
-            Label:
-                id: max_RRlabel
-                text: "Max RR [Breaths/min]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.32}
-            Label:
-                id: IE_ratio
-                text: "I:E Ratio [Ratio]"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.19}
-            
-            ### Buttons Column 2 ###
-            VButton:
-                id: inspiratory_rise_time
-                name: 'inspiratory_rise_time'
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.65}
-                text: "0.2"
-                on_press: self.callback()
-            VButton:
-                name: 'inspiratory_time'
-                id: inspiratory_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.52}
-                text: "1"
-                on_press: self.callback()
-            VButton:
-                name: 'min_inspiratory_time'
-                id: min_inspiratory_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.39}
-                text: "2"
-                on_press: self.callback()
-            VButton:
-                name: 'max_inspiratory_time'
-                id: max_inspiratory_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.26}
-                text: "2"
-                on_press: self.callback()
-            VButton:
-                name: 'max_inspiratory_pressure'
-                id: max_inspiratory_pressure
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.13}
-                text: "1"
-                on_press: self.callback()
-            Label:
-                id: inspiratory_rise_timelabel
-                text: 'Inspiratory Rise Time [Seconds]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.71}
-
-            # Row 4 Labels
-            Label:
-                id: inspiratory_timelabel
-                text:'Inspiratory Time [Seconds]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.58}
-            Label:
-                id: min_inspiratory_timelabel
-                text: 'Min Inspiratory Time [Seconds]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.45}
-            Label:
-                id: max_inspiratory_timelabel
-                text: 'Max Inspiratory Time [Seconds]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.32}
-            Label:
-                id: max_inspiratory_pressurelabel
-                text: 'Max Inspiratory Pressure [cmH20]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.19}
-
-            ### Buttons Column 3 ###
-
-            VButton:
-                name:'max_inspiratory_tidal_volume'
-                id: max_inspiratory_tidal_volume
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.52}
-                text: "800"
-                on_press: self.callback()
-            VButton:
-                id: min_inspiratory_tidal_volume
-                name: "min_inspiratory_tidal_volume"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.39}
-                text: "300"
-                on_press: self.callback()
-            VButton:
-                name: 'max_expiratory_tidal_volume'
-                id: max_expiratory_tidal_volume
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.26}
-                text: "800"
-                on_press: self.callback()
-            VButton:
-                name: 'min_expiratory_tidal_volume'
-                id: min_expiratory_tidal_volume
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.13}
-                text: "300"
-                on_press: self.callback()
-
-            Label:
-                id: max_inspiratory_tidal_volumelabel
-                text:'Max Inspiratory Tidal Volume [mL]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.58}
-            Label:
-                id: min_inspiratory_tidal_volumelabel
-                text: 'Min Inspiratory Tidal Volume [mL]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.45}
-            Label:
-                id: max_expiratory_tidal_volumelabel
-                text: 'Max Expiratory Tidal Volume [mL]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.32}
-            Label:
-                id: min_expiratory_tidal_volumelabel
-                text: 'Min Expriatory Tidal Volume [mL]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.6, 'center_y':0.19}
-
-            ### Buttons Column 4 ###
-            VButton:
-
-                id: max_leak
-                name: 'max_leak'
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.52}
-                text: "50"
-                on_press: self.callback()
-            VButton:
-                name: 'apnoea_time'
-                id: apnoea_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.39}
-                text: "10"
-                on_press: self.callback()
-            VButton:
-                name: 'max_pressure'
-                id: max_pressure
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.26}
-                text: "40"
-                on_press: self.callback()
-
-            Label:
-                id: max_leaklabel
-                text:'Max Leak [mL/min]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.58}
-            Label:
-                id: apnoea_timelabel
-                text: 'Apnoea Time [Seconds]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.45}
-            Label:
-                id: max_pressurelabel
-                text: 'Max Pressure [cmH2O]'
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.8, 'center_y':0.32}
-
-
-            ### Accept and Cancel Buttons ###
-
-            VButton:
-                id: cancelVButton
-                size_hint: (0.1, 0.05)
-                pos_hint: {'center_x':0.85, 'center_y':0.1}
-                text: "Back"
-                on_press: 
-                    settingsScreen.manager.current = 'menu'
-                    settingsScreen.manager.transition.direction = 'right'
-
-
-            ### Dropdowns ###
-            DropDown:
-                id: ventilatorModeDropDown
-                on_select: lambda instance, x:setattr(modeSelect, 'text', x)
-                ### Dropdown VButtons ###
-                VButton:
-                    id: vcMode
-                    text: "Volume Control"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: ventilatorModeDropDown.select(vcMode.text)
-                VButton:
-                    id: pcMode
-                    text: "Pressure Control"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: ventilatorModeDropDown.select(pcMode.text)
-                VButton:
-                    id: vsMode
-                    text: "Volume Support"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: ventilatorModeDropDown.select(vsMode.text)
-                VButton:
-                    id: psMode
-                    text: "Pressure Support"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: ventilatorModeDropDown.select(psMode.text)
-                VButton:
-                    id: bvMode
-                    text: "Bi-vent"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: ventilatorModeDropDown.select(bvMode.text)
-
-            DropDown:
-                id: presetModeDropDown
-                on_select: lambda instance, x:setattr(presetSelect, 'text', x)
-                VButton:
-                    id: presetMode1
-                    text: "Preset1"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: presetModeDropDown.select(presetMode1.text)
-                VButton:
-                    id: presetMode2
-                    text: "Preset2"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: presetModeDropDown.select(presetMode2.text)
-                VButton:
-                    id: presetMode3
-                    text: "Preset3"
-                    size_hint_y: None
-                    height: 40
-                    on_release: lambda btn: presetModeDropDown.select(presetMode3.text)
-=======
         # RelativeLayout:
 
 
@@ -1280,7 +904,6 @@ ScreenManager:
         #             size_hint_y: None
         #             height: 40
         #             on_release: lambda btn: presetModeDropDown.select(presetMode3.text)
->>>>>>> origin/PleaseWorkThisTimebyNick
 
 
 

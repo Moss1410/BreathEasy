@@ -243,9 +243,9 @@ def combineLists(list1,list2):
     return list
 
 ################################### CLASSES (FOR KIVY) ###################################
-class SmallVButton(Button):
+class VButton(Button):
     def __init__(self, **kwargs):
-        super(SmallVButton, self).__init__(**kwargs)
+        super(VButton, self).__init__(**kwargs)
 
     # button click function
     def callback(self):#, event): 
