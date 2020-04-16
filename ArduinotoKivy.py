@@ -72,7 +72,6 @@ def get_data():
     global corrupt
     maxTime = 0
     startingTime=time.time()
-    print(1)
     while (corrupt and (int(time.time()-startingTime)<=5)):
         try: 
             ser = serial.Serial('COM3', baudrate)
@@ -186,9 +185,9 @@ class Logic(BoxLayout):
         global clear
         clear = not clear
 
-class Grapher(Graph):
+class Grapher2(Graph):
     def __init__(self, **kwargs):
-        super(Grapher, self).__init__(**kwargs)
+        super(Grapher2, self).__init__(**kwargs)
         self.peakPressure = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
         self.oldpeakPressure = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
         self.add_plot(self.peakPressure)
@@ -197,17 +196,14 @@ class Grapher(Graph):
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
-        get_level_thread = Thread(target = get_data)
-        get_level_thread.daemon = True
-        get_level_thread.start()
     
     def get_value(self, dt):
         self.peakPressure.points = combineLists(times,peakPressure)
         self.oldpeakPressure.points = combineLists(oldTime,oldpeakPressure)
 
-class Grapher2(Graph):
+class Grapher(Graph):
     def __init__(self, **kwargs):
-        super(Grapher2, self).__init__(**kwargs)
+        super(Grapher, self).__init__(**kwargs)
         self.respirationRate = LinePlot(line_width=2.0, color=[0, 0, 1, 1])
         self.oldrespirationRate = LinePlot(line_width=1.5, color=[1, 0, 0, 0.5])
         self.add_plot(self.respirationRate)
@@ -216,6 +212,9 @@ class Grapher2(Graph):
         self.ymin=0
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
+        get_level_thread = Thread(target = get_data)
+        get_level_thread.daemon = True
+        get_level_thread.start()
     
     def get_value(self, dt):
         self.respirationRate.points = combineLists(times,respirationRate)
