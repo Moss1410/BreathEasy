@@ -120,8 +120,8 @@ def get_data():
             if currTime/1000 not in data1.keys():
                 currTime = 0.0
                 maxTime = 0
-            #pp = data1[currTime/1000]/30
-            pp=45
+            pp = data1[currTime/1000]/30
+            #pp=45
             rr = data2[currTime/1000]/12
             tv = data3[currTime/1000]/3
             update_level(currTime, pp, rr, tv)
