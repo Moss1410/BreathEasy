@@ -54,7 +54,7 @@ class Warnings():
         self.peek_pressure_high = Warning('Peak Pressure High', 4,0,40,1,'cmH20',inc.inspiratory_pressure)
         self.peek_pressure_low = Warning('Peak Pressure Low',4,0,10,0,'cmH20',inc.inspiratory_pressure)
         self.PEEP_high = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_pressure) # i was changing these, but i think youve been removing them liv
-        self.PEEP_low = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_pressure)
+        self.PEEP_low = Warning('PEEP Low',4,0,5,1,'cmH20',inc.expiratory_pressure)
         self.loss_of_data_transfer = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_flow)
         self.respiratory_rate_low = Warning('Respiratory Rate Low',4,0,sett.min_RR.get_value(),0,'Breaths/min',inc.expiratory_flow)
         self.ventilator_power_level = Warning('Ventilator Power Level',5,0,10,0,'Voltage',inc.expiratory_flow)
