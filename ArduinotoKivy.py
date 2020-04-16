@@ -1,3 +1,8 @@
+from kivy.config import Config
+Config.set('graphics', 'resizable', '0') 
+Config.set('graphics', 'width', '1700') 
+Config.set('graphics', 'height', '900')
+
 # External library imports
 from kivy.lang import Builder
 from kivy.app import App
@@ -114,7 +119,7 @@ class VButton(Button):
         layout = GridLayout(cols = 1, padding = 10) 
         print("\u2193")
 
-        self.textinput = TextInput(multiline=False, text = '40')
+        self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
         closeButton = Button(text = "OK") 
 
         layout.add_widget(self.textinput)      
@@ -127,10 +132,15 @@ class VButton(Button):
         closeButton.bind(on_press = self.setValue)
     
     def setValue(self, send):
-        self.popup.dismiss()
         global settings
-        settings.__dict__[self.name].set_value(int(self.textinput.text))
+        try:
+            float(self.textinput.text)
+        except:
+            self.textinput.text = "Try Again"
+            return
+        settings.__dict__[self.name].set_value(float(self.textinput.text))
         self.text = str(settings.__dict__[self.name].get_value())
+        self.popup.dismiss()
 
     def talk(self, message):
         print(message)
