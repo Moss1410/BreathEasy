@@ -467,125 +467,81 @@ ScreenManager:
                 SettingsRowLogic:
                     SettingsItemLogic:
                         Label:
-                            id: FiO2label
-                            text: "FiO2"
+                            id: MinRRlabel
+                            text:"Min RR"
                         SmallVButton:
-                            id: PEEP
-                            text: "100"
+                            id: min_RR
+                            name: "PEEP"
+                            text: "25"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        Label:
+                            id: InspiratoryTimelabel
+                            text: "Inspiratory Time"
+                        SmallVButton:
+                            id: inspiratory_time
+                            text: "10"
                             on_press: self.callback()
                 # Row 3
                 SettingsRowLogic:
                     SettingsItemLogic:
                         Label:
-                            id: FiO2label
-                            text: "FiO2"
+                            id: MaxRRlabel
+                            text: "Max RR"
                         SmallVButton:
-                            id: PEEP
-                            text: "100"
+                            id: max_RR
+                            text: "0.2"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        SmallVButton:
+                            id: min_inspiratory_time
+                            name: "PEEP"
+                            text: "25"
                             on_press: self.callback()
                 # Row 4
                 SettingsRowLogic:
                     SettingsItemLogic:
                         Label:
-                            id: FiO2label
-                            text: "FiO2"
+                            id: IElabel
+                            text: "IE Ratio"
                         SmallVButton:
-                            id: PEEP
-                            text: "100"
+                            id: IE_ratio
+                            text: "1"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        SmallVButton:
+                            id: max_inspiratory_time
+                            text: "0.2"
+                            on_press: self.callback()
+                # Row 4
+                SettingsRowLogic:
+                    SettingsItemLogic:
+                        Label:
+                            id: IElabel
+                            text: "IE Ratio"
+                        SmallVButton:
+                            id: IE_ratio
+                            text: "1"
+                            on_press: self.callback()
+                    SettingsItemLogic:
+                        SmallVButton:
+                            id: max_inspiratory_pressure
+                            text: "1"
                             on_press: self.callback()
 
         RelativeLayout:
 
 
-            ### Column Headings ###
 
+            ### Buttons Column 2 
 
-            ### Buttons Column 1 ###
-            # VButton:
-            #     id: PEEP
-            #     size_hint: (0.12, 0.08)
-            #     pos_hint: {'center_x':0.2, 'center_y':0.65}
-            #     text: "100"
-            #     on_press: self.callback()
-            VButton:
-                id: Fi02
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.52}
-                text: "10"
-                on_press: self.callback()
-            VButton:
-                id: min_RR
-                name: "PEEP"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.39}
-                text: "25"
-                on_press: self.callback()
-            VButton:
-                id: max_RR
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.26}
-                text: "0.2"
-                on_press: self.callback()
-            VButton:
-                id: IE_ratio
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.13}
-                text: "1"
-                on_press: self.callback()
-            # Label:
-            #     id: FiO2label
-            #     text: "FiO2"
-            #     size_hint: (0.15, 0.08)
-            #     pos_hint: {'center_x':0.2, 'center_y':0.71}
-            Label:
-                id: MinRRlabel
-                text:"Min RR"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.58}
-            Label:
-                id: MaxRRlabel
-                text: "Max RR"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.45}
-
-            Label:
-                id: InspiratoryTimelabel
-                text: "Inspiratory Time"
-                size_hint: (0.15, 0.08)
-                pos_hint: {'center_x':0.2, 'center_y':0.19}
-            
-            ### Buttons Column 2 ###
-
-            VButton:
-                id: inspiratory_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.52}
-                text: "10"
-                on_press: self.callback()
-            VButton:
-                id: min_inspiratory_time
-                name: "PEEP"
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.39}
-                text: "25"
-                on_press: self.callback()
-            VButton:
-                id: max_inspiratory_time
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.26}
-                text: "0.2"
-                on_press: self.callback()
-            VButton:
-                id: max_inspiratory_pressure
-                size_hint: (0.12, 0.08)
-                pos_hint: {'center_x':0.4, 'center_y':0.13}
-                text: "1"
-                on_press: self.callback()
             Label:
                 id: inspiratory_rise_timelabel
                 text: 'Inspiratory Rise Time'
                 size_hint: (0.15, 0.08)
                 pos_hint: {'center_x':0.4, 'center_y':0.71}
+
+            # Row 4 Labels
             Label:
                 id: inspiratory_timelabel
                 text:'Inspiratory Time'
