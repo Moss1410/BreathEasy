@@ -183,7 +183,6 @@ def getVolumePeak():
 def getPEEP():
     average1 = statistics.mean(peakPressure)
     lowerHalf = []
-    counter = 0
     for value in peakPressure:
         if value < average1:
             lowerHalf.append(value)
