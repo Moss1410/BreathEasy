@@ -177,6 +177,9 @@ def getPressureAverage():
 def getPressurePeak():
     return max(peakPressure)
 
+def getVolumePeak():
+    return max(tidalVolume)
+
 def getPEEP():
     average1 = statistics.mean(peakPressure)
     lowerHalf = []
