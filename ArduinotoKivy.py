@@ -1,6 +1,3 @@
-from kivy.config import Config
-Config.set('graphics', 'width', '1500') 
-Config.set('graphics', 'height', '900')
 
 # from kivy.config import Config
 # Config.set('graphics', 'resizable', '0') 
@@ -29,6 +26,7 @@ import kivy
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown 
 from kivy.uix.label import Label
+from kivy.uix.progressbar import ProgressBar
 from kivy.uix.relativelayout import RelativeLayout 
 from kivy.config import Config  
 from kivy.base import runTouchApp 
@@ -291,11 +289,26 @@ class ChangeLabel(Label):
     def __init__(self, *args, **kwargs):
         Label.__init__(self, *args, **kwargs) 
         Clock.schedule_interval(self.update, 0.001)
-        #print("hi")
         
-
     def update(self, dt):
         self.text = str(incomings.__dict__[self.name].get_value())
+
+class InputValueLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        
+    def update(self, dt):
+        self.text = str(settings.__dict__[self.name].get_value())
+
+class InputProgressBar(ProgressBar):
+    def __init__(self, *args, **kwargs):
+        ProgressBar.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        
+    def update(self, dt):
+        self.value = settings.__dict__[self.name].get_value()
+    
 
 
 class PeakPressure(Graph):
