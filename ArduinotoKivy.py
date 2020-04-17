@@ -287,7 +287,7 @@ class BigButton(Button):
         layout = GridLayout(cols = 1, padding = 10) 
         print("\u2193")
 
-        self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
+        self.textinput = TextInput(multiline=False)
         closeButton = Button(text = "OK") 
 
         layout.add_widget(self.textinput)      
