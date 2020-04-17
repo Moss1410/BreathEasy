@@ -265,6 +265,13 @@ def combineLists(list1,list2):
     return list
 
 ################################### CLASSES (FOR KIVY) ###################################
+class PresetDropDown(DropDown):
+    def __init__(self, **kwargs):
+        super(PresetDropDown, self).__init__(**kwargs)
+    
+    #def update(self, dt):
+
+
 class VButton(Button):
     def __init__(self, **kwargs):
         super(VButton, self).__init__(**kwargs)
