@@ -574,7 +574,7 @@ ScreenManager:
                         text: "Presets"
                         on_parent: dropdown3.dismiss()
                         on_release: dropdown3.open(self)
-                    DropDown:
+                    PresetDropDown:
                         spacing: 20
                         id: dropdown3
                         on_select: presetSelect.text = '{}'.format(args[1])
