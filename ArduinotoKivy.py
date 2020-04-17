@@ -401,7 +401,8 @@ class BreathEasy(App):
     
     def build(self):
         # Set the initial window color for our app
-        Window.clearcolor = (24/255, 24/255, 24/255, 1)
+        # Window.clearcolor = (24/255, 24/255, 24/255, 1) # black background
+        Window.clearcolor = (0, 0, 0, 1) # white bkg
         return Builder.load_file("total.kv")
 
 ################################### MAIN LOOP (RUNS APP) ###################################
