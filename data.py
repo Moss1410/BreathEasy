@@ -78,14 +78,20 @@ class IncomingDatas():
     def __init__(self):
         self.time = IncomingData('Time','Seconds')
         self.inspiratory_pressure = IncomingData('Inspiratory Pressure', 'cmH2O')
+        self.peak_inspiratory_pressure = IncomingData('Peak Inspiratory Pressure', 'cmH2O')
+        self.peak_inspiratory_pressure.set_value(30)
         self.inspiratory_flow = IncomingData('Inspiratory Flow', 'L/min')
         self.expiratory_pressure = IncomingData('Expiratory Pressure', 'cmH2O')
         self.expiratory_flow = IncomingData('Expiratory Flow', 'L/min')
         self.PEEP = IncomingData('PEEP', 'cmH2O')
+        self.PEEP.set_value(5)
         self.respiratory_rate = IncomingData('Respiratory Rate', 'Breaths/min')
+        self.respiratory_rate.set_value(10)
         self.voltage = IncomingData("Voltage", "V")
+        self.voltage.set_value(24)
         self.tidal_volume = IncomingData("Tidal Volume", "mL")
         self.Fi02 = IncomingData('Fi02','%')
+        self.Fi02.set_value(1)
         self.Fe02 = IncomingData('Fe02','%')
         self.settings_recieved = IncomingData('Settings Recieved', '')
 
@@ -265,19 +271,19 @@ class Warning:
 
 class Warnings():
     def __init__(self, inc, sett):
-        self.peek_pressure_high = Warning('Peak Pressure High', 4,0,40,1,'cmH20',inc.inspiratory_pressure)
-        self.peek_pressure_low = Warning('Peak Pressure Low',4,0,10,0,'cmH20',inc.inspiratory_pressure)
+        self.peek_pressure_high = Warning('Peak Pressure High', 4,0,40,1,'cmH20',inc.peak_inspiratory_pressure)
+        self.peek_pressure_low = Warning('Peak Pressure Low',4,0,10,0,'cmH20',inc.peak_inspiratory_pressure)
         self.PEEP_high = Warning('PEEP High',4,0,10,1,'cmH20',inc.PEEP)
-        self.PEEP_low = Warning('PEEP High',4,0,5,0,'cmH20',inc.PEEP)
+        self.PEEP_low = Warning('PEEP Low',4,0,5,0,'cmH20',inc.PEEP)
         #self.loss_of_data_transfer = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_flow)
         self.respiratory_rate_low = Warning('Respiratory Rate Low',4,0,sett.min_RR.get_value(),0,'Breaths/min',inc.respiratory_rate)
         self.ventilator_power_level = Warning('Ventilator Power Level',5,0,24,2,'Voltage',inc.voltage)
-        self.Tv_not_achieved = Warning('Tidal volume not achieved',4,0,sett.min_expiratory_tidal_volume,2,'%',inc.tidal_volume)
+        self.Tv_not_achieved = Warning('Tidal volume not achieved',4,0,sett.min_expiratory_tidal_volume.get_value(),1,'%',inc.tidal_volume)
         #self.iTv_not_achieved = Warning('iTv not achieved',4,0,sett.max_inspiratory_tidal_volume,2,'%',inc.expiratory_flow)
-        self.min_leak = Warning('Min Leak',4,0,0,0,'mL/min',inc.inspiratory_flow)
+        self.min_leak = Warning('Min Leak',4,0,-50,0,'mL/min',inc.inspiratory_flow)
         self.max_leak = Warning('Max Leak',4,0,50,1,'mL/min',inc.inspiratory_flow)
-        self.low_FiO2 = Warning('Low FiO2',4,0,0.9,0,'mL/min', inc.Fi02,)
-        self.high_Fi02 = Warning('High Fi02',4,0,0.3,1,'mL/min',inc.Fi02)
+        self.low_FiO2 = Warning('Low FiO2',4,0,0.3,0,'mL/min', inc.Fi02)
+        #self.high_Fi02 = Warning('High Fi02',4,0,0.9,1,'mL/min',inc.Fi02)
     
     # Warning Management -Know when to display warnings
     def update_all_warning_status(self):
@@ -303,7 +309,7 @@ class Warnings():
                 if warning.get_sensor_data().get_value() < vmin:
                     warning.set_status(1)
                 if warning.get_sensor_data().get_value() > vmax:
-                    warning.set_status(2)
+                    warning.set_status(1)
 
     def get_warnings(self):
         warnings_list = []
@@ -313,10 +319,10 @@ class Warnings():
         warnings_list += [self.PEEP_low]
         #warnings_list += [self.loss_of_data_transfer]
         warnings_list += [self.respiratory_rate_low]
-        #warnings_list += [self.eTv_not_achieved]
+        warnings_list += [self.Tv_not_achieved]
         #warnings_list += [self.iTv_not_achieved]
         warnings_list += [self.min_leak]
         warnings_list += [self.max_leak]
         warnings_list += [self.low_FiO2]
-        warnings_list += [self.high_Fi02]
+        #warnings_list += [self.high_Fi02]
         return warnings_list
