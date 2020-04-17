@@ -127,8 +127,8 @@ def get_data():
                 maxTime = 0
             pp = data1[currTime/1000]/30
             #pp=45
-            rr = data2[currTime/1000]/12
-            tv = data3[currTime/1000]/3
+            rr = data2[currTime/1000]/13
+            tv = data3[currTime/1000]
             update_level(currTime, pp, rr, tv)
             currTime += 10
             time.sleep(0.01)
@@ -251,21 +251,44 @@ class PresetDropDown(DropDown):
     
     def update(self, dt):
         global saved_sets
+        self.clear_widgets()
         for k in saved_sets.keys():
-            btn = Button(text=k, size_hint_y=None, height=20)
+            btn = DropDownItemButton(text=k, size_hint_y=None, height=20)
+            btn.bind(on_press=self.setter)
+            self.add_widget(btn)
 
+    
+    def setter(self, button):
+        global settings
+        list1 = saved_sets[button.text].get_settings()
+        list2 = settings.get_settings()
+        for i, item in enumerate(list1):
+            list2[i].set_value(item.get_value())
+
+
+
+class DropDownItemButton(Button):
+    def __init__(self, **kwargs):
+        super(DropDownItemButton, self).__init__(**kwargs)
+    #     Clock.schedule_interval(self.update, 0.5)
+    
+    # def update(self, dt):
+    #     global saved_sets
+    #     for k in saved_sets.keys():
+    #         btn = Button(text=k, size_hint_y=None, height=20)
 
 
 
 class VButton(Button):
     def __init__(self, **kwargs):
         super(VButton, self).__init__(**kwargs)
+        Clock.schedule_interval(self.update, 0.5)
+
     # button click function
     def callback(self):#, event): 
        
         # Setup the popup layout    
         layout = GridLayout(cols = 1, padding = 10) 
-        print("\u2193")
 
         self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
         closeButton = Button(text = "OK") 
@@ -290,6 +313,11 @@ class VButton(Button):
         self.text = str(settings.__dict__[self.name].get_value())
         self.popup.dismiss()
 
+    def update(self, dt):
+        if hasattr(self, 'name'):
+            self.text = str(settings.__dict__[self.name].get_value())
+
+
 class BigButton(Button):
     def __init__(self, **kwargs):
         super(BigButton, self).__init__(**kwargs)
@@ -298,7 +326,6 @@ class BigButton(Button):
        
         # Setup the popup layout    
         layout = GridLayout(cols = 1, padding = 10) 
-        print("\u2193")
 
         self.textinput = TextInput(multiline=False)
         closeButton = Button(text = "OK") 
@@ -316,7 +343,10 @@ class BigButton(Button):
         global saved_sets
         global settings
         saved_sets[self.textinput.text] = data.Settings()
-        saved_sets[self.textinput.text].__dict__ == settings.__dict__.copy()
+        list1 = saved_sets[self.textinput.text].get_settings()
+        list2 = settings.get_settings()
+        for i, item in enumerate(list2):
+            list1[i].set_value(item.get_value())
         self.popup.dismiss()
 
 
@@ -368,12 +398,12 @@ class AlarmLabel(Label):
                 self.background_color = [1,0,0,1]
                 warned = True
                 self.text = warn.get_name()
-                #print(warn.get_name())
-                #print(warn.incoming_data.value)
-                # for i in range(5):
-                #     wave_obj = sa.WaveObject.from_wave_file("SHUTDOWN.wav")
-                #     play_obj = wave_obj.play()
-                #     play_obj.wait_done()
+                print(warn.get_name())
+                print(warn.incoming_data.value)
+                for i in range(5):
+                    wave_obj = sa.WaveObject.from_wave_file("SHUTDOWN.wav")
+                    play_obj = wave_obj.play()
+                    play_obj.wait_done()
 
         if not warned:
             self.background_color = [0,1,0,1]
@@ -424,8 +454,8 @@ class TidalVolume(Graph):
         self.oldtidalVolume = LinePlot(line_width=1, color=[0, 0, 1, 0.2])
         self.add_plot(self.tidalVolume)
         self.add_plot(self.oldtidalVolume)
-        self.ymax=400
-        self.ymin=0
+        self.ymax=900
+        self.ymin=300
         self.xmax=graphTime
         Clock.schedule_interval(self.get_value, 0.001)
     

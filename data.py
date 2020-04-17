@@ -101,8 +101,8 @@ settings_list = []
 #Setting(Name, default_value, units, min, max)
 class Settings():
     def __init__(self):
-        self.ventilation_mode = Setting('Ventilation Mode',2.0,'','','')
-        self.system_status = Setting('System Status',0.0,'','','')
+        self.ventilation_mode = Setting('Ventilation Mode',2.0,'',0,2)
+        self.system_status = Setting('System Status',0.0,'',0,1)
         
         self.PEEP = Setting('PEEP',5.0,'cmH2O',5,12)
         self.FiO2 = Setting('FiO2',1.0,'%',0.3,1)
@@ -267,7 +267,7 @@ class Warnings():
         #self.loss_of_data_transfer = Warning('PEEP High',4,0,10,1,'cmH20',inc.expiratory_flow)
         self.respiratory_rate_low = Warning('Respiratory Rate Low',4,0,sett.min_RR.get_value(),0,'Breaths/min',inc.respiratory_rate)
         self.ventilator_power_level = Warning('Ventilator Power Level',5,0,24,2,'Voltage',inc.voltage)
-        self.Tv_not_achieved = Warning('Tidal volume not achieved',4,0,sett.min_expiratory_tidal_volume.get_value(),1,'%',inc.tidal_volume)
+        #self.Tv_not_achieved = Warning('Tidal volume not achieved',4,0,300,0,'%',inc.tidal_volume)
         #self.iTv_not_achieved = Warning('iTv not achieved',4,0,sett.max_inspiratory_tidal_volume,2,'%',inc.expiratory_flow)
         self.min_leak = Warning('Min Leak',4,0,-50,0,'mL/min',inc.inspiratory_flow)
         self.max_leak = Warning('Max Leak',4,0,50,1,'mL/min',inc.inspiratory_flow)
@@ -308,7 +308,7 @@ class Warnings():
         warnings_list += [self.PEEP_low]
         #warnings_list += [self.loss_of_data_transfer]
         warnings_list += [self.respiratory_rate_low]
-        warnings_list += [self.Tv_not_achieved]
+        #warnings_list += [self.Tv_not_achieved]
         #warnings_list += [self.iTv_not_achieved]
         warnings_list += [self.min_leak]
         warnings_list += [self.max_leak]

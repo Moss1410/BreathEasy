@@ -531,18 +531,6 @@ ScreenManager:
                         id: dropdown3
                         on_select: presetSelect.text = '{}'.format(args[1])
                         Logic: 
-                        DropDownItemButton:
-                            text: 'First Item'
-                            size_hint_y: None
-                            on_release: dropdown3.select('First Item')
-                        DropDownItemButton:
-                            text: 'Second Item'
-                            size_hint_y: None
-                            on_release: dropdown3.select('Second Item')
-                        DropDownItemButton:
-                            text: 'Third Item'
-                            size_hint_y: None
-                            on_release: dropdown3.select('Third Item')
 
             SettingsBottomPanelLogic:
                 # # Title Row
@@ -657,7 +645,7 @@ ScreenManager:
                         SmallVButton:
                             name:'tidal_volume'
                             id: tidal_volume
-                            text: "800.0"
+                            text: "600.0"
                             on_press: self.callback()
                     SettingsItemLogic:
                         SettingsItemLabel:
@@ -674,7 +662,7 @@ ScreenManager:
                             text: 'Min Inspiratory Tidal Volume [mL]'
                         SmallVButton:
                             id: min_inspiratory_tidal_volume
-                            name: 'Min Inspiratory Tidal Volume [mL]'
+                            name: 'min_inspiratory_tidal_volume'
                             text: "300.0"
                             on_press: self.callback()
                     SettingsItemLogic:
@@ -691,7 +679,7 @@ ScreenManager:
                             id: min_expiratory_tidal_volume
                             text: 'Max Inspiratory Time [Seconds]'
                         SmallVButton:
-                            name: 'Min Expriatory Tidal Volume [mL]'
+                            name: 'min_expiratory_tidal_volume'
                             id: min_expiratory_tidal_volume
                             text: "300.0"
                             on_press: self.callback()
