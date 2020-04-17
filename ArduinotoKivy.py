@@ -1,6 +1,3 @@
-from kivy.config import Config
-Config.set('graphics', 'width', '1500') 
-Config.set('graphics', 'height', '900')
 
 # from kivy.config import Config
 # Config.set('graphics', 'resizable', '0') 
@@ -29,6 +26,7 @@ import kivy
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown 
 from kivy.uix.label import Label
+from kivy.uix.progressbar import ProgressBar
 from kivy.uix.relativelayout import RelativeLayout 
 from kivy.config import Config  
 from kivy.base import runTouchApp 
@@ -60,6 +58,8 @@ oldtidalVolume = []
 respirationRate = []
 oldrespirationRate = []
 times = []
+global saved_sets
+saved_sets = {}
 RR = 0
 PEEP = 100000000000000
 
@@ -77,6 +77,7 @@ def getCurve(file):
     return dictionary
         
 data1=getCurve('SquareWave2.csv')
+#data1=getCurve('PressureWarning.csv')
 data2=getCurve('FlowWave.csv')
 data3=getCurve('VolumeWave.csv')
 data4=getCurve('zeroes.csv')
@@ -209,7 +210,7 @@ def update_level(timeIn, pp, rr, tv):
     incomings.tidal_volume.set_value(tv)
     if timeIn%500==0:
         incomings.voltage.set_value(24 + data4[timeIn/1000])
-        incomings.Fi02.set_value(settings.FiO2.get_value() - data4[timeIn/1000])
+        incomings.Fi02.set_value(settings.FiO2.get_value() - abs(data4[timeIn/1000]))
 
     global oldTime
     global times
@@ -217,7 +218,8 @@ def update_level(timeIn, pp, rr, tv):
     timeIn -= maxTime
     if timeIn >= graphTime:
         incomings.PEEP.set_value(round(getPEEP(),2))
-        incomings.respiratory_rate.set_value(round(getRR(),2)) # this seems to give a constant value for some reason -Nick
+        incomings.respiratory_rate.set_value(round(getRR(),2))
+        incomings.peak_inspiratory_pressure.set_value(getPressurePeak())
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
@@ -275,8 +277,35 @@ class VButton(Button):
         self.text = str(settings.__dict__[self.name].get_value())
         self.popup.dismiss()
 
-    def talk(self, message):
-        print(message)
+class BigButton(Button):
+    def __init__(self, **kwargs):
+        super(BigButton, self).__init__(**kwargs)
+    # button click function
+    def callback(self):#, event): 
+       
+        # Setup the popup layout    
+        layout = GridLayout(cols = 1, padding = 10) 
+        print("\u2193")
+
+        self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
+        closeButton = Button(text = "OK") 
+
+        layout.add_widget(self.textinput)      
+        layout.add_widget(closeButton) 
+
+        self.popup = Popup(title ='Please Enter a Preset Name:', content = layout, size_hint =(None, None), size =(200, 150))   
+        self.popup.open() 
+        # textinput.bind(text=on_text)
+        
+        closeButton.bind(on_press = self.setValue)
+    
+    def setValue(self, send):
+        global saved_sets
+        global settings
+        saved_sets[self.textinput.text] = data.Settings()
+        saved_sets[self.textinput.text].__dict__ == settings.__dict__.copy()
+        self.popup.dismiss()
+
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
@@ -291,11 +320,54 @@ class ChangeLabel(Label):
     def __init__(self, *args, **kwargs):
         Label.__init__(self, *args, **kwargs) 
         Clock.schedule_interval(self.update, 0.001)
-        #print("hi")
         
-
     def update(self, dt):
         self.text = str(incomings.__dict__[self.name].get_value())
+
+class InputValueLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        
+    def update(self, dt):
+        self.text = str(settings.__dict__[self.name].get_value())
+
+class InputProgressBar(ProgressBar):
+    def __init__(self, *args, **kwargs):
+        ProgressBar.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        
+    def update(self, dt):
+        self.value = settings.__dict__[self.name].get_value()
+
+class AlarmLabel(Label):
+    def __init__(self, *args, **kwargs):
+        Label.__init__(self, *args, **kwargs) 
+        Clock.schedule_interval(self.update, 0.001)
+        
+    def update(self, dt):
+        global warns
+        warns.update_all_warning_status()
+        lister = warns.get_warnings()
+        warned = False
+        for warn in lister:
+            if warn.get_status() == 1:
+                self.background_color = [1,0,0,1]
+                warned = True
+                self.text = warn.get_name()
+                #print(warn.get_name())
+                #print(warn.incoming_data.value)
+                for i in range(5):
+                    wave_obj = sa.WaveObject.from_wave_file("SHUTDOWN.wav")
+                    play_obj = wave_obj.play()
+                    play_obj.wait_done()
+
+        if not warned:
+            self.background_color = [0,1,0,1]
+            self.text = "No warnings"
+
+
+    
 
 
 class PeakPressure(Graph):
@@ -357,31 +429,6 @@ class BreathEasy(App):
         super(BreathEasy, self).__init__(**kwargs)
         self.che = True
         Window.bind(on_request_close=self.exit_check)
-        # get_level_thread = Thread(target = self.show_warnings)
-        # get_level_thread.daemon = True
-        # get_level_thread.start()
-    
-    # def show_warnings(self):
-    #     global warns
-    #     warns.update_all_warning_status()
-    #     lister = warns.get_warnings()
-    #     for warn in lister:
-    #         if warn.get_status() == 1 and self.che:
-    #             self.che = False
-    #             layout = GridLayout(cols = 1, padding = 10) 
-    #             closeButton = Button(text = "Close") 
-
-    #             layout.add_widget(closeButton) 
-
-    #             self.popup = Popup(title = warn.get_name(), content = layout, size_hint =(None, None), size =(500, 500))   
-    #             self.popup.open() 
-    #             # textinput.bind(text=on_text)
-                
-    #             closeButton.bind(on_press = self.pops)
-
-    def pops(self, somethings):
-        self.popup.dismiss
-        self.che = True
 
     def exit_check(self, *args):
         layout = GridLayout(cols = 1, padding = 10) 
