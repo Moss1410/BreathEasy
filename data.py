@@ -127,60 +127,49 @@ class Settings():
         self.apnoea_time = Setting('Apnoea Time',10.0,'Seconds',8,20)
         self.max_pressure = Setting('Max Pressure',40.0,'cmH2O',30,45)
 
-def init_settings_and_data():
-    global settings_list
-    global data_list
-    datt = IncomingDatas()
-    sett = Settings()
-    settings_list+= [sett.ventilation_mode]
-    settings_list+= [sett.system_status]
-    settings_list+= [sett.PEEP]
-    settings_list+= [sett.Fi02]
-    settings_list+= [sett.min_RR]
-    settings_list+= [sett.max_RR]
-    settings_list+= [sett.IE_ratio]
-    settings_list+= [sett.inspiratory_rise_time]
-    settings_list+= [sett.inspiratory_time]
-    settings_list+= [sett.min_inspiratory_time]
-    settings_list+= [sett.max_inspiratory_time]
-    settings_list+= [sett.max_inspiratory_pressure]
-    settings_list+= [sett.tidal_volume]
-    settings_list+= [sett.max_inspiratory_tidal_volume]
-    settings_list+= [sett.min_inspiratory_tidal_volume]
-    settings_list+= [sett.max_expiratory_tidal_volume]
-    settings_list+= [sett.min_expiratory_tidal_volume]
-    settings_list+= [sett.min_leak]
-    settings_list+= [sett.max_leak]
-    settings_list+= [sett.apnoea_time]
-    settings_list+= [sett.max_pressure]
+    def create_settings_string(self):
+        settings_list = self.get_settings()
+        output = '$Breatheout'
+        for x in settings_list:
+            value = str(x.get_value())
+            if len(value) != 5:
+                while len(value) != 5:
+                    value='0'+value
+            output = output + ',' + value
+        output = output + ','
+        return output
 
-    data_list+= [datt.time]
-    data_list+= [datt.inspiratory_pressure]
-    data_list+= [datt.inspiratory_flow]
-    data_list+= [datt.expiratory_pressure]
-    data_list+= [datt.expiratory_flow]
-    data_list+= [datt.Fi02]
-    data_list+= [datt.Fe02]
-    data_list+= [datt.room_air_flow_rate]
-    data_list+= [datt.O2_flow_rate]
+    def get_settings(self):
+        settings_list = []
+        settings_list+= [self.ventilation_mode]
+        settings_list+= [self.system_status]
+        settings_list+= [self.PEEP]
+        settings_list+= [self.FiO2]
+        settings_list+= [self.min_RR]
+        settings_list+= [self.max_RR]
+        settings_list+= [self.IE_ratio]
+        settings_list+= [self.inspiratory_rise_time]
+        settings_list+= [self.inspiratory_time]
+        settings_list+= [self.min_inspiratory_time]
+        settings_list+= [self.max_inspiratory_time]
+        settings_list+= [self.max_inspiratory_pressure]
+        settings_list+= [self.tidal_volume]
+        settings_list+= [self.max_inspiratory_tidal_volume]
+        settings_list+= [self.min_inspiratory_tidal_volume]
+        settings_list+= [self.max_expiratory_tidal_volume]
+        settings_list+= [self.min_expiratory_tidal_volume]
+        settings_list+= [self.min_leak]
+        settings_list+= [self.max_leak]
+        settings_list+= [self.apnoea_time]
+        settings_list+= [self.max_pressure]
+        return settings_list
 
 # Turn Current Settings into Output String
 # Should be of the form:
 # $Breatheout,002.0,000.0,005.0,001.0,010.0,025.0,000.5,000.2,001.0,002.0,004.0,015.0,600.0,800.0,300.0,800.0,300.0,000.0,050.0,010.0,040.0,
 # Maximum digit length 000.0 for all settings
 # String is of length 137 including initial $ #must check for this on reciept
-def create_settings_string():
-    output = '$Breatheout'
-    for x in settings_list:
-        value = str(x.get_value())
-        if len(value) != 5:
-            while len(value) != 5:
-                value='0'+value
-        output = output + ',' + value
-    output = output + ','
 
-    print(output)
-    return output
 
 # Intake Serial Data
 # Something similar will have to be done in Arduino/C for interpretting the user settings
