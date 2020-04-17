@@ -154,7 +154,6 @@ def get_data():
             update_level(currTime, pp, rr, tv)
             currTime += 10
             time.sleep(0.01)
-            
 
 def getRR():
     newRR=0
