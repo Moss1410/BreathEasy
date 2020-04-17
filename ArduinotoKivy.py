@@ -109,9 +109,19 @@ def get_data():
                 try:
                     data = str(value.decode("utf-8"))
                     data=data.split(",")
-                    dataTime = int(data[0])
-                    signal1 = int(data[1])-500
-                    update_level(dataTime, 0, signal1, 0)
+                    identifier = data[0]
+                    dataTime = int(data[1])
+                    inspPres = int(data[2])-500
+                    inspFlow = int(data[3])
+                    expPres = int(data[4])
+                    expFlow = int(data[5])
+                    inspOxy = int(data[6])
+                    expOxy = int(data[7])
+                    roomAirFlow = int(data[8])
+                    room02Flow = int(data[9])
+                    comStatus = int(data[10])
+                    #signal1 = int(data[1])-500
+                    update_level(dataTime, 0, inspPres, 0)
                 except:
                     pass
         except:
@@ -212,8 +222,8 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        RR=getRR()
-        PEEP=getPEEP()
+        #RR=getRR()
+        #PEEP=getPEEP()
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
