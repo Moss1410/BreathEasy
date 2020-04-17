@@ -96,35 +96,47 @@ def get_data():
     global maxTime
     global corrupt
     global PEEP
+    global settings
     maxTime = 0
-    startingTime=time.time()
+    startingTime=time.time()    
     while (corrupt and (int(time.time()-startingTime)<=1)):
         try: 
             ser = serial.Serial('COM3', baudrate)
             corrupt=False
+            mode = 'out'
             while True:
-                while (ser.inWaiting()==0):
-                    pass
-                value = ser.readline()
-                try:
-                    data = str(value.decode("utf-8"))
-                    data=data.split(",")
-                    identifier = data[0]
-                    dataTime = int(data[1])
-                    inspPres = int(data[2])-500
-                    inspFlow = int(data[3])
-                    expPres = int(data[4])
-                    expFlow = int(data[5])
-                    inspOxy = int(data[6])
-                    expOxy = int(data[7])
-                    roomAirFlow = int(data[8])
-                    room02Flow = int(data[9])
-                    comStatus = int(data[10])
-                    #signal1 = int(data[1])-500
-                    update_level(dataTime, 0, inspPres, 0)
-                except:
-                    pass
+                if mode=='in':
+                    while (ser.inWaiting()==0):
+                        pass
+                    value = ser.readline()
+                    try:
+                        data = str(value.decode("utf-8"))
+                        data=data.split(",")
+                        identifier = data[0]
+                        dataTime = int(data[1])
+                        inspPres = int(data[2])
+                        inspFlow = int(data[3])
+                        expPres = int(data[4])
+                        expFlow = int(data[5])
+                        inspOxy = int(data[6])
+                        expOxy = int(data[7])
+                        roomAirFlow = int(data[8])
+                        room02Flow = int(data[9])
+                        comStatus = int(data[10])
+                        update_level(dataTime, 0, inspPres, 0)
+                        mode = 'out'
+                    except:
+                        pass
+                if mode == 'out':
+                    ser.write(settings.encode())
+                    while mode=='out':
+                        data = ser.readline()
+                        if data:
+                            mode='in'
+                            print(data) #strip out the new lines for now
+                            # (better to do .read() in the long run for this reason
         except:
+            print(settings)
             pass
     if corrupt==True:
         currTime = 0
