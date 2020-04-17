@@ -58,6 +58,8 @@ oldtidalVolume = []
 respirationRate = []
 oldrespirationRate = []
 times = []
+global saved_sets
+saved_sets = {}
 RR = 0
 PEEP = 100000000000000
 
@@ -275,8 +277,35 @@ class VButton(Button):
         self.text = str(settings.__dict__[self.name].get_value())
         self.popup.dismiss()
 
-    def talk(self, message):
-        print(message)
+class BigButton(Button):
+    def __init__(self, **kwargs):
+        super(BigButton, self).__init__(**kwargs)
+    # button click function
+    def callback(self):#, event): 
+       
+        # Setup the popup layout    
+        layout = GridLayout(cols = 1, padding = 10) 
+        print("\u2193")
+
+        self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
+        closeButton = Button(text = "OK") 
+
+        layout.add_widget(self.textinput)      
+        layout.add_widget(closeButton) 
+
+        self.popup = Popup(title ='Please Enter a Preset Name:', content = layout, size_hint =(None, None), size =(200, 150))   
+        self.popup.open() 
+        # textinput.bind(text=on_text)
+        
+        closeButton.bind(on_press = self.setValue)
+    
+    def setValue(self, send):
+        global saved_sets
+        global settings
+        saved_sets[self.textinput.text] = data.Settings()
+        saved_sets[self.textinput.text].__dict__ == settings.__dict__.copy()
+        self.popup.dismiss()
+
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):

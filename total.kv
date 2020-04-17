@@ -84,6 +84,12 @@
     bold: True
     size_hint: 1,1
 
+<BigButton@VButton+LightBlueBackgroundButton>
+    font_size: str(int(self.height)/5)+'sp'
+    #color: 0/255,51/255,255/255,1  # Bright blue text color
+    bold: True
+    size_hint: 1,1
+
 
 <SmallVButton@VButton+LightBlueBackgroundButton>
     font_size: str(int(self.height)/1.5)+'sp'
@@ -482,9 +488,10 @@ ScreenManager:
                     id: modeSelect
                     text: "Ventilation Mode"   
                     #on_release: ventilatorModeDropDown.open
-                BigVButton:
+                BigButton:
                     id: storePresetSelect
-                    text: "Store Preselect"
+                    on_press: self.callback()
+                    text: "Store Presets"
                 BigVButton:
                     id: presetSelect
                     text: "Presets"
