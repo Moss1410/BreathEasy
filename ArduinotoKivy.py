@@ -76,7 +76,7 @@ def getCurve(file):
            dictionary[float(row[0])]=float(row[1])
     return dictionary
         
-data1=getCurve('SquareWave2.csv')
+data1=getCurve('SquareWave.csv')
 #data1=getCurve('PressureWarning.csv')
 data2=getCurve('FlowWave.csv')
 data3=getCurve('VolumeWave.csv')
