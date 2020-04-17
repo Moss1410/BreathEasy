@@ -58,6 +58,8 @@
     # background_color: 0.82, 0.9, 0.94, 1    # Default background color
     spacing: 20
 
+<PresetDropDown@DropDown>
+
 # BackgroundLogic Class
 <LightBlueBackgroundLogic@Logic+BackgroundColor>
     background_color: 0.82, 0.9, 0.94, 1    # Default background color
@@ -511,6 +513,11 @@ ScreenManager:
 
             # GRAPHS & OUTPUTS PANEL
             SettingsMidPanelLogic:
+                BigVButton:
+                    id: storePresetSelect
+                    on_press: self.callback()
+                    text: "Store Presets"
+    save settings left, 
                 CustomDropDown:
                     spacing: 20
                     DropDownHeaderButton:
@@ -535,38 +542,16 @@ ScreenManager:
                             text: 'Third Item'
                             size_hint_y: None
                             on_release: dropdown1.select('Third Item')
-                CustomDropDown:
-                    spacing: 20
-                    DropDownHeaderButton:
-                        id: storePresetSelect
-                        text: "Store Preselect" 
-                        on_parent: dropdown2.dismiss()
-                        on_release: dropdown2.open(self)
-                    DropDown:
-                        spacing: 20
-                        id: dropdown2
-                        on_select: storePresetSelect.text = '{}'.format(args[1])
-                        Logic: 
-                        DropDownItemButton:
-                            text: 'First Item'
-                            size_hint_y: None
-                            on_release: dropdown2.select('First Item')
-                        DropDownItemButton:
-                            text: 'Second Item'
-                            size_hint_y: None
-                            on_release: dropdown2.select('Second Item')
-                        DropDownItemButton:
-                            text: 'Third Item'
-                            size_hint_y: None
-                            on_release: dropdown2.select('Third Item')
+
+                LightBlueBackgroundButton:
+                    id: storePresetSelect
+                    text: "Store Preselect" 
+
                 BigVButton:
                     id: modeSelect
                     text: "Ventilation Mode"   
                     #on_release: ventilatorModeDropDown.open
-                BigButton:
-                    id: storePresetSelect
-                    on_press: self.callback()
-                    text: "Store Presets"
+
                 CustomDropDown:
                     spacing: 20
                     DropDownHeaderButton:
