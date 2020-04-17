@@ -247,8 +247,14 @@ def combineLists(list1,list2):
 class PresetDropDown(DropDown):
     def __init__(self, **kwargs):
         super(PresetDropDown, self).__init__(**kwargs)
+        Clock.schedule_interval(self.update, 0.5)
     
-    #def update(self, dt):
+    def update(self, dt):
+        global saved_sets
+        for k in saved_sets.keys():
+            btn = Button(text=k, size_hint_y=None, height=20)
+
+
 
 
 class VButton(Button):
