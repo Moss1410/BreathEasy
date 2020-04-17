@@ -84,6 +84,12 @@
     bold: True
     size_hint: 1,1
 
+<BigButton@VButton+LightBlueBackgroundButton>
+    font_size: str(int(self.height)/5)+'sp'
+    #color: 0/255,51/255,255/255,1  # Bright blue text color
+    bold: True
+    size_hint: 1,1
+
 
 <SmallVButton@VButton+LightBlueBackgroundButton>
     font_size: str(int(self.height)/1.5)+'sp'
@@ -336,57 +342,64 @@ ScreenManager:
                 # Parameter 1
                 InputLogic:
                     InputLabel:
-                        text: 'RR [b/min]:'
+                        text: 'Min RR [b/min]'
                         
                     InputValueLabel:
+                        name: "min_RR"
                         text: str(int(input_1.value))
 
                     InputProgressBar:
                         id: input_1
-                        min: 8
-                        max: 25
-                        value: 15
+                        name: "min_RR"
+                        min: 4
+                        max: 14
+                        value: 8
                         size_hint: 1, 0.4
 
 
                 # Parameter 2
                 InputLogic:
                     InputLabel:
-                        text: 'Pi [cmH2O]:'  #changed this label to Pi from Inspiratory Pressure to make it fit better
-                        
+                        text: 'Pi [cmH2O]'  
                     InputValueLabel:
+                        name: "max_inspiratory_pressure"
                         text: str(int(input_2.value))
                         
                     InputProgressBar:
                         id: input_2
-                        min: 0
-                        max: 10
-                        value: 5
+                        name: "max_inspiratory_pressure"
+                        min: 10
+                        max: 20
+                        value: 15
 
                 # Parameter 3
                 InputLogic:
                     InputLabel:
-                        text: 'Ti [s]:'  #Inspiratory Time
+                        text: 'Ti [s]'  #Inspiratory Time
                         
                     InputValueLabel:
+                        name: "inspiratory_time"
                         text: str(int(input_3.value))
                         
                     InputProgressBar:
                         id: input_3
-                        min: 0
-                        max: 10
-                        value: 7
+                        name: "inspiratory_time"
+                        min: 0.5
+                        max: 2
+                        value: 1
 
                 # Parameter 4
                 InputLogic:
                     InputLabel:
-                        text: 'PEEP [cmH2O]:'
+                        text: 'PEEP [cmH2O]'
                         
                     InputValueLabel:
+                        name: "PEEP"
                         text: str(int(input_4.value))
                         
                     InputProgressBar:
                         id: input_4
+                        name: "PEEP"
                         min: 5
                         max: 12
                         value: 5
@@ -394,27 +407,31 @@ ScreenManager:
                 # Parameter 5
                 InputLogic:
                     InputLabel:
-                        text: 'FiO2 [%]:'
+                        text: 'FiO2 [%]'
                         
                     InputValueLabel:
+                        name: "FiO2"
                         text: str(int(input_5.value))
                         
                     InputProgressBar:
                         id: input_5
-                        min: 30
-                        max: 100
-                        value: 40
+                        name: "FiO2"
+                        min: 0.3
+                        max: 1
+                        value: 1
 
                 # Parameter 6
                 InputLogic:
                     InputLabel:
-                        text: 'TV [mL]:'    #Tidal Volume
+                        text: 'TV [mL]'    #Tidal Volume
                         
                     InputValueLabel:
+                        name: "tidal_volume"
                         text: str(int(input_6.value))
                         
                     InputProgressBar:
                         id: input_6
+                        name: "tidal_volume"
                         min: 200
                         max: 800
                         value: 600
@@ -426,18 +443,18 @@ ScreenManager:
                     orientation: 'vertical'
                     size_hint: 0.25, 1
                     AlarmGroupLogic:
-                        AlarmLabel:
-                            text: 'Signal Lost'
-                        AlarmLabel:
-                            background_color: 252/255,127/255,3/255,1
-                            text: 'Low RR'
-                                
-                    AlarmGroupLogic:
+                    #     AlarmLabel:
+                    #         text: 'Signal Lost'
                         AlarmLabel:
                             background_color: 1,0,0,1
-                            text: 'PEEP Low'
-                        AlarmLabel:
-                            text: 'Low FiO2'
+                            text: 'Low RR'
+                                
+                    # AlarmGroupLogic:
+                    #     AlarmLabel:
+                    #         background_color: 252/255,127/255,3/255,1
+                    #         text: 'PEEP Low'
+                    #     AlarmLabel:
+                    #         text: 'Low FiO2'
                 ################################
     ###### SettingsScreen UI Layout #######################################################################
     SettingsScreen:
@@ -471,9 +488,10 @@ ScreenManager:
                     id: modeSelect
                     text: "Ventilation Mode"   
                     #on_release: ventilatorModeDropDown.open
-                BigVButton:
+                BigButton:
                     id: storePresetSelect
-                    text: "Store Preselect"
+                    on_press: self.callback()
+                    text: "Store Presets"
                 BigVButton:
                     id: presetSelect
                     text: "Presets"
