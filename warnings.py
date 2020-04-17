@@ -7,7 +7,22 @@ import data
 
 # Where has my wWARNING CLASSS GONE
 
+<<<<<<< HEAD
+
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+# def check_all_warning_status():
+#     for w in warnings_list:
+#         if w.get_status !=0:
+#             w.show_warning()
+=======
+=======
+>>>>>>> origin/PleaseWorkThisTimebyNick
+    def show_warning(self):
+=======
 def show_warning(self):
+>>>>>>> origin/PleaseWorkThisTimebyNick
         #DISPLAY OR DO SOMTHING???
         return
 
@@ -78,6 +93,19 @@ def check_all_warning_status():
     for w in warnings_list:
         if w.get_status !=0:
             w.show_warning()
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/PleaseWorkThisTimebyNick
+=======
+=======
+# def check_all_warning_status():
+#     for w in warnings_list:
+#         if w.get_status !=0:
+#             w.show_warning()
+>>>>>>> origin/Olivia
+>>>>>>> origin/PleaseWorkThisTimebyNick
+=======
+>>>>>>> origin/PleaseWorkThisTimebyNick
 
 
 
