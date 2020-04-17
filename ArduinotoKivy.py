@@ -287,7 +287,7 @@ class BigButton(Button):
         layout = GridLayout(cols = 1, padding = 10) 
         print("\u2193")
 
-        self.textinput = TextInput(multiline=False, text = str(settings.__dict__[self.name].get_value()))
+        self.textinput = TextInput(multiline=False)
         closeButton = Button(text = "OK") 
 
         layout.add_widget(self.textinput)      
@@ -357,10 +357,10 @@ class AlarmLabel(Label):
                 self.text = warn.get_name()
                 #print(warn.get_name())
                 #print(warn.incoming_data.value)
-                for i in range(5):
-                    wave_obj = sa.WaveObject.from_wave_file("SHUTDOWN.wav")
-                    play_obj = wave_obj.play()
-                    play_obj.wait_done()
+                # for i in range(5):
+                #     wave_obj = sa.WaveObject.from_wave_file("SHUTDOWN.wav")
+                #     play_obj = wave_obj.play()
+                #     play_obj.wait_done()
 
         if not warned:
             self.background_color = [0,1,0,1]
