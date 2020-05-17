@@ -1,8 +1,8 @@
 
-# from kivy.config import Config
+from kivy.config import Config
 # Config.set('graphics', 'resizable', '0') 
-# Config.set('graphics', 'width', '1700') 
-# Config.set('graphics', 'height', '900')
+Config.set('graphics', 'width', '1700') 
+Config.set('graphics', 'height', '900')
 
 # External library imports
 #from kivy.config import Config
@@ -105,7 +105,7 @@ def get_data():
         try: 
             ser = serial.Serial('COM3', baudrate)
             corrupt=False
-            mode = 'out'
+            mode = 'in'
             while True:
                 if mode=='in':
                     while (ser.inWaiting()==0):
@@ -115,30 +115,30 @@ def get_data():
                         data = str(value.decode("utf-8"))
                         data=data.split(",")
                         identifier = data[0]
-                        dataTime = int(data[1])
-                        inspPres = int(data[2])
-                        inspFlow = int(data[3])
-                        expPres = int(data[4])
-                        expFlow = int(data[5])
-                        inspOxy = int(data[6])
-                        expOxy = int(data[7])
-                        roomAirFlow = int(data[8])
-                        room02Flow = int(data[9])
-                        comStatus = int(data[10])
+                        dataTime = int(data[0])
+                        inspPres = int(data[1])
+                        # inspFlow = int(data[3])
+                        # expPres = int(data[4])
+                        # expFlow = int(data[5])
+                        # inspOxy = int(data[6])
+                        # expOxy = int(data[7])
+                        # roomAirFlow = int(data[8])
+                        # room02Flow = int(data[9])
+                        # comStatus = int(data[10])
+                        ###Need to map the incoming data to something
                         update_level(dataTime, 0, inspPres, 0)
-                        mode = 'out'
+                        #mode = 'out'
                     except:
                         pass
                 if mode == 'out':
-                    ser.write(settings.encode())
+                    #ser.write(settings.create_settings_string().encode())
                     while mode=='out':
                         data = ser.readline()
                         if data:
                             mode='in'
-                            print(data) #strip out the new lines for now
+                            #print(data) #strip out the new lines for now
                             # (better to do .read() in the long run for this reason
         except:
-            print(settings)
             pass
     if corrupt==True:
         currTime = 0.0
@@ -238,9 +238,9 @@ def update_level(timeIn, pp, rr, tv):
     global maxTime
     timeIn -= maxTime
     if timeIn >= graphTime:
-        incomings.PEEP.set_value(round(getPEEP(),2))
-        incomings.respiratory_rate.set_value(round(getRR(),2))
-        incomings.peak_inspiratory_pressure.set_value(getPressurePeak())
+        #incomings.PEEP.set_value(round(getPEEP(),2))
+        #incomings.respiratory_rate.set_value(round(getRR(),2))
+        #incomings.peak_inspiratory_pressure.set_value(getPressurePeak())
         maxTime += timeIn
         oldTime = times.copy()
         oldpeakPressure = peakPressure.copy()
@@ -477,7 +477,7 @@ class BreathEasy(App):
     def build(self):
         # Set the initial window color for our app
         # Window.clearcolor = (24/255, 24/255, 24/255, 1) # black background
-        Window.clearcolor = (0, 0, 0, 1) # white bkg
+        Window.clearcolor = (24/255, 24/255, 24/255, 1) # white bkg
         return Builder.load_file("total.kv")
 
 ################################### MAIN LOOP (RUNS APP) ###################################
